@@ -1,15 +1,31 @@
 import React, { useState } from "react";
 import logo from "./logo.svg";
+import { useQuery } from "react-query";
 import "./Home.css";
 
 function Home() {
   const [count, setCount] = useState(0);
+
+  const { isLoading, isError, data } = useQuery(["someQuery"], async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return "this data loaded asynchronously";
+  });
+
+  let loadedData;
+  if (isLoading) {
+    loadedData = <p>loading...</p>;
+  } else if (isError) {
+    loadedData = <p>Error!</p>;
+  } else {
+    loadedData = <p>{data}</p>;
+  }
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>Hello Vite + React!</p>
+        {loadedData}
         <p>
           <button onClick={() => setCount((count) => count + 1)}>
             count is: {count}
