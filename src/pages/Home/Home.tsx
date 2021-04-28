@@ -3,7 +3,7 @@ import logo from "./logo.svg";
 import { useQuery } from "react-query";
 import "./Home.css";
 
-function Home() {
+export const Home: React.FC = () => {
   const [count, setCount] = useState(0);
 
   const { isLoading, isError, data } = useQuery(["someQuery"], async () => {
@@ -56,6 +56,4 @@ function Home() {
       </header>
     </div>
   );
-}
-
-export default Home;
+};
