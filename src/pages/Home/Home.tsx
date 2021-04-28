@@ -11,13 +11,13 @@ export const Home: React.FC = () => {
     return "this data loaded asynchronously";
   });
 
-  let loadedData;
+  let loadedData: string;
   if (isLoading) {
-    loadedData = <p>loading...</p>;
+    loadedData = "loading...";
   } else if (isError) {
-    loadedData = <p>Error!</p>;
+    loadedData = "Error!";
   } else {
-    loadedData = <p>{data}</p>;
+    loadedData = data!;
   }
 
   return (
@@ -25,7 +25,9 @@ export const Home: React.FC = () => {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>Hello Vite + React!</p>
-        {loadedData}
+        <p className="p-5 m-5 bg-white text-black rounded ring ring-blue-300">
+          {loadedData}
+        </p>
         <p>
           <button onClick={() => setCount((count) => count + 1)}>
             count is: {count}
