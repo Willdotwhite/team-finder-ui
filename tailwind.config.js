@@ -1,11 +1,28 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
+const primaryBright = "#00FFC0";
+const primaryDark = "#16D0A2";
+
 module.exports = {
-  purge: [],
+  mode: "jit",
+  purge: ["./src/**/*.tsx", "index.html"],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Lato", ...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        primary: {
+          DEFAULT: primaryBright,
+          bright: primaryBright,
+          dark: primaryDark,
+        },
+      },
+    },
   },
   variants: {
     extend: {},
   },
   plugins: [],
-}
+};

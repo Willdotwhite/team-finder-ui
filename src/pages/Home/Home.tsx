@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import logo from "./logo.svg";
 import { useQuery } from "react-query";
-import "./Home.css";
 
 export const Home: React.FC = () => {
   const [count, setCount] = useState(0);
@@ -11,49 +9,29 @@ export const Home: React.FC = () => {
     return "this data loaded asynchronously";
   });
 
-  let loadedData;
+  let loadedData: string;
   if (isLoading) {
-    loadedData = <p>loading...</p>;
+    loadedData = "loading...";
   } else if (isError) {
-    loadedData = <p>Error!</p>;
+    loadedData = "Error!";
   } else {
-    loadedData = <p>{data}</p>;
+    loadedData = data!;
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        {loadedData}
-        <p>
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {" | "}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div className="container mx-auto my-6">
+      <h1 className="text-3xl text-primary font-light px-6 pb-6">
+        Hello World
+      </h1>
+      <div className="border border-white p-6 space-y-3 border-opacity-25">
+        <p>{loadedData}</p>
+        <button
+          className="bg-primary-dark p-2 focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-primary"
+          onClick={() => setCount((count) => count + 1)}
+        >
+          count is: {count}
+        </button>
+      </div>
     </div>
   );
 };

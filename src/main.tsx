@@ -1,3 +1,4 @@
+import "focus-visible";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Context } from "./Context";
