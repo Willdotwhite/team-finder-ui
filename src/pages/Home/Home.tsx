@@ -23,7 +23,7 @@ export const Home: React.FC = () => {
       <h1 className="text-3xl text-primary font-light px-6 pb-6">
         Hello World
       </h1>
-      <div className="border border-white p-6 space-y-3 border-opacity-50">
+      <div className="border border-white p-6 space-y-3 border-opacity-25">
         <p>{loadedData}</p>
         <button
           className="bg-primary-dark p-2 focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-primary"
