@@ -1,22 +1,32 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 
-export const Home: React.FC = () => {
-  const [count, setCount] = useState(0);
+interface Team {
+  author: string,
+  createdAt: string,
+  name: string,
+  skillsetMask: number,
+  id: number
+}
 
-  const { isLoading, isError, data } = useQuery(["someQuery"], async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    return "this data loaded asynchronously";
+const Teams: React.FC = () => {
+  const { isLoading, isError, data } = useQuery(["someQuery"], async (): Promise<Array<Team>> => {
+    return fetch("http://178.62.53.195/teams", {mode:"cors"}).then(res => res.json());
   });
 
-  let loadedData: string;
-  if (isLoading) {
-    loadedData = "loading...";
-  } else if (isError) {
-    loadedData = "Error!";
-  } else {
-    loadedData = data!;
-  }
+  return <div>{
+    isLoading ? "Loading.." : isError ? "fuck" : data!.map(t => <div key={t.id} className="p-3">
+        <div>{t.name}</div>
+        <div>{t.author}</div>
+        <div>{t.createdAt}</div>
+        <div>{t.skillsetMask}</div>
+        <div>{t.id}</div>
+      </div>)
+  }</div>
+}
+
+export const Home: React.FC = () => {
+  const [count, setCount] = useState(0);
 
   return (
     <div className="container mx-auto my-6">
@@ -24,13 +34,13 @@ export const Home: React.FC = () => {
         Hello World
       </h1>
       <div className="border border-white p-6 space-y-3 border-opacity-25">
-        <p>{loadedData}</p>
         <button
           className="bg-primary-dark p-2 focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-primary"
           onClick={() => setCount((count) => count + 1)}
         >
           count is: {count}
         </button>
+        <Teams/>
       </div>
     </div>
   );
