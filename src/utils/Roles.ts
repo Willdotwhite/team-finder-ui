@@ -20,7 +20,7 @@ const roles: Role[] = [
 /**
  * Get all roles for a given Role ID (as an combined view of all roles, by the sum of the IDs)
  */
-const getRoles = (bitwiseRoleId: number): Role[] => {
+export const getRoles = (bitwiseRoleId: number): Role[] => {
   return roles.filter(role => roleIsInBitwiseRoleId(bitwiseRoleId, role.id));
 }
 
