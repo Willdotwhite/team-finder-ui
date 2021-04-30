@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
+import { getRoles } from "../../utils/Roles";
 
 interface Team {
   author: string,
@@ -19,7 +20,9 @@ const Teams: React.FC = () => {
         <div>{t.name}</div>
         <div>{t.author}</div>
         <div>{t.createdAt}</div>
-        <div>{t.skillsetMask}</div>
+
+        {/*<div>{getRoles(t.skillsetMask)}</div>*/}
+        {<div>{JSON.stringify(getRoles(1 + (Math.random() * 1023)))}</div>}
         <div>{t.id}</div>
       </div>)
   }</div>
