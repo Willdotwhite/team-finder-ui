@@ -38,5 +38,3 @@ export const getRoles = (bitwiseRoleId: number): Role[] => {
 const roleIsInBitwiseRoleId = (bitwiseRoleId: number, roleId: number): boolean => {
   return (bitwiseRoleId & roleId) == roleId;
 }
-
-console.log(getRoles(43));
