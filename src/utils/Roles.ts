@@ -7,7 +7,7 @@ export interface Role {
   name: string;
 }
 
-const roles: Role[] = [
+export const roles: Role[] = [
   {id: 1, name: "2D Art"},
   {id: 2, name: "3D Art"},
   {id: 4, name: "Code"},

@@ -2,18 +2,52 @@ import * as React from "react";
 import { Button } from "../../components/Button";
 import { PageContainer } from "../../components/PageContainer";
 import { PageHeader } from "../../components/PageHeader";
+import { roles } from "../../utils/Roles";
 
 export const Register: React.FC = () => {
   const [description, setDescription] = React.useState("");
+  const [skillsets, setSkillsets] = React.useState(new Set<number>());
+
+  const toggleSkillset = (id: number) =>
+    setSkillsets((current) => {
+      const next = new Set(current.values());
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
 
   return (
     <PageContainer>
       <PageHeader>Register a Team</PageHeader>
       <form
-        className="max-w-prose mx-auto"
+        className="max-w-prose mx-auto space-y-4"
         onSubmit={(e) => e.preventDefault()}
       >
-        <div className="space-y-2 mb-4">
+        <div className="space-y-2">
+          <label className="text-lg block">
+            What skillsets are you looking for from team members?
+          </label>
+          <p className="text-xs">
+            TODO: use Guitar&rsquo;s much nicer-looking selection UI!
+          </p>
+          <div>
+            {roles.map((role) => (
+              <label key={role.id} className="block">
+                <input
+                  type="checkbox"
+                  className="mr-1"
+                  onChange={() => toggleSkillset(role.id)}
+                  checked={skillsets.has(role.id)}
+                />
+                {role.name}
+              </label>
+            ))}
+          </div>
+        </div>
+        <div className="space-y-2">
           <label className="text-lg block" htmlFor="description">
             Tell us a bit about yourself and the team you&rsquo;d like to see!
           </label>
