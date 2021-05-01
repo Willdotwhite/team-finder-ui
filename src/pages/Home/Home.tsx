@@ -15,11 +15,11 @@ const RoleFilter: React.FC<RFProps> = ({roleState:[selected, setSelected]}) => {
     else setSelected( [...selected, evid] );
   }
 
-  var roleClass = "cursor-pointer transition w-20 ";
+  var roleClass = "cursor-pointer transition w-21 ";
 
   return <div className="flex justify-between my-10">{
     roles.map(r => {
-      var color = selected.includes(r.id) ? "fill-bright" : "fill-dimwhite hover:fill-white";
+      var color = selected.includes(r.id) ? "fill-primaryBright" : "fill-dimwhite hover:fill-white";
       return <RoleView onClick={() => click(r.id)} showText={true} className={roleClass+color} key={r.id} r={r}/>;
     })
   }</div>

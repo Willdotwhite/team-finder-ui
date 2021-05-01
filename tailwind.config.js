@@ -9,8 +9,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      // doesn't work?? :
-      w: {
+      width: {
         21: "5.25rem"
       },
       fontFamily: {
@@ -26,8 +25,7 @@ module.exports = {
       fill: {
         white: "#FFF",
         dimwhite: "#828282",
-        bright: primaryBright,
-        dimbright: primaryDark,
+        primaryBright: primaryBright
       }
     },
   },
