@@ -1,5 +1,7 @@
 import React from "react";
 import { useQuery } from "react-query";
+import { PageContainer } from "../../components/PageContainer";
+import { PageHeader } from "../../components/PageHeader";
 import { TeamData, Team } from "../../components/Team"
 
 export const Home: React.FC = () => {
@@ -10,10 +12,10 @@ export const Home: React.FC = () => {
   });
 
   return (
-    <div className="container mx-auto my-6 p-2">
-      <h1 className="text-3xl text-primary font-light my-6">
+    <PageContainer>
+      <PageHeader>
         Find a team!
-      </h1>
+      </PageHeader>
 
       <button
         className="bg-primary-dark my-6 p-2 focus:outline-none focus-visible:outline-none focus-visible:ring focus-visible:ring-primary"
@@ -25,6 +27,6 @@ export const Home: React.FC = () => {
       <div>{
         isLoading ? "Loading.." : isError ? "fuck" : data!.map(t => <Team key={t.id} team={t}/>)
       }</div>
-    </div>
+    </PageContainer>
   );
 };
