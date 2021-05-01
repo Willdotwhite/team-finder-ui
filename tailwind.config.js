@@ -19,10 +19,17 @@ module.exports = {
           dark: primaryDark,
         },
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme("colors.white"),
+          },
+        },
+      }),
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
