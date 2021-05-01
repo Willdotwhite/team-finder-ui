@@ -18,8 +18,8 @@ export const Register: React.FC = () => {
             Tell us a bit about yourself and the team you&rsquo;d like to see!
           </label>
           <textarea
-            className="text-md bg-transparent border border-white focus:border-primary px-4 py-2 block w-full"
-            placeholder="todo"
+            className="text-md bg-transparent border border-white focus:border-primary px-4 py-2 block w-full placeholder-white placeholder-opacity-40 h-40"
+            placeholder="Hi, I'm Mark! I've been learning Unity for about a year, but this is my first jam. I like level design, and I can do a bit of programming too! I like platformers and games that make it feel good to move around. I'd love to pair up with an artist and maybe a programmer."
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
