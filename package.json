@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "focus-visible": "^5.2.0",
+    "javascript-time-ago": "^2.3.4",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-query": "^3.13.12",
