@@ -2,17 +2,68 @@ import * as React from "react";
 import { NestedValue, useForm } from "react-hook-form";
 import classNames from "classnames";
 import immer from "immer";
+import { useMutation } from "react-query";
 import { Button } from "../../components/Button";
 import { PageContainer } from "../../components/PageContainer";
 import { PageHeader } from "../../components/PageHeader";
 import { roles } from "../../utils/Roles";
+import { useHistory } from "react-router";
 
 interface FormData {
   description: string;
   skillsets: NestedValue<Record<number, boolean>>;
 }
 
+interface TeamDto {
+  author: string;
+  description: string;
+  skillsetMask: number;
+}
+
+const teamFromForm = (formData: FormData): TeamDto => {
+  return {
+    author: "Definitely Guitar Kid#4264",
+    description: formData.description,
+    skillsetMask: 0,
+  };
+};
+
+const postTeam = async (teamDto: TeamDto): Promise<TeamDto> => {
+  const response = await fetch("http://178.62.53.195/teams", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(teamDto),
+  });
+  if (!response.ok) {
+    throw new Error(
+      `${response.status} ${response.statusText}: ${await response.text()}`
+    );
+  }
+  return await response.json();
+};
+
 export const Register: React.FC = () => {
+  const history = useHistory();
+
+  const { mutate, error, isLoading } = useMutation(
+    async (formData: FormData) => {
+      const team = teamFromForm(formData);
+      return postTeam(team);
+    },
+    {
+      onSuccess: () => {
+        // ordinarily, you'd also invalidate queries here...
+        // but the only other query for now is the list page,
+        // whose primary purpose is to see OTHER people's teams!
+        // So we don't need to work too hard to make sure your own shows up
+        history.push("/");
+      },
+    }
+  );
+
   const {
     register,
     formState,
@@ -59,7 +110,7 @@ export const Register: React.FC = () => {
       <form
         className="max-w-prose mx-auto space-y-4"
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onSubmit={handleSubmit(() => {})}
+        onSubmit={handleSubmit((data) => mutate(data))}
       >
         <div className="space-y-2">
           <label className="text-lg block">
@@ -121,7 +172,15 @@ export const Register: React.FC = () => {
             </ul>
           </div>
         </div>
-        <Button type="submit">Register</Button>
+        {error && (
+          <div className="text-red-400">
+            Sorry, there was a problem and we couldn&rsquo;t submit a team for
+            you.
+          </div>
+        )}
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? "Registering..." : "Register"}
+        </Button>
       </form>
     </PageContainer>
   );
