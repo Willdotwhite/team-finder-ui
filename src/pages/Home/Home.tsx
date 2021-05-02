@@ -18,7 +18,7 @@ const RoleFilter: React.FC<RFProps> = ({roleState:[selected, setSelected]}) => {
   return <div className="flex justify-between my-10">{
     roles.map(r => {
       var color = selected.includes(r.id) ? "fill-primaryBright" : "fill-dimwhite hover:fill-white";
-      return (<div key={r.id} onClick={() => toggleSelected(r.id)} className={"text-center leading-tight align-top cursor-pointer w-21"}>
+      return (<div data-role={r.id} key={r.id} onClick={() => toggleSelected(r.id)} className={"text-center leading-tight align-top cursor-pointer w-21"}>
         <RoleSVG roleId={r.id} className={"mb-2 p-2 border-2 rounded transition "+color}/>
         {r.name}
       </div>)
@@ -28,11 +28,16 @@ const RoleFilter: React.FC<RFProps> = ({roleState:[selected, setSelected]}) => {
 
 
 const TeamList: React.FC<{selectedRoles: number[]}> = ({selectedRoles}) => {
-  // TODO: selectedRoles filter queries
-  // not implemented in back-end yet
+  // const url = new URL("http://178.62.53.195/teams");
+  const url = new URL("http://127.0.0.1:8080/teams");
+
+  if (selectedRoles.length) {
+    const skillsetMask = selectedRoles.reduce((a, b) => a + b, 0);
+    url.searchParams.append("skillsetMask", skillsetMask.toString());
+  }
 
   const { isLoading, isError, data, refetch } = useQuery(["Teams"], async (): Promise<Array<TeamData>> => {
-    var arr: Array<Record<string, unknown>> = await fetch("http://178.62.53.195/teams", {mode:"cors"}).then(res => res.json());
+    var arr: Array<Record<string, unknown>> = await fetch(url.toString(), {mode:"cors"}).then(res => res.json());
     return arr.map(t => new TeamData(t));
   });
 
