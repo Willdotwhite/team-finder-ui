@@ -7,7 +7,10 @@ import { TeamData, Team } from "../../components/Team"
 export const Home: React.FC = () => {
 	
   const { isLoading, isError, data, refetch } = useQuery(["Teams"], async (): Promise<Array<TeamData>> => {
-    var arr: Array<Record<string, unknown>> = await fetch("http://178.62.53.195/teams", {mode:"cors"}).then(res => res.json());
+    var arr: Array<Record<string, unknown>> = await fetch(
+      `${import.meta.env.VITE_API_URL}/teams`,
+      { mode: "cors" }
+    ).then((res) => res.json());
     return arr.map(t => new TeamData(t));
   });
 

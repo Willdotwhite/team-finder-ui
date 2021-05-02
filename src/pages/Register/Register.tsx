@@ -29,7 +29,7 @@ const teamFromForm = (formData: FormData): TeamDto => {
 };
 
 const postTeam = async (teamDto: TeamDto): Promise<TeamDto> => {
-  const response = await fetch("http://178.62.53.195/teams", {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/teams`, {
     method: "POST",
     mode: "cors",
     headers: {
