@@ -11,9 +11,9 @@ export const roles: Role[] = [
   {id: 1, name: "2D Art"},
   {id: 2, name: "3D Art"},
   {id: 4, name: "Code"},
-  {id: 8, name: "Design/Production"},
-  {id: 16, name: "Sound/Music"},
-  {id: 32, name: "Testing/Support"},
+  {id: 8, name: "Design/\nProduction"},
+  {id: 16, name: "Sound/\nMusic"},
+  {id: 32, name: "Testing/\nSupport"},
   {id: 64, name: "Other"},
 ];
 
