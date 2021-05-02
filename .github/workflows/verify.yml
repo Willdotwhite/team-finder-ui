@@ -2,18 +2,28 @@ name: Node.js CI
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 14.x
-      uses: actions/setup-node@v2
-      with:
-        node-version: 14.x
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
 
-    - run: npm ci
-    - run: npm run build
-    - run: npm test
+      - run: npm ci
+      - run: npm run tsc
+        if: ${{ always() }}
+      - run: npm run lint:report
+        id: lint
+        if: ${{ always() }}
+      - uses: ataylorme/eslint-annotate-action@1.2.0
+        if: ${{ always() }}
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          report-json: "eslint_report.json"
+      - run: npm run build
+      - run: npm test
