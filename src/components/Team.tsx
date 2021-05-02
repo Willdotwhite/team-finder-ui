@@ -1,6 +1,6 @@
 import React from "react";
 import { getRoles, Role } from "../utils/Roles";
-import {RoleView} from "./RoleView";
+import {RoleSVG} from "./RoleSVG";
 
 export class TeamData {
   author: string;
@@ -28,7 +28,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
   var h = (Date.now() - team.createdAt.valueOf()) / 3600000;
   var timestr = h.toFixed(1) + " Hours ago"
 
-  var skillstr = team.skills.map(r => <RoleView className="w-7 fill-bright inline-block m-1 align-top" r={r} key={r.id}/>);
+  var skillstr = team.skills.map(r => <RoleSVG roleId={r.id} key={r.id} className="w-7 fill-primaryBright inline-block m-1 align-top"/>);
 
   return (
     <div className="my-10 p-5 border relative">

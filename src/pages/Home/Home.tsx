@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { TeamData, Team } from "../../components/Team"
-import { RoleView } from "../../components/RoleView"
+import { RoleSVG } from "../../components/RoleSVG"
 import { roles } from "../../utils/Roles";
 
 
@@ -10,17 +10,18 @@ type RFProps = {
 }
 const RoleFilter: React.FC<RFProps> = ({roleState:[selected, setSelected]}) => {
 
-  const click = (evid: number) => {
-    if(selected.includes(evid)) setSelected( selected.filter(id => evid != id) );
-    else setSelected( [...selected, evid] );
+  const toggleSelected = (roleId: number) => {
+    if(selected.includes(roleId)) setSelected( selected.filter(id => id != roleId) );
+    else setSelected( [...selected, roleId] );
   }
-
-  var roleClass = "cursor-pointer transition w-21 ";
 
   return <div className="flex justify-between my-10">{
     roles.map(r => {
       var color = selected.includes(r.id) ? "fill-primaryBright" : "fill-dimwhite hover:fill-white";
-      return <RoleView onClick={() => click(r.id)} showText={true} className={roleClass+color} key={r.id} r={r}/>;
+      return (<div key={r.id} onClick={() => toggleSelected(r.id)} className={"text-center leading-tight align-top cursor-pointer w-21"}>
+        <RoleSVG roleId={r.id} className={"mb-2 p-2 border-2 rounded transition "+color}/>
+        {r.name}
+      </div>)
     })
   }</div>
 }
