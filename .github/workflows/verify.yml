@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Verify
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ jobs:
           node-version: 14.x
 
       - run: npm ci
-      - run: npm run tsc
+      - run: npm run typecheck
         if: ${{ always() }}
       - run: npm run lint:report
         id: lint
