@@ -29,11 +29,7 @@ module.exports = {
           },
         },
       }),
-      fill: {
-        white: "#FFF",
-        dimwhite: "#828282",
-        primaryBright: primaryBright
-      }
+      fill: (theme) => theme('colors')
     },
   },
   variants: {
