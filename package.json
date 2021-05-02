@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && eslint src && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "test": "echo \"no tests yet\""
   },
   "dependencies": {
     "classnames": "^2.3.1",
