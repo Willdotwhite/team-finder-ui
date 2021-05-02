@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
+import { PageContainer } from "../../components/PageContainer";
+import { PageHeader } from "../../components/PageHeader";
 import { TeamData, Team } from "../../components/Team"
 import { RoleSVG } from "../../components/RoleSVG"
 import { roles } from "../../utils/Roles";
@@ -28,8 +30,7 @@ const RoleFilter: React.FC<RFProps> = ({roleState:[selected, setSelected]}) => {
 
 
 const TeamList: React.FC<{selectedRoles: number[]}> = ({selectedRoles}) => {
-  const url = new URL("http://178.62.53.195/teams");
-  // const url = new URL("http://127.0.0.1:8080/teams");
+  const url = new URL(`${import.meta.env.VITE_API_URL}/teams`);
 
   if (selectedRoles.length) {
     const skillsetMask = selectedRoles.reduce((a, b) => a + b, 0);
@@ -58,12 +59,12 @@ export const Home: React.FC = () => {
   var roleState = useState<number[]>([]);
 
   return (
-    <div className="container mx-auto px-2 max-w-screen-md">
-      <h1 className="text-3xl text-primary font-light my-6">
+    <PageContainer>
+      <PageHeader>
         Find a team!
-      </h1>
+      </PageHeader>
       <RoleFilter roleState={roleState}/>
       <TeamList selectedRoles={roleState[0]} />
-    </div>
+    </PageContainer>
   );
 };

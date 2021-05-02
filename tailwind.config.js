@@ -22,6 +22,13 @@ module.exports = {
           dark: primaryDark,
         },
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme("colors.white"),
+          },
+        },
+      }),
       fill: {
         white: "#FFF",
         dimwhite: "#828282",
@@ -34,5 +41,5 @@ module.exports = {
       fill: ['hover']
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
