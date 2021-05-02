@@ -28,8 +28,8 @@ const RoleFilter: React.FC<RFProps> = ({roleState:[selected, setSelected]}) => {
 
 
 const TeamList: React.FC<{selectedRoles: number[]}> = ({selectedRoles}) => {
-  // const url = new URL("http://178.62.53.195/teams");
-  const url = new URL("http://127.0.0.1:8080/teams");
+  const url = new URL("http://178.62.53.195/teams");
+  // const url = new URL("http://127.0.0.1:8080/teams");
 
   if (selectedRoles.length) {
     const skillsetMask = selectedRoles.reduce((a, b) => a + b, 0);
