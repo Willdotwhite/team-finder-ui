@@ -9,6 +9,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      width: {
+        21: "5.25rem"
+      },
       fontFamily: {
         sans: ["Lato", ...defaultTheme.fontFamily.sans],
       },
@@ -19,10 +22,17 @@ module.exports = {
           dark: primaryDark,
         },
       },
+      fill: {
+        white: "#FFF",
+        dimwhite: "#828282",
+        primaryBright: primaryBright
+      }
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      fill: ['hover']
+    },
   },
   plugins: [],
 };
