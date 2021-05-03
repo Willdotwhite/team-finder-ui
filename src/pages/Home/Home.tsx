@@ -19,7 +19,7 @@ const RoleFilter: React.FC<RFProps> = ({roleState:[selected, setSelected]}) => {
 
   return <div className="flex justify-between my-10">{
     roles.map(r => {
-      var color = selected.includes(r.id) ? "fill-primaryBright" : "fill-dimwhite hover:fill-white";
+      var color = selected.includes(r.id) ? "fill-primary" : "fill-white opacity-50 hover:opacity-100";
       return (<div data-role={r.id} key={r.id} onClick={() => toggleSelected(r.id)} className={"text-center leading-tight align-top cursor-pointer w-21"}>
         <RoleSVG roleId={r.id} className={"mb-2 p-2 border-2 rounded transition "+color}/>
         {r.name}

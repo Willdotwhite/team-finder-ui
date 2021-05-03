@@ -27,7 +27,7 @@ export class TeamData {
 }
 
 export const Team: React.FC<{team:TeamData}> = ({team}) => {
-  var skillstr = team.skills.map(r => <RoleSVG roleId={r.id} key={r.id} className="w-7 fill-primaryBright inline-block m-1 align-top"/>);
+  var skillstr = team.skills.map(r => <RoleSVG roleId={r.id} key={r.id} className="w-7 fill-primary inline-block m-1 align-top"/>);
 
   return (
     <div data-team-id={team.id} className="my-10 p-5 border relative">
