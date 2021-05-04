@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { PageContainer } from "../../components/PageContainer";
 import { PageHeader } from "../../components/PageHeader";
+import { PageUserInfo } from "../../components/PageUserInfo";
+import { PageNavigator } from "../../components/PageNavigator";
 import { TeamData, Team } from "../../components/Team"
 import { RoleSVG } from "../../components/RoleSVG"
 import { roles } from "../../utils/Roles";
@@ -19,7 +21,7 @@ const RoleFilter: React.FC<RFProps> = ({roleState:[selected, setSelected]}) => {
 
   return <div className="flex justify-between my-10">{
     roles.map(r => {
-      const color = selected.includes(r.id) ? "fill-primary" : "fill-white opacity-50 hover:opacity-100";
+      const color = selected.includes(r.id) ? "fill-white border-primary" : "fill-white opacity-50 hover:opacity-100";
 
       return (<div data-role={r.id} key={r.id} onClick={() => toggleSelected(r.id)} className={"text-center leading-tight align-top cursor-pointer w-21"}>
         <RoleSVG roleId={r.id} className={"mb-2 p-2 border-2 rounded transition "+color}/>
@@ -61,6 +63,9 @@ export const Home: React.FC = () => {
 
   return (
     <PageContainer>
+      <img className="my-2" src={"MainLogo.png"}></img>
+      <PageUserInfo/>
+      <PageNavigator/>
       <PageHeader>
         Find a team!
       </PageHeader>
