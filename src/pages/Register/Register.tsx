@@ -6,6 +6,7 @@ import { useMutation } from "react-query";
 import { Button } from "../../components/Button";
 import { PageContainer } from "../../components/PageContainer";
 import { PageHeader } from "../../components/PageHeader";
+import { PageNavigator } from "../../components/PageNavigator";
 import { roles } from "../../utils/Roles";
 import { useHistory } from "react-router";
 
@@ -106,6 +107,8 @@ export const Register: React.FC = () => {
 
   return (
     <PageContainer>
+      <img className="mt-2" src={"MainLogoSmall.png"}></img>
+      <PageNavigator/>
       <PageHeader>Register a Team</PageHeader>
       <form
         className="max-w-prose mx-auto space-y-4"
