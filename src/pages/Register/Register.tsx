@@ -149,7 +149,7 @@ export const Register: React.FC = () => {
                 ? "border-red-400 focus:border-red-500"
                 : "border-white focus:border-primary"
             )}
-            maxlength = "300"
+            maxlength = "240"
             placeholder="Hi, I'm Mark! I've been learning Unity for about a year, but this is my first jam. I like level design, and I can do a bit of programming too! I like platformers and games that make it feel good to move around. I'd love to pair up with an artist and maybe a programmer."
             id="description"
             {...register("description", { required: "Required" })}
