@@ -2,8 +2,35 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { PageContainer } from "../../components/PageContainer";
 import { PageHeader } from "../../components/PageHeader";
+import { PageUserInfo } from "../../components/PageUserInfo";
+import { PageNavigator } from "../../components/PageNavigator";
 import { TeamData, Team } from "../../components/Team";
 import { SkillsetSelector } from "../../components/SkillsetSelector";
+import { NavLink } from "react-router-dom";
+import { SkillsetSVG } from "../../components/SkillsetSVG"
+import { skillsets } from "../../utils/Skillsets"
+
+type RFProps = {
+  roleState: [number[], React.Dispatch<React.SetStateAction<number[]>>]
+}
+const RoleFilter: React.FC<RFProps> = ({roleState:[selected, setSelected]}) => {
+
+  const toggleSelected = (roleId: number) => {
+    if(selected.includes(roleId)) setSelected( selected.filter(id => id != roleId) );
+    else setSelected( [...selected, roleId] );
+  }
+
+  return <div className="flex justify-between my-10">{
+    skillsets.map(r => {
+      const color = selected.includes(r.id) ? "fill-white border-primary" : "fill-white opacity-50 hover:opacity-100";
+
+      return (<div data-role={r.id} key={r.id} onClick={() => toggleSelected(r.id)} className={"text-center leading-tight align-top cursor-pointer w-21"}>
+        <SkillsetSVG skillsetId={r.id} className={"mb-2 p-2 border-2 rounded transition "+color} />
+        {r.name}
+      </div>)
+    })
+  }</div>
+}
 
 const TeamList: React.FC<{ selectedSkillsets: number[] }> = ({
   selectedSkillsets,
@@ -55,6 +82,9 @@ export const Home: React.FC = () => {
 
   return (
     <PageContainer>
+      <NavLink to="/"> <img className="my-2" src={"MainLogo.png"}></img></NavLink>
+      <PageUserInfo/>
+      <PageNavigator/>
       <PageHeader>Find a team!</PageHeader>
       <SkillsetSelector
         selectedSkillsets={selectedSkillsets}

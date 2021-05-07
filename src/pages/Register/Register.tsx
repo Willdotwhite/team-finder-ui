@@ -5,8 +5,12 @@ import { useMutation } from "react-query";
 import { Button } from "../../components/Button";
 import { PageContainer } from "../../components/PageContainer";
 import { PageHeader } from "../../components/PageHeader";
+import { PageNavigator } from "../../components/PageNavigator";
+import { skillsets } from "../../utils/Skillsets";
 import { useHistory } from "react-router";
 import { SkillsetSelector } from "../../components/SkillsetSelector";
+import { NavLink } from "react-router-dom";
+
 
 interface FormData {
   description: string;
@@ -23,7 +27,7 @@ const teamFromForm = (formData: FormData): TeamDto => {
   return {
     author: "Definitely Guitar Kid#4264",
     description: formData.description,
-    skillsetMask: 0,
+    skillsetMask: formData.skillsets.reduce((a, b) => a + b, 0),
   };
 };
 
@@ -82,6 +86,8 @@ export const Register: React.FC = () => {
 
   return (
     <PageContainer>
+      <NavLink to="/"><img className="mt-2" src={"MainLogoSmall.png"}></img></NavLink>
+      <PageNavigator/>
       <PageHeader>Register a Team</PageHeader>
       <form
         className="max-w-prose mx-auto space-y-8"
