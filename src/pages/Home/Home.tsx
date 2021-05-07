@@ -5,10 +5,12 @@ import { PageHeader } from "../../components/PageHeader";
 import { TeamData, Team } from "../../components/Team";
 import { SkillsetSelector } from "../../components/SkillsetSelector";
 
-const TeamList: React.FC<{ selectedRoles: number[] }> = ({ selectedRoles }) => {
+const TeamList: React.FC<{ selectedSkillsets: number[] }> = ({
+  selectedSkillsets,
+}) => {
   const url = new URL(`${import.meta.env.VITE_API_URL}/teams`);
-  const skillsetMask = selectedRoles.length
-    ? selectedRoles.reduce((a, b) => a + b, 0)
+  const skillsetMask = selectedSkillsets.length
+    ? selectedSkillsets.reduce((a, b) => a + b, 0)
     : null;
 
   if (skillsetMask) {
@@ -49,17 +51,17 @@ const TeamList: React.FC<{ selectedRoles: number[] }> = ({ selectedRoles }) => {
 };
 
 export const Home: React.FC = () => {
-  const [selectedRoles, setSelectedRoles] = useState<number[]>([]);
+  const [selectedSkillsets, setSelectedSkillsets] = useState<number[]>([]);
 
   return (
     <PageContainer>
       <PageHeader>Find a team!</PageHeader>
       <SkillsetSelector
-        selectedSkillsets={selectedRoles}
-        onChange={setSelectedRoles}
+        selectedSkillsets={selectedSkillsets}
+        onChange={setSelectedSkillsets}
         className="my-10"
       />
-      <TeamList selectedRoles={selectedRoles} />
+      <TeamList selectedSkillsets={selectedSkillsets} />
     </PageContainer>
   );
 };
