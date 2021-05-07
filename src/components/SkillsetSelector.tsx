@@ -20,11 +20,16 @@ export const SkillsetSelector: React.FC<Props> = ({
   };
 
   return (
-    <div className={classnames("flex space-x-2", className)}>
+    <div
+      className={classnames(
+        "flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 min-w-max",
+        className
+      )}
+    >
       {allRoles.map((r) => {
         const color = selectedSkillsets.includes(r.id)
           ? "fill-primary transition-none"
-          : "fill-white opacity-50 hover:opacity-100 transition";
+          : "fill-white opacity-50 group-hover:opacity-100 transition";
 
         return (
           <div
@@ -32,12 +37,15 @@ export const SkillsetSelector: React.FC<Props> = ({
             key={r.id}
             onClick={() => toggleSelected(r.id)}
             className={
-              "text-center leading-tight break-words align-top cursor-pointer flex-1 w-0"
+              "group items-center flex flex-row sm:block sm:text-center leading-tight sm:break-words align-top cursor-pointer sm:flex-1 sm:w-0"
             }
           >
             <RoleSVG
               roleId={r.id}
-              className={classnames("mb-2 p-2 border-2 rounded", color)}
+              className={classnames(
+                "mr-2 sm:mr-0 sm:mb-2 p-2 border-2 rounded w-12 sm:w-auto",
+                color
+              )}
             />
             <span>{r.name}</span>
           </div>
