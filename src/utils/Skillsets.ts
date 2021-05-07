@@ -1,4 +1,4 @@
-export interface Role {
+export interface Skillset {
   /**
    * Bitwise ID (read: power of two) that can uniquely
    * identify this specific role from all roles stored as aggregate bitwise int
@@ -7,22 +7,24 @@ export interface Role {
   name: string;
 }
 
-export const roles: Role[] = [
-  {id: 1, name: "2D Art"},
-  {id: 2, name: "3D Art"},
-  {id: 4, name: "Code"},
-  {id: 8, name: "Design/\nProduction"},
-  {id: 16, name: "Sound/\nMusic"},
-  {id: 32, name: "Testing/\nSupport"},
-  {id: 64, name: "Other"},
+export const skillsets: Skillset[] = [
+  { id: 1, name: "2D Art" },
+  { id: 2, name: "3D Art" },
+  { id: 4, name: "Code" },
+  { id: 8, name: "Design/\nProduction" },
+  { id: 16, name: "Sound/\nMusic" },
+  { id: 32, name: "Testing/\nSupport" },
+  { id: 64, name: "Other" },
 ];
 
 /**
  * Get all roles for a given Role ID (as an combined view of all roles, by the sum of the IDs)
  */
-export const getRoles = (bitwiseRoleId: number): Role[] => {
-  return roles.filter(role => roleIsInBitwiseRoleId(bitwiseRoleId, role.id));
-}
+export const getSkillsets = (bitwiseSkillsetId: number): Skillset[] => {
+  return skillsets.filter((role) =>
+    roleIsInBitwiseSkillsetMask(bitwiseSkillsetId, role.id)
+  );
+};
 
 /**
  * Does the aggregated collection of all roles contain the given role ID?
@@ -35,6 +37,9 @@ export const getRoles = (bitwiseRoleId: number): Role[] => {
  * an AND operation on the two numbers when represented as binary; if the resulting
  * value of the AND is the roleId we passed in, then that bitwiseRoleId contains that role.
  */
-const roleIsInBitwiseRoleId = (bitwiseRoleId: number, roleId: number): boolean => {
+const roleIsInBitwiseSkillsetMask = (
+  bitwiseRoleId: number,
+  roleId: number
+): boolean => {
   return (bitwiseRoleId & roleId) == roleId;
-}
+};

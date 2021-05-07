@@ -1,20 +1,20 @@
 import * as React from "react";
-import { NestedValue, useForm } from "react-hook-form";
-import classNames from "classnames";
-import immer from "immer";
+import { Controller, NestedValue, useForm } from "react-hook-form";
+import classnames from "classnames";
 import { useMutation } from "react-query";
 import { Button } from "../../components/Button";
 import { PageContainer } from "../../components/PageContainer";
 import { PageHeader } from "../../components/PageHeader";
 import { PageNavigator } from "../../components/PageNavigator";
-import { roles } from "../../utils/Roles";
+import { skillsets } from "../../utils/Skillsets";
 import { useHistory } from "react-router";
-import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom";
+import { SkillsetSelector } from "../../components/SkillsetSelector";
+import { NavLink } from "react-router-dom";
 
 
 interface FormData {
   description: string;
-  skillsets: NestedValue<Record<number, boolean>>;
+  skillsets: NestedValue<number[]>;
 }
 
 interface TeamDto {
@@ -27,7 +27,7 @@ const teamFromForm = (formData: FormData): TeamDto => {
   return {
     author: "Definitely Guitar Kid#4264",
     description: formData.description,
-    skillsetMask: 0,
+    skillsetMask: formData.skillsets.reduce((a, b) => a + b, 0),
   };
 };
 
@@ -67,45 +67,22 @@ export const Register: React.FC = () => {
     }
   );
 
-  const {
-    register,
-    formState,
-    handleSubmit,
-    setValue,
-    watch,
-  } = useForm<FormData>({
+  const { register, formState, handleSubmit, control } = useForm<FormData>({
     defaultValues: {
       description: "",
-      skillsets: {},
+      skillsets: [],
     },
   });
 
   React.useEffect(() => {
     register("skillsets", {
       validate: (value) => {
-        if (Object.keys(value).length === 0) {
+        if (value.length === 0) {
           return "Required";
         }
       },
     });
   }, [register]);
-
-  const skillsets = watch("skillsets");
-
-  const toggleSkillset = (id: number) =>
-    setValue(
-      "skillsets",
-      immer(skillsets, (prev) => {
-        if (prev[id]) {
-          delete prev[id];
-        } else {
-          prev[id] = true;
-        }
-      }),
-      {
-        shouldValidate: true,
-      }
-    );
 
   return (
     <PageContainer>
@@ -113,30 +90,25 @@ export const Register: React.FC = () => {
       <PageNavigator/>
       <PageHeader>Register a Team</PageHeader>
       <form
-        className="max-w-prose mx-auto space-y-4"
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        className="max-w-prose mx-auto space-y-8"
         onSubmit={handleSubmit((data) => mutate(data))}
       >
         <div className="space-y-2">
-          <label className="text-lg block">
+          <label
+            className={classnames(
+              "text-lg block",
+              formState.errors.skillsets && "text-red-400"
+            )}
+          >
             What skillsets are you looking for from team members?
           </label>
-          <p className="text-xs">
-            TODO: use Guitar&rsquo;s much nicer-looking selection UI!
-          </p>
-          <div>
-            {roles.map((role) => (
-              <label key={role.id} className="block">
-                <input
-                  type="checkbox"
-                  className="mr-1"
-                  onChange={() => toggleSkillset(role.id)}
-                  checked={Boolean(skillsets[role.id])}
-                />
-                {role.name}
-              </label>
-            ))}
-          </div>
+          <Controller
+            control={control}
+            name="skillsets"
+            render={({ field: { value, onChange } }) => (
+              <SkillsetSelector selectedSkillsets={value} onChange={onChange} />
+            )}
+          />
           {formState.errors.skillsets && (
             <div className="text-red-400">
               {formState.errors.skillsets?.message}
@@ -144,11 +116,17 @@ export const Register: React.FC = () => {
           )}
         </div>
         <div className="space-y-2">
-          <label className="text-lg block" htmlFor="description">
+          <label
+            className={classnames(
+              "text-lg block",
+              formState.errors.description && "text-red-400"
+            )}
+            htmlFor="description"
+          >
             Tell us a bit about yourself and the team you&rsquo;d like to see!
           </label>
           <textarea
-            className={classNames(
+            className={classnames(
               "text-md bg-transparent border  px-4 py-2 block w-full placeholder-white placeholder-opacity-40 h-40",
               formState.errors.description
                 ? "border-red-400 focus:border-red-500"
