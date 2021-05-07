@@ -57,6 +57,7 @@ export const Home: React.FC = () => {
       <SkillsetSelector
         selectedSkillsets={selectedRoles}
         onChange={setSelectedRoles}
+        className="my-10"
       />
       <TeamList selectedRoles={selectedRoles} />
     </PageContainer>

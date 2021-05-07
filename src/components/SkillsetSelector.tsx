@@ -1,14 +1,17 @@
 import * as React from "react";
+import classnames from "classnames";
 import { roles as allRoles } from "../utils/Roles";
 import { RoleSVG } from "./RoleSVG";
 
 interface Props {
   selectedSkillsets: number[];
   onChange: (newValue: number[]) => void;
+  className?: string;
 }
 export const SkillsetSelector: React.FC<Props> = ({
   selectedSkillsets,
   onChange,
+  className,
 }) => {
   const toggleSelected = (roleId: number) => {
     if (selectedSkillsets.includes(roleId))
@@ -17,11 +20,11 @@ export const SkillsetSelector: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex justify-between my-10">
+    <div className={classnames("flex space-x-2", className)}>
       {allRoles.map((r) => {
         const color = selectedSkillsets.includes(r.id)
-          ? "fill-primary"
-          : "fill-white opacity-50 hover:opacity-100";
+          ? "fill-primary transition-none"
+          : "fill-white opacity-50 hover:opacity-100 transition";
 
         return (
           <div
@@ -29,14 +32,14 @@ export const SkillsetSelector: React.FC<Props> = ({
             key={r.id}
             onClick={() => toggleSelected(r.id)}
             className={
-              "text-center leading-tight align-top cursor-pointer w-21"
+              "text-center leading-tight break-words align-top cursor-pointer flex-1 w-0"
             }
           >
             <RoleSVG
               roleId={r.id}
-              className={"mb-2 p-2 border-2 rounded transition " + color}
+              className={classnames("mb-2 p-2 border-2 rounded", color)}
             />
-            {r.name}
+            <span>{r.name}</span>
           </div>
         );
       })}
