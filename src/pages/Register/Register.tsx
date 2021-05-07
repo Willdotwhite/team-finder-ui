@@ -9,6 +9,8 @@ import { PageHeader } from "../../components/PageHeader";
 import { PageNavigator } from "../../components/PageNavigator";
 import { roles } from "../../utils/Roles";
 import { useHistory } from "react-router";
+import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom";
+
 
 interface FormData {
   description: string;
@@ -107,7 +109,7 @@ export const Register: React.FC = () => {
 
   return (
     <PageContainer>
-      <img className="mt-2" src={"MainLogoSmall.png"}></img>
+      <NavLink to="/"><img className="mt-2" src={"MainLogoSmall.png"}></img></NavLink>
       <PageNavigator/>
       <PageHeader>Register a Team</PageHeader>
       <form

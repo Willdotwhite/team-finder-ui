@@ -7,6 +7,8 @@ import { PageNavigator } from "../../components/PageNavigator";
 import { TeamData, Team } from "../../components/Team"
 import { RoleSVG } from "../../components/RoleSVG"
 import { roles } from "../../utils/Roles";
+import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom";
+
 
 
 type RFProps = {
@@ -63,7 +65,7 @@ export const Home: React.FC = () => {
 
   return (
     <PageContainer>
-      <img className="my-2" src={"MainLogo.png"}></img>
+      <NavLink to="/"> <img className="my-2" src={"MainLogo.png"}></img></NavLink>
       <PageUserInfo/>
       <PageNavigator/>
       <PageHeader>
