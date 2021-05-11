@@ -22,7 +22,7 @@ export const SkillsetSelector: React.FC<Props> = ({
   return (
     <div
       className={classnames(
-        "flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 min-w-max",
+        "flex flex-col justify-center sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 min-w-max",
         className
       )}
     >
@@ -39,6 +39,7 @@ export const SkillsetSelector: React.FC<Props> = ({
             className={
               "group items-center flex flex-row sm:block sm:text-center leading-tight sm:break-words align-top cursor-pointer sm:flex-1 sm:w-0"
             }
+            style={{maxWidth: 80}}
           >
             <SkillsetSVG
               skillsetId={s.id}

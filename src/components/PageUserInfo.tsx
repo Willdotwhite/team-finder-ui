@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom"
 export const PageUserInfo: React.FC = () => (
   <div className="text-center">
     {/* Profile UI, placeholder data */}
-    <div className="inline-flex flex-row justify-center items-center mt-5 p-6 border">
+    <div className="inline-flex flex-row justify-center items-center p-5 border">
       <img style={{height: "90px", width: "90px"}} className="object-cover rounded-full ring-4 ring-primary" src={"TestUser.jpg"}></img>
       <div className="flex flex-col justify-center">
         <div className="flex flex-row mb-2">

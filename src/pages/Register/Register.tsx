@@ -88,7 +88,6 @@ export const Register: React.FC = () => {
     <PageContainer>
       <NavLink to="/"><img className="mt-2" src={"MainLogoSmall.png"}></img></NavLink>
       <PageNavigator/>
-      <PageHeader>Register a Team</PageHeader>
       <form
         className="max-w-prose mx-auto space-y-8"
         onSubmit={handleSubmit((data) => mutate(data))}
