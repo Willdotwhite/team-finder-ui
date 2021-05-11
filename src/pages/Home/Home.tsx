@@ -85,11 +85,14 @@ export const Home: React.FC = () => {
       <NavLink to="/">
         <div className="text-center">
           {/* TODO: Resize and optimise this image before launch */}
-          <img className="inline-block my-2" src="MainLogo.png" alt="GMTK Game Jam 2021 - Team Finder" style={{height: "100px"}} />
+          <img className="inline-block my-6" src="MainLogo100px.png" alt="GMTK Game Jam 2021 - Team Finder"/>
         </div>
       </NavLink>
       <PageUserInfo/>
       <PageNavigator/>
+      <PageHeader>
+        Find teams looking for:
+      </PageHeader>
       <SkillsetSelector
         selectedSkillsets={selectedSkillsets}
         onChange={setSelectedSkillsets}
