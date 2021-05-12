@@ -25,22 +25,28 @@ interface TeamDto {
 }
 
 const teamFromForm = (formData: FormData): TeamDto => {
+  // TODO: We can parse the Auth token and pull this data out on the API when token handling is properly introduced
+  const userData = JSON.parse(localStorage.getItem("userData") as string);
+
   return {
-    author: "Definitely Guitar Kid#4264",
+    author: userData.username!,
     description: formData.description,
     skillsetMask: formData.skillsets.reduce((a, b) => a + b, 0),
   };
 };
-
 const postTeam = async (teamDto: TeamDto): Promise<TeamDto> => {
+  const token = localStorage.getItem("token");
+
   const response = await fetch(`${import.meta.env.VITE_API_URL}/teams`, {
     method: "POST",
     mode: "cors",
     headers: {
+      "Authorization": "Bearer " + token,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(teamDto),
   });
+
   if (!response.ok) {
     throw new Error(
       `${response.status} ${response.statusText}: ${await response.text()}`
