@@ -32,14 +32,18 @@ const teamFromForm = (formData: FormData): TeamDto => {
 };
 
 const postTeam = async (teamDto: TeamDto): Promise<TeamDto> => {
+  const token = localStorage.getItem("token");
+
   const response = await fetch(`${import.meta.env.VITE_API_URL}/teams`, {
     method: "POST",
     mode: "cors",
     headers: {
+      "Authorization": "Bearer " + token,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(teamDto),
   });
+
   if (!response.ok) {
     throw new Error(
       `${response.status} ${response.statusText}: ${await response.text()}`
