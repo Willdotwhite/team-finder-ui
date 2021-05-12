@@ -1,6 +1,6 @@
 import * as React from "react";
 import { NavLink } from "react-router-dom";
-import {UserInfo} from "./UserInfo";
+import { UserInfo } from "./UserInfo";
 
 
 let userIsLoggedIn = false;
@@ -32,7 +32,7 @@ const LoggedInUserInfoPanel: React.FC<UserInfo> = ({avatar, username}) => (
         <h1 className="text-white font-bold text-lg text-left mx-6">
           {username}
         </h1>
-        <NavLink to="/" className="text-white text-right ml-6 hover:underline hover:cursor-pointer">Log Out</NavLink>
+        <NavLink to="/logout" className="text-white text-right ml-6 hover:underline hover:cursor-pointer">Log Out</NavLink>
       </div>
       <h1 className="text-white text-center mx-6">Team Status:</h1>
       <h1 className="text-white text-center mx-6">No Team Registered</h1>
