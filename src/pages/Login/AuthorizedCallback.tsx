@@ -33,10 +33,8 @@ export const AuthorizedCallback: React.FC = () => {
     localStorage.setItem("token", token)
     localStorage.setItem("userData", JSON.stringify(userInfo))
 
-    return (
-        <PageContainer>
-            <PageHeader>Authorization Successful</PageHeader>
-            <div>We made it!</div>
-        </PageContainer>
-    )
+    // Redirect to homepage, we don't need to stay here!
+    window.location.replace("/");
+
+    return (<></>)
 }

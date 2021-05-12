@@ -42,7 +42,7 @@ const LoggedInUserInfoPanel: React.FC<UserInfo> = ({avatar, username}) => (
 
 const LoggedOutUserInfoPanel: React.FC = () => (
   <>
-    <NavLink to="/login" className="inline-block text-white text-3xl mt-8 mb-2 w-auto hover:underline">Log In{"\n"}</NavLink>
+    <a href={`${import.meta.env.VITE_API_URL}/oauth2/authorization/discord`} className="inline-block text-white text-3xl mt-8 mb-2 w-auto hover:underline">Log In{"\n"}With Discord</a>
     <div className="text-white">if you want to register a Team</div>
   </>
 )
