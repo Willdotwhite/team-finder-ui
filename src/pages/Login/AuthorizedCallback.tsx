@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 import { PageContainer } from "../../components/PageContainer";
 import { PageHeader } from "../../components/PageHeader";
 import { useLocation } from "react-router-dom";
-import {UserInfo} from "../../components/UserInfo";
+import { UserInfo } from "../../components/UserInfo";
 
 export const AuthorizedCallback: React.FC = () => {
     const query = new URLSearchParams(useLocation().search)
@@ -33,10 +33,8 @@ export const AuthorizedCallback: React.FC = () => {
     localStorage.setItem("token", token)
     localStorage.setItem("userData", JSON.stringify(userInfo))
 
-    return (
-        <PageContainer>
-            <PageHeader>Authorization Successful</PageHeader>
-            <div>We made it!</div>
-        </PageContainer>
-    )
+    // Redirect to homepage, we don't need to stay here!
+    window.location.replace("/");
+
+    return null
 }
