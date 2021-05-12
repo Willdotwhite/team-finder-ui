@@ -6,6 +6,7 @@ import { Button } from "../../components/Button";
 import { PageContainer } from "../../components/PageContainer";
 import { PageHeader } from "../../components/PageHeader";
 import { PageNavigator } from "../../components/PageNavigator";
+import { PageUserInfo } from "../../components/PageUserInfo";
 import { skillsets } from "../../utils/Skillsets";
 import { useHistory } from "react-router";
 import { SkillsetSelector } from "../../components/SkillsetSelector";
@@ -86,9 +87,13 @@ export const Register: React.FC = () => {
 
   return (
     <PageContainer>
-      <NavLink to="/"><img className="mt-2" src={"MainLogoSmall.png"}></img></NavLink>
+      <NavLink to="/">
+        <div className="text-center">
+          <img className="my-6 inline-block" src={"MainLogo100px.png"} alt="GMTK Game Jam 2021 - Team Finder"></img>
+        </div>
+      </NavLink>
+      <PageUserInfo/>
       <PageNavigator/>
-      <PageHeader>Register a Team</PageHeader>
       <form
         className="max-w-prose mx-auto space-y-8"
         onSubmit={handleSubmit((data) => mutate(data))}

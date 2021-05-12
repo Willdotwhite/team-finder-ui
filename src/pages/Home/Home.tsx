@@ -20,7 +20,7 @@ const RoleFilter: React.FC<RFProps> = ({roleState:[selected, setSelected]}) => {
     else setSelected( [...selected, roleId] );
   }
 
-  return <div className="flex justify-between my-10">{
+  return <div className="flex justify-between">{
     skillsets.map(r => {
       const color = selected.includes(r.id) ? "fill-white border-primary" : "fill-white opacity-50 hover:opacity-100";
 
@@ -82,14 +82,20 @@ export const Home: React.FC = () => {
 
   return (
     <PageContainer>
-      <NavLink to="/"> <img className="my-2" src={"MainLogo.png"}></img></NavLink>
+      <NavLink to="/">
+        <div className="text-center">
+          {/* TODO: Resize and optimise this image before launch */}
+          <img className="inline-block my-6" src="MainLogo100px.png" alt="GMTK Game Jam 2021 - Team Finder"/>
+        </div>
+      </NavLink>
       <PageUserInfo/>
       <PageNavigator/>
-      <PageHeader>Find a team!</PageHeader>
+      <PageHeader>
+        Find teams looking for:
+      </PageHeader>
       <SkillsetSelector
         selectedSkillsets={selectedSkillsets}
         onChange={setSelectedSkillsets}
-        className="my-10"
       />
       <TeamList selectedSkillsets={selectedSkillsets} />
     </PageContainer>
