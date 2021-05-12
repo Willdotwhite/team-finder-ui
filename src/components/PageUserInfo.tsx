@@ -25,7 +25,7 @@ export const PageUserInfo: React.FC = () => (
 );
 
 const LoggedInUserInfoPanel: React.FC<UserInfo> = ({avatar, username}) => (
-  <div className="inline-flex flex-row justify-center items-center mt-5 p-6 border">
+  <div className="inline-flex flex-row justify-center items-center p-6 border">
     <img style={{height: "90px", width: "90px"}} className="object-cover rounded-full ring-4 ring-primary" src={avatar} />
     <div className="flex flex-col justify-center">
       <div className="flex flex-row mb-2">
