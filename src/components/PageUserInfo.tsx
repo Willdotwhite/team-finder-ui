@@ -8,7 +8,7 @@ let userInfo: UserInfo = {avatar: undefined, username: undefined};
 
 // TODO: Handle data not present/malformed
 export function CheckSimpleLogin() {
-  let storedUserData = localStorage.getItem("userData");
+  const storedUserData = localStorage.getItem("userData");
   if (storedUserData != null) {
     userInfo = JSON.parse(storedUserData)
     userIsLoggedIn = true;
