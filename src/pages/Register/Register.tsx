@@ -132,9 +132,9 @@ export const Register: React.FC = () => {
                 <SkillsetSelector selectedSkillsets={value} onChange={onChange} />
               )}
             />
-            {formState.errors.skillsets && (
+            {formState && formState.errors && formState.errors.skillsets && (
               <div className="text-red-400">
-                {formState.errors.skillsets?.message}
+                {formState.errors.skillsets.message}
               </div>
             )}
           </div>
