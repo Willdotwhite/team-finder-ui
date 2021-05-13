@@ -27,9 +27,6 @@ export const AuthorizedCallback: React.FC = () => {
       avatar:   rawUserData.aud as string,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      id:       rawUserData.id as string,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       username: rawUserData.sub as string
     };
 
