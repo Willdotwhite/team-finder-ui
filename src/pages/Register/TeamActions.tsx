@@ -1,11 +1,31 @@
 import {FormData} from "./Register";
-import {getUserInfo, UserInfo} from "../../components/UserInfo";
 
 interface TeamDto {
   description: string;
   skillsetMask: number;
 }
 
+
+export const createTeam = async (formData: FormData): Promise<TeamDto> => {
+  return makeApiRequest("/teams", "POST", teamFromForm(formData));
+};
+
+export const getTeam = async (): Promise<TeamDto> => {
+  return makeApiRequest("/teams/mine", "GET", {});
+};
+
+export const updateTeam = async (formData: FormData): Promise<TeamDto> => {
+  return makeApiRequest("/teams/mine", "PUT", teamFromForm(formData));
+};
+
+export const deleteTeam = async (): Promise<TeamDto> => {
+  return makeApiRequest("/teams/mine", "DELETE", {});
+};
+
+/**
+ * Convert FormData to the format needed to create/update a Team record
+ * @param formData
+ */
 const teamFromForm = (formData: FormData): TeamDto => {
   return {
     description: formData.description,
@@ -13,18 +33,33 @@ const teamFromForm = (formData: FormData): TeamDto => {
   };
 };
 
-export const createTeam = async (formData: FormData): Promise<TeamDto> => {
+/**
+ * Horrific general API request method
+ * @param path
+ * @param method
+ * @param body
+ */
+const makeApiRequest = async (path: string, method: string, body: object) => {
   const token = localStorage.getItem("token");
 
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/teams`, {
-    method: "POST",
+  const options = {
+    method: method,
     mode: "cors",
     headers: {
       "Authorization": "Bearer " + token,
       "Content-Type": "application/json",
-    },
-    body: JSON.stringify(teamFromForm(formData)),
-  });
+    }
+  };
+  
+  if (body) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    options['body'] = JSON.stringify(body);
+  }
+  
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/${path}`, options);
 
   if (!response.ok) {
     throw new Error(
@@ -32,49 +67,4 @@ export const createTeam = async (formData: FormData): Promise<TeamDto> => {
     );
   }
   return await response.json();
-};
-
-
-export const updateTeam = async (formData: FormData): Promise<TeamDto> => {
-  const token = localStorage.getItem("token");
-  const userInfo = getUserInfo()
-
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/teams/${userInfo.id}`, {
-    method: "PUT",
-    mode: "cors",
-    headers: {
-      "Authorization": "Bearer " + token,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(teamFromForm(formData)),
-  });
-
-  if (!response.ok) {
-    throw new Error(
-      `${response.status} ${response.statusText}: ${await response.text()}`
-    );
-  }
-  return await response.json();
-};
-
-
-export const deleteTeam = async (): Promise<TeamDto> => {
-  const token = localStorage.getItem("token");
-  const userInfo = getUserInfo()
-
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/teams/${userInfo.id}`, {
-    method: "DELETE",
-    mode: "cors",
-    headers: {
-      "Authorization": "Bearer " + token,
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(
-      `${response.status} ${response.statusText}: ${await response.text()}`
-    );
-  }
-  return await response.json();
-};
+}
