@@ -6,7 +6,7 @@ import { Button } from "../../components/Button";
 import { PageContainer } from "../../components/PageContainer";
 import { PageHeader } from "../../components/PageHeader";
 import { PageNavigator } from "../../components/PageNavigator";
-import { CheckSimpleLogin, PageUserInfo } from "../../components/PageUserInfo";
+import { IsUserLoggedIn, PageUserInfo } from "../../components/PageUserInfo";
 import { skillsets } from "../../utils/Skillsets";
 import { useHistory } from "react-router";
 import { SkillsetSelector } from "../../components/SkillsetSelector";
@@ -92,7 +92,7 @@ export const Register: React.FC = () => {
   }, [register]);
 
 
-  if (!CheckSimpleLogin()) {
+  if (!IsUserLoggedIn()) {
     window.location.replace(`${import.meta.env.VITE_API_URL}/oauth2/authorization/discord`);
 
     return(
@@ -100,7 +100,7 @@ export const Register: React.FC = () => {
         <div className="my-6 text-center text-white text-3xl">Redirecting to login...</div>
       </PageContainer>
     );
-    
+
   } else {
 
     return (

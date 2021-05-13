@@ -3,22 +3,20 @@ import { NavLink } from "react-router-dom";
 import { UserInfo } from "./UserInfo";
 
 
-let userIsLoggedIn = false;
 let userInfo: UserInfo = {avatar: undefined, username: undefined};
+let storedUserData = null;
+
 
 // TODO: Handle data not present/malformed
-export function CheckSimpleLogin() {
-  const storedUserData = localStorage.getItem("userData");
-  if (storedUserData != null) {
-    userInfo = JSON.parse(storedUserData)
-    userIsLoggedIn = true;
-  }
-  return (userIsLoggedIn);
+export function IsUserLoggedIn() {
+  return (localStorage.getItem("userData") != null);
 }
 
 export const PageUserInfo: React.FC = () => (
   <div className="text-center">
-    { userIsLoggedIn ? (
+    { IsUserLoggedIn() ? (
+        storedUserData = localStorage.getItem("userData"),
+        userInfo = JSON.parse(storedUserData || '{}'),
         <LoggedInUserInfoPanel avatar={userInfo.avatar} username={userInfo.username} />
       ) : (
         <LoggedOutUserInfoPanel />
