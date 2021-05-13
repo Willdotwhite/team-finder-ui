@@ -6,7 +6,7 @@ import { Button } from "../../components/Button";
 import { PageContainer } from "../../components/PageContainer";
 import { PageHeader } from "../../components/PageHeader";
 import { PageNavigator } from "../../components/PageNavigator";
-import { IsUserLoggedIn, PageUserInfo } from "../../components/PageUserInfo";
+import { isUserLoggedIn, PageUserInfo } from "../../components/PageUserInfo";
 import { skillsets } from "../../utils/Skillsets";
 import { useHistory } from "react-router";
 import { SkillsetSelector } from "../../components/SkillsetSelector";
@@ -92,7 +92,7 @@ export const Register: React.FC = () => {
   }, [register]);
 
 
-  if (!IsUserLoggedIn()) {
+  if (!isUserLoggedIn()) {
     window.location.replace(`${import.meta.env.VITE_API_URL}/oauth2/authorization/discord`);
 
     return(

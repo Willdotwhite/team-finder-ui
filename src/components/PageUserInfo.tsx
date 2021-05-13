@@ -8,13 +8,13 @@ let storedUserData = null;
 
 
 // TODO: Handle data not present/malformed
-export function IsUserLoggedIn() {
+export function isUserLoggedIn() {
   return (localStorage.getItem("userData") != null);
 }
 
 export const PageUserInfo: React.FC = () => (
   <div className="text-center">
-    { IsUserLoggedIn() ? (
+    { isUserLoggedIn() ? (
         storedUserData = localStorage.getItem("userData"),
         userInfo = JSON.parse(storedUserData || '{}'),
         <LoggedInUserInfoPanel avatar={userInfo.avatar} username={userInfo.username} />
