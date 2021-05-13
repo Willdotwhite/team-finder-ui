@@ -11,7 +11,7 @@ export const createTeam = async (formData: FormData): Promise<TeamDto> => {
 };
 
 export const getTeam = async (): Promise<TeamDto> => {
-  return makeApiRequest("/teams/mine", "GET", {});
+  return makeApiRequest("/teams/mine", "GET");
 };
 
 export const updateTeam = async (formData: FormData): Promise<TeamDto> => {
@@ -19,7 +19,7 @@ export const updateTeam = async (formData: FormData): Promise<TeamDto> => {
 };
 
 export const deleteTeam = async (): Promise<TeamDto> => {
-  return makeApiRequest("/teams/mine", "DELETE", {});
+  return makeApiRequest("/teams/mine", "DELETE");
 };
 
 /**
@@ -39,7 +39,7 @@ const teamFromForm = (formData: FormData): TeamDto => {
  * @param method
  * @param body
  */
-const makeApiRequest = async (path: string, method: string, body: Record<string, unknown>) => {
+const makeApiRequest = async (path: string, method: string, body: TeamDto | undefined = undefined) => {
   const token = localStorage.getItem("token");
 
   const options = {
