@@ -4,64 +4,26 @@ import classnames from "classnames";
 import { useMutation } from "react-query";
 import { Button } from "../../components/Button";
 import { PageContainer } from "../../components/PageContainer";
-import { PageHeader } from "../../components/PageHeader";
 import { PageNavigator } from "../../components/PageNavigator";
 import { PageUserInfo } from "../../components/PageUserInfo";
 import { skillsets } from "../../utils/Skillsets";
 import { useHistory } from "react-router";
 import { SkillsetSelector } from "../../components/SkillsetSelector";
 import { NavLink } from "react-router-dom";
+import {createTeam} from "./TeamActions";
 
 
-interface FormData {
+export interface FormData {
   description: string;
   skillsets: NestedValue<number[]>;
 }
-
-interface TeamDto {
-  author: string;
-  description: string;
-  skillsetMask: number;
-}
-
-const teamFromForm = (formData: FormData): TeamDto => {
-  // TODO: We can parse the Auth token and pull this data out on the API when token handling is properly introduced
-  const userData = JSON.parse(localStorage.getItem("userData") as string);
-
-  return {
-    author: userData.username!,
-    description: formData.description,
-    skillsetMask: formData.skillsets.reduce((a, b) => a + b, 0),
-  };
-};
-const postTeam = async (teamDto: TeamDto): Promise<TeamDto> => {
-  const token = localStorage.getItem("token");
-
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/teams`, {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      "Authorization": "Bearer " + token,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(teamDto),
-  });
-
-  if (!response.ok) {
-    throw new Error(
-      `${response.status} ${response.statusText}: ${await response.text()}`
-    );
-  }
-  return await response.json();
-};
 
 export const Register: React.FC = () => {
   const history = useHistory();
 
   const { mutate, error, isLoading } = useMutation(
     async (formData: FormData) => {
-      const team = teamFromForm(formData);
-      return postTeam(team);
+      return createTeam(formData);
     },
     {
       onSuccess: () => {
