@@ -20,7 +20,14 @@ export class TeamData {
   constructor(teamJSON: Record<string, unknown>){
     this.author = teamJSON.author as string;
     this.description = teamJSON.description as string;
-    this.createdAt = new Date(teamJSON.createdAt as string);
+
+    const createdAt = teamJSON.createdAt as string;
+    this.createdAt = new Date(createdAt);
+    // Safari can't handle YYYY-mm-dd HH:MM:ss, but it _can_ handle YYYY-mm-ddTHH:MM:ss
+    if (isNaN(this.createdAt.getTime())) {
+      this.createdAt = new Date(createdAt.replace(" ", "T"))
+    }
+
     this.skills = getSkillsets(teamJSON.skillsetMask as number);
     this.id = teamJSON.id as number;
   }
