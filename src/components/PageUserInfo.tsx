@@ -7,10 +7,13 @@ let userIsLoggedIn = false;
 let userInfo: UserInfo = {avatar: undefined, username: undefined};
 
 // TODO: Handle data not present/malformed
-const storedUserData = localStorage.getItem("userData");
-if (storedUserData != null) {
-  userInfo = JSON.parse(storedUserData)
-  userIsLoggedIn = true;
+export function CheckSimpleLogin() {
+  var storedUserData = localStorage.getItem("userData");
+  if (storedUserData != null) {
+    userInfo = JSON.parse(storedUserData)
+    userIsLoggedIn = true;
+  }
+  return (userIsLoggedIn);
 }
 
 export const PageUserInfo: React.FC = () => (
