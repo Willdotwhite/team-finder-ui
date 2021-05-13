@@ -133,7 +133,6 @@ export const Register: React.FC = () => {
                 : "border-white focus:border-primary"
             )}
             maxlength = "210"
-            pattern = "[a-zA-Z0-9-_.,!@#$%&* ]{1,210}"
             placeholder="Hi, I'm Mark! I've been learning Unity for about a year, but this is my first jam. I like level design, and I can do a bit of programming too! I like platformers and games that make it feel good to move around. I'd love to pair up with an artist and maybe a programmer."
             id="description"
             {...register("description", { required: "Required" })}
