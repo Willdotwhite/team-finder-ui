@@ -39,7 +39,7 @@ const teamFromForm = (formData: FormData): TeamDto => {
  * @param method
  * @param body
  */
-const makeApiRequest = async (path: string, method: string, body: object) => {
+const makeApiRequest = async (path: string, method: string, body: Record<string, unknown>) => {
   const token = localStorage.getItem("token");
 
   const options = {
