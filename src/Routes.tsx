@@ -5,6 +5,7 @@ import { Register } from "./pages/Register/Register";
 import { Login } from "./pages/Login/Login"
 import { Logout } from "./pages/Login/Logout"
 import { AuthorizedCallback } from "./pages/Login/AuthorizedCallback";
+import { NotFound } from "./pages/Errors/NotFound";
 
 export const Routes: React.FC = () => (
   <Switch>
@@ -24,6 +25,11 @@ export const Routes: React.FC = () => (
     </Route>
     <Route exact={true} path="/login/authorized">
       <AuthorizedCallback />
+    </Route>
+
+    {/* This always lives at the bottom of the list */}
+    <Route path="/*">
+      <NotFound />
     </Route>
   </Switch>
 );
