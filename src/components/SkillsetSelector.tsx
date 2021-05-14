@@ -1,5 +1,4 @@
 import * as React from "react";
-import classnames from "classnames";
 import { skillsets as allSkillsets } from "../utils/Skillsets";
 import { SkillsetSVG } from "./SkillsetSVG";
 
@@ -11,7 +10,7 @@ interface Props {
 export const SkillsetSelector: React.FC<Props> = ({
   selectedSkillsets,
   onChange,
-  className,
+  className = "",
 }) => {
   const toggleSelected = (skillId: number) => {
     if (selectedSkillsets.includes(skillId))
@@ -21,10 +20,10 @@ export const SkillsetSelector: React.FC<Props> = ({
 
   return (
     <div
-      className={classnames(
-        "flex flex-col justify-center sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 min-w-max",
+      className={
+        "flex flex-col justify-center sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 min-w-max "+
         className
-      )}
+      }
     >
       {allSkillsets.map((s) => {
         const color = selectedSkillsets.includes(s.id)
@@ -43,10 +42,7 @@ export const SkillsetSelector: React.FC<Props> = ({
           >
             <SkillsetSVG
               skillsetId={s.id}
-              className={classnames(
-                "mr-2 sm:mr-0 sm:mb-2 p-2 border-2 rounded w-12 sm:w-auto",
-                color
-              )}
+              className={"mr-2 sm:mr-0 sm:mb-2 p-2 border-2 rounded w-12 sm:w-auto "+color}
             />
             <span>{s.name}</span>
           </div>

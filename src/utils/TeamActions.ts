@@ -1,24 +1,35 @@
-import {FormData} from "./Register";
+import {FormData} from "../pages/Register/Register";
 
 interface TeamDto {
   description: string;
   skillsetMask: number;
 }
 
+export const getAllTeams = (queryParams: Record<string, any>): Promise<Array<Record<string, unknown>>> => {
+  const url = new URL(`${import.meta.env.VITE_API_URL}/teams`);
 
-export const createTeam = async (formData: FormData): Promise<TeamDto> => {
+  for(let k in queryParams){
+    let v = queryParams[k];
+    if(queryParams.hasOwnProperty(k) && v != null && v != undefined)
+      url.searchParams.append(k, v.toString());
+  }
+
+  return fetch(url.toString(), {mode: "cors"}).then((res) => res.json());
+};
+
+export const createTeam = (formData: FormData): Promise<TeamDto> => {
   return makeApiRequest("/teams", "POST", teamFromForm(formData));
 };
 
-export const getTeam = async (): Promise<TeamDto> => {
+export const getTeam = (): Promise<TeamDto> => {
   return makeApiRequest("/teams/mine", "GET");
 };
 
-export const updateTeam = async (formData: FormData): Promise<TeamDto> => {
+export const updateTeam = (formData: FormData): Promise<TeamDto> => {
   return makeApiRequest("/teams/mine", "PUT", teamFromForm(formData));
 };
 
-export const deleteTeam = async (): Promise<TeamDto> => {
+export const deleteTeam = (): Promise<TeamDto> => {
   return makeApiRequest("/teams/mine", "DELETE");
 };
 
