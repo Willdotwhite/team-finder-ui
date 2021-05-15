@@ -1,6 +1,6 @@
 import {FormData} from "../pages/Register/Register";
 
-interface TeamDto {
+export interface TeamDto {
   description: string;
   skillsetMask: number;
 }
@@ -17,19 +17,19 @@ export const getAllTeams = (queryParams: Record<string, any>): Promise<Array<Rec
   return fetch(url.toString(), {mode: "cors"}).then((res) => res.json());
 };
 
-export const createTeam = (formData: FormData): Promise<TeamDto> => {
+export const createTeam = async (formData: FormData): Promise<Response> => {
   return makeApiRequest("/teams", "POST", teamFromForm(formData));
 };
 
-export const getTeam = (): Promise<TeamDto> => {
+export const getTeam = async (): Promise<Response> => {
   return makeApiRequest("/teams/mine", "GET");
 };
 
-export const updateTeam = (formData: FormData): Promise<TeamDto> => {
+export const updateTeam = async (formData: FormData): Promise<Response> => {
   return makeApiRequest("/teams/mine", "PUT", teamFromForm(formData));
 };
 
-export const deleteTeam = (): Promise<TeamDto> => {
+export const deleteTeam = async (): Promise<Response> => {
   return makeApiRequest("/teams/mine", "DELETE");
 };
 
@@ -70,12 +70,10 @@ const makeApiRequest = async (path: string, method: string, body: TeamDto | unde
   
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const response = await fetch(`${import.meta.env.VITE_API_URL}${path}`, options);
-
-  if (!response.ok) {
-    throw new Error(
-      `${response.status} ${response.statusText}: ${await response.text()}`
-    );
+  const res = await fetch(`${import.meta.env.VITE_API_URL}${path}`, options);
+  if(!res.ok) {
+    if(res.status == 401) window.location.replace(`${import.meta.env.VITE_API_URL}/oauth2/authorization/discord`);
+    else throw new Error(`${res.status} ${res.statusText}: ${await res.text()}`);
   }
-  return await response.json();
+  return res;
 }
