@@ -6,6 +6,7 @@ import { Login } from "./pages/Login/Login"
 import { Logout } from "./pages/Login/Logout"
 import { AuthorizedCallback } from "./pages/Login/AuthorizedCallback";
 import { NotFound } from "./pages/Errors/NotFound";
+import { LoginFailure } from "./pages/Errors/LoginFailure";
 
 export const Routes: React.FC = () => (
   <Switch>
@@ -22,6 +23,7 @@ export const Routes: React.FC = () => (
       <Logout />
     </Route>
     <Route exact={true} path="/login/failed">
+      <LoginFailure />
     </Route>
     <Route exact={true} path="/login/authorized">
       <AuthorizedCallback />
