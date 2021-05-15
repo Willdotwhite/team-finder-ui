@@ -3,7 +3,6 @@ import { Controller, NestedValue, useForm, useWatch } from "react-hook-form";
 import classnames from "classnames";
 import { useMutation, useQuery } from "react-query";
 import { Button } from "../../components/Button";
-import { isUserLoggedIn } from "../../components/PageUserInfo";
 import { SkillsetSelector } from "../../components/SkillsetSelector";
 import { createTeam, updateTeam, getTeam, deleteTeam, TeamDto } from "../../utils/TeamActions";
 import { getSkillsets } from "../../utils/Skillsets";
@@ -37,7 +36,7 @@ const RegisterForm: React.FC<{userTeam: TeamDto | null}> = ({userTeam}) => {
   const { status, data, mutate, error, isLoading } = useMutation(
     async (formData: FormData | null) => {
       // ensures a minimum of 200ms wait to ensure status bar transitions smoothly
-      let waitForBarAnim = new Promise(resolve => setTimeout(resolve, 200));
+      const waitForBarAnim = new Promise(resolve => setTimeout(resolve, 200));
 
       let rtn: string;
 
@@ -88,12 +87,12 @@ const RegisterForm: React.FC<{userTeam: TeamDto | null}> = ({userTeam}) => {
 
   // Counts how many characters are left for the description
   useWatch({control, name:"description"});
-  let charRemain = charLimit - getValues("description").length;
-  let remainColor = charRemain <= 0 ? "text-red-400" : "";
+  const charRemain = charLimit - getValues("description").length;
+  const remainColor = charRemain <= 0 ? "text-red-400" : "";
 
   // Configures the status bar's appearance
-  let statusBarBG = data ? "bg-primary-dark" : error ? "bg-red-500" : "bg-transparent border";
-  let statusBarMsg = match(data,
+  const statusBarBG = data ? "bg-primary-dark" : error ? "bg-red-500" : "bg-transparent border";
+  const statusBarMsg = match(data,
     ["create", "Team successfully created!"],
     ["update", "Team successfully updated!"],
     ["delete", "Team successfully deleted!"]
@@ -165,8 +164,8 @@ const RegisterForm: React.FC<{userTeam: TeamDto | null}> = ({userTeam}) => {
             <li>Your game dev/jam experience</li>
             <li>Your skills</li>
             <li>The type of games you like to make, or an idea you have for your jam game</li>
-            <li>How big you want your team, and if there's anybody you <em>really</em> need</li>
-            <li>If you're looking for a coder, make sure to mention what engine/language you're using!</li>
+            <li>How big you want your team, and if there&rsquo;s anybody you <em>really</em> need</li>
+            <li>If you&rsquo;re looking for a coder, make sure to mention what engine/language you&rsquo;re using!</li>
             <li>Anything else you&rsquo;d like a potential teammate to know!</li>
           </ul>
         </div>

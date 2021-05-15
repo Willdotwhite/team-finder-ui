@@ -8,7 +8,7 @@ let storedUserData = null;
 
 
 // TODO: Handle data not present/malformed
-export function isUserLoggedIn() {
+export function isUserLoggedIn(): boolean {
   return (localStorage.getItem("userData") != null);
 }
 
