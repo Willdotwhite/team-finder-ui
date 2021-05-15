@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Controller, NestedValue, useForm, useWatch } from "react-hook-form";
 import classnames from "classnames";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Button } from "../../components/Button";
 import { SkillsetSelector } from "../../components/SkillsetSelector";
 import {
@@ -27,6 +27,8 @@ type FormEvent = "create" | "update" | "delete" | "error";
 export const Register: React.FC = () => {
   const [lastFormEvent, setLastFormEvent] =
     React.useState<FormEvent | null>(null);
+
+  const queryClient = useQueryClient();
 
   const {
     data: userTeam,
@@ -54,6 +56,8 @@ export const Register: React.FC = () => {
     {
       onSuccess: (result, args) => {
         setLastFormEvent(args.userTeam ? "update" : "create");
+        queryClient.setQueryData<TeamDto | null>("userTeam", result);
+        queryClient.invalidateQueries(["Teams"], { exact: false });
       },
       onError: () => {
         setLastFormEvent("error");
@@ -68,6 +72,8 @@ export const Register: React.FC = () => {
     {
       onSuccess: () => {
         setLastFormEvent("delete");
+        queryClient.setQueryData("userTeam", null);
+        queryClient.invalidateQueries(["Teams"], { exact: false });
       },
       onError: () => {
         setLastFormEvent("error");
@@ -86,14 +92,15 @@ export const Register: React.FC = () => {
 
   // Reset form state depending on server-side userTeam
   React.useEffect(() => {
-    reset(
+    const newDefaultValues =
       userTeam == null
         ? defaultTeam
         : {
             description: userTeam.description,
             skillsets: getSkillsets(userTeam.skillsetMask).map((s) => s.id),
-          }
-    );
+          };
+    console.log('resetting', newDefaultValues);
+    reset(newDefaultValues);
   }, [userTeam, reset]);
 
   // validation
@@ -116,39 +123,58 @@ export const Register: React.FC = () => {
   const charRemain = charLimit - description.length;
   const remainColor = charRemain <= 0 ? "text-red-400" : "";
 
-  // Configures the status bar's appearance
-  const statusBarBG =
-    lastFormEvent && lastFormEvent != "error"
-      ? "bg-primary-dark"
-      : lastFormEvent == "error" || errorLoading
-      ? "bg-red-500"
-      : "bg-transparent border";
-
-  const statusBarMsg = isSaving
-    ? "Saving..."
-    : isDeleting
-    ? "Deleting..."
-    : errorLoading
-    ? "An error occurred while checking if you already have a team, please refresh the page."
-    : match(
-        lastFormEvent,
-        ["create", "Team successfully created!"],
-        ["update", "Team successfully updated!"],
-        ["delete", "Team successfully deleted!"],
-        ["error", "An error occurred while updating, please try again."],
-        [null, "Use the form below to let people know about your team!"]
-      );
+  let statusBar;
+  const statusBarCommonClasses =
+    "p-2 m-8 rounded text-center text-lg font-bold transition ";
+  if (lastFormEvent && lastFormEvent != "error") {
+    const message = match(
+      lastFormEvent,
+      ["create", "Team successfully created!"],
+      ["update", "Team successfully updated!"],
+      ["delete", "Team successfully deleted!"],
+      [null, "Use the form below to let people know about your team!"]
+    );
+    statusBar = (
+      <div className={statusBarCommonClasses + "bg-primary-dark"}>
+        {message}
+      </div>
+    );
+  } else if (isSaving) {
+    statusBar = (
+      <div className={statusBarCommonClasses + "bg-transparent border"}>
+        Saving...
+      </div>
+    );
+  } else if (isDeleting) {
+    statusBar = (
+      <div className={statusBarCommonClasses + "bg-transparent border"}>
+        Deleting...
+      </div>
+    );
+  } else if (lastFormEvent == "error") {
+    statusBar = (
+      <div className={statusBarCommonClasses + "bg-red-500"}>
+        An error occurred while updating, please try again.
+      </div>
+    );
+  } else if (errorLoading) {
+    statusBar = (
+      <div className={statusBarCommonClasses + "bg-red-500"}>
+        An error occurred while checking if you already have a team, please
+        refresh the page.
+      </div>
+    );
+  } else {
+    statusBar = (
+      <div className={statusBarCommonClasses + "bg-transparent border"}>
+        Use the form below to let people know about your team!
+      </div>
+    );
+  }
 
   return (
     <>
-      <div
-        className={
-          "p-2 m-8 rounded text-center text-lg font-bold transition " +
-          statusBarBG
-        }
-      >
-        {statusBarMsg}
-      </div>
+      {statusBar}
       <form
         className="mx-auto space-y-8"
         onSubmit={handleSubmit((data) =>
