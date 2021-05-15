@@ -5,14 +5,14 @@ export interface TeamDto {
   skillsetMask: number;
 }
 
+// added to allow the explicit any
+// eslint-disable-next-line
 export const getAllTeams = (queryParams: Record<string, any>): Promise<Array<Record<string, unknown>>> => {
   const url = new URL(`${import.meta.env.VITE_API_URL}/teams`);
 
   for(const k in queryParams){
     const v = queryParams[k];
-    
-    if(Object.prototype.hasOwnProperty.call(queryParams, k) && v != null && v != undefined)
-      url.searchParams.append(k, v.toString());
+    if(queryParams.hasOwnProperty(k) && v != null && v != undefined) url.searchParams.append(k, v.toString());
   }
 
   return fetch(url.toString(), {mode: "cors"}).then((res) => res.json());

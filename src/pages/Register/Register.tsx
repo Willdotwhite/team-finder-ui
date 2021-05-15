@@ -3,7 +3,6 @@ import { Controller, NestedValue, useForm, useWatch } from "react-hook-form";
 import classnames from "classnames";
 import { useMutation, useQuery } from "react-query";
 import { Button } from "../../components/Button";
-import { isUserLoggedIn } from "../../components/PageUserInfo";
 import { SkillsetSelector } from "../../components/SkillsetSelector";
 import { createTeam, updateTeam, getTeam, deleteTeam, TeamDto } from "../../utils/TeamActions";
 import { getSkillsets } from "../../utils/Skillsets";

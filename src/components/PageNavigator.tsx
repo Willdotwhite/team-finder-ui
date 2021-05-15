@@ -1,5 +1,7 @@
 import * as React from "react";
-import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom";
+// for some reason, removing Link here causes an error below? added this to stop ESlint complaining about the unused var, Link
+// eslint-disable-next-line
+import { BrowserRouter as Link, NavLink } from "react-router-dom";
 
 export const PageNavigator: React.FC = () => (
   <div className="flex flex-row justify-center items-center my-8">
