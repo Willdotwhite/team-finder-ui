@@ -1,8 +1,13 @@
 import * as React from "react";
-import jwt_decode from "jwt-decode";
+import jwtDecode from "jwt-decode";
 import { PageHeader } from "../../components/PageHeader";
 import { useLocation } from "react-router-dom";
 import { UserInfo } from "../../utils/UserInfo";
+
+interface AssumedTokenType {
+  aud: string;
+  sub: string;
+}
 
 export const AuthorizedCallback: React.FC = () => {
     const query = new URLSearchParams(useLocation().search)
@@ -14,17 +19,13 @@ export const AuthorizedCallback: React.FC = () => {
       </>)
     }
 
-    const rawUserData = jwt_decode(token);
+    const rawUserData = jwtDecode(token) as AssumedTokenType;
 
     // .sub and .aud shouldn't be long-lived, as this is a misuse of claims
     // Expect these to change before long
     const userInfo: UserInfo = {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      avatar:   rawUserData.aud as string,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      username: rawUserData.sub as string
+      avatar:   rawUserData.aud,
+      username: rawUserData.sub
     };
 
     localStorage.setItem("token", token)

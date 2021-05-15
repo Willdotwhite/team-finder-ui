@@ -5,17 +5,20 @@ export interface TeamDto {
   skillsetMask: number;
 }
 
-// added to allow the explicit any
-// eslint-disable-next-line
-export const getAllTeams = (queryParams: Record<string, any>): Promise<Array<Record<string, unknown>>> => {
+type QueryParam = string | number | null;
+
+export const getAllTeams = (
+  queryParams: Record<string, QueryParam>
+): Promise<Array<Record<string, unknown>>> => {
   const url = new URL(`${import.meta.env.VITE_API_URL}/teams`);
 
-  for(const k in queryParams){
-    const v = queryParams[k];
-    if(queryParams.hasOwnProperty(k) && v != null && v != undefined) url.searchParams.append(k, v.toString());
-  }
+  Object.entries(queryParams).forEach(([k, v]) => {
+    if (v != null && v != undefined) {
+      url.searchParams.append(k, v.toString());
+    }
+  });
 
-  return fetch(url.toString(), {mode: "cors"}).then((res) => res.json());
+  return fetch(url.toString(), { mode: "cors" }).then((res) => res.json());
 };
 
 export const createTeam = async (formData: FormData): Promise<Response> => {
@@ -54,7 +57,7 @@ const teamFromForm = (formData: FormData): TeamDto => {
 const makeApiRequest = async (path: string, method: string, body: TeamDto | undefined = undefined) => {
   const token = localStorage.getItem("token");
 
-  const options = {
+  const options: RequestInit = {
     method: method,
     mode: "cors",
     headers: {
@@ -64,13 +67,9 @@ const makeApiRequest = async (path: string, method: string, body: TeamDto | unde
   };
   
   if (body) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     options['body'] = JSON.stringify(body);
   }
   
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   const res = await fetch(`${import.meta.env.VITE_API_URL}${path}`, options);
   if(!res.ok) {
     if(res.status == 401) window.location.replace(`${import.meta.env.VITE_API_URL}/oauth2/authorization/discord`);
