@@ -45,7 +45,7 @@ export const Home: React.FC = () => {
 
   return (<>
     <PageHeader>
-      Find teams looking for:
+      Filter by what skills you can give:
     </PageHeader>
     <SkillsetSelector
       selectedSkillsets={selectedSkillsets}

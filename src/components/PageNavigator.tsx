@@ -6,16 +6,16 @@ export const PageNavigator: React.FC = () => (
     <NavLink
       to="/"
       exact={true}
-      activeClassName="text-primary font-medium hover:no-underline"
+      activeClassName="text-primary font-medium underline hover:no-underline"
       className="text-2xl font-light text-white text-center mx-16 uppercase whitespace-pre hover:underline">
       Find<br />Team
     </NavLink>
 
     <NavLink
       to="/register"
-      activeClassName="text-primary font-medium hover:no-underline"
+      activeClassName="text-primary font-medium underline hover:no-underline"
       className="text-2xl font-light text-white text-center mx-16 uppercase whitespace-pre hover:underline">
-      Register / Edit<br />Your Team
+      Post / Edit<br />Your Team
     </NavLink>
   </div>
 );
