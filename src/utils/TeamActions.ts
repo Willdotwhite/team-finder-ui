@@ -8,9 +8,10 @@ export interface TeamDto {
 export const getAllTeams = (queryParams: Record<string, any>): Promise<Array<Record<string, unknown>>> => {
   const url = new URL(`${import.meta.env.VITE_API_URL}/teams`);
 
-  for(let k in queryParams){
-    let v = queryParams[k];
-    if(queryParams.hasOwnProperty(k) && v != null && v != undefined)
+  for(const k in queryParams){
+    const v = queryParams[k];
+    
+    if(Object.prototype.hasOwnProperty.call(queryParams, k) && v != null && v != undefined)
       url.searchParams.append(k, v.toString());
   }
 

@@ -42,9 +42,9 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
   return (
     <div data-team-id={team.id} className="my-8 p-5 border relative">
       <div className="absolute -top-2.5 left-1 px-3 bg-black leading-none font-bold text-lg">
-        <a href={`https://discordapp.com/users/${team.authorId}`} target="_blank">
+        <a href={`https://discordapp.com/users/${team.authorId}`} target="_blank" rel="noreferrer">
           <span className="pb-1 border-b-2 border-white" style={{borderBottomWidth: "1px"}}>
-            🔗 {team.author}'s Team
+            🔗 {team.author}&rsquo;s Team
           </span>
         </a>
       </div>

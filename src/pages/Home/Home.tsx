@@ -5,7 +5,7 @@ import { TeamData, Team } from "../../components/Team";
 import { SkillsetSelector } from "../../components/SkillsetSelector";
 import { getAllTeams } from "../../utils/TeamActions";
 
-interface TLprops { selectedSkillsets: number[] };
+interface TLprops { selectedSkillsets: number[] }
 const TeamList: React.FC<TLprops> = ({selectedSkillsets}) => {
   const skillsetMask = selectedSkillsets.length
     ? selectedSkillsets.reduce((a, b) => a + b, 0)
