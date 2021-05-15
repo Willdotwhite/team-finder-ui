@@ -21,8 +21,8 @@ export const createTeam = async (formData: FormData): Promise<Response> => {
   return makeApiRequest("/teams", "POST", teamFromForm(formData));
 };
 
-export const getTeam = async (): Promise<Response> => {
-  return makeApiRequest("/teams/mine", "GET");
+export const getTeam = async (): Promise<TeamDto | null> => {
+  return (await makeApiRequest("/teams/mine", "GET")).json();
 };
 
 export const updateTeam = async (formData: FormData): Promise<Response> => {

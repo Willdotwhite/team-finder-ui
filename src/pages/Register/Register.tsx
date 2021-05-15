@@ -20,9 +20,9 @@ const defaultTeam = {description: "", skillsets: [] as number[]};
 // There's SURELY a better way of doing this, right?
 export const Register: React.FC = () => {
   const {data, isLoading} = useQuery("userTeam", async () => {
-    return (await getTeam()).json();
+    return getTeam();
   }, {
-    // has to be 0, otherwise when you leave and come back to Register the the cache isn't invalidated
+    // has to be 0, otherwise when you leave and come back to Register the the cache isn't invalidated, and it shows the wrong thing
     cacheTime: 0
   });
 
@@ -42,21 +42,26 @@ const RegisterForm: React.FC<{userTeam: TeamDto | null}> = ({userTeam}) => {
   // sending data changes to server
   const { status, data, mutate, error, isLoading } = useMutation(
     async (formData: FormData | null) => {
-      // delay to ensure the background on the status bar transitions smoothly
-      await new Promise(resolve => setTimeout(resolve, 200));
+      // ensures a minimum of 200ms wait to ensure status bar transitions smoothly
+      let waitForBarAnim = new Promise(resolve => setTimeout(resolve, 200));
+
+      let rtn: string;
 
       if(formData == null) {
         await deleteTeam();
-        return "delete";
-      }
-
-      if(userHasTeam){
-        await updateTeam(formData);
-        return "update";
+        rtn = "delete";
       } else {
-        await createTeam(formData);
-        return "create";
+        if(userHasTeam){
+          await updateTeam(formData);
+          rtn = "update";
+        } else {
+          await createTeam(formData);
+          rtn = "create";
+        }
       }
+      
+      await waitForBarAnim;
+      return rtn;
     },
     {
       onSuccess: action => updateUserHasTeam(action != "delete")
