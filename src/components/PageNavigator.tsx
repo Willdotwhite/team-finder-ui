@@ -1,6 +1,4 @@
 import * as React from "react";
-// for some reason, removing Link here causes an error below? added this to stop ESlint complaining about the unused var, Link
-// eslint-disable-next-line
 import { BrowserRouter as Link, NavLink } from "react-router-dom";
 
 export const PageNavigator: React.FC = () => (

@@ -26,6 +26,7 @@
   "rules": {
     "react/prop-types": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/ban-ts-comment": "warn",
     "prefer-const": "warn"
   },
   "ignorePatterns": ["*.config.js"]

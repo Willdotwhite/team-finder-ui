@@ -57,7 +57,7 @@ const teamFromForm = (formData: FormData): TeamDto => {
 const makeApiRequest = async (path: string, method: string, body: TeamDto | undefined = undefined) => {
   const token = localStorage.getItem("token");
 
-  const options = {
+  const options: RequestInit = {
     method: method,
     mode: "cors",
     headers: {
@@ -67,13 +67,9 @@ const makeApiRequest = async (path: string, method: string, body: TeamDto | unde
   };
   
   if (body) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     options['body'] = JSON.stringify(body);
   }
   
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   const res = await fetch(`${import.meta.env.VITE_API_URL}${path}`, options);
   if(!res.ok) {
     if(res.status == 401) window.location.replace(`${import.meta.env.VITE_API_URL}/oauth2/authorization/discord`);
