@@ -5,11 +5,26 @@ import { Context } from "./Context";
 import { Routes } from "./Routes";
 import "tailwindcss/tailwind.css";
 import "./index.css";
+import { PageUserInfo } from "./components/PageUserInfo";
+import { PageNavigator } from "./components/PageNavigator";
+import { NavLink } from "react-router-dom";
+import { PageContainer } from "./components/PageContainer";
 
 ReactDOM.render(
   <React.StrictMode>
     <Context>
-      <Routes />
+      <PageContainer>
+        <NavLink to="/">
+          <div className="text-center">
+            {/* TODO: Resize and optimise this image before launch */}
+            <img className="inline-block my-6" src="MainLogo100px.png" alt="GMTK Game Jam 2021 - Team Finder"/>
+          </div>
+        </NavLink>
+        <PageUserInfo/>
+        <PageNavigator/>
+        
+        <Routes />
+      </PageContainer>
     </Context>
   </React.StrictMode>,
   document.getElementById("root")

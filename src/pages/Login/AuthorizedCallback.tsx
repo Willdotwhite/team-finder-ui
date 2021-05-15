@@ -1,20 +1,17 @@
 import * as React from "react";
 import jwt_decode from "jwt-decode";
-import { PageContainer } from "../../components/PageContainer";
 import { PageHeader } from "../../components/PageHeader";
 import { useLocation } from "react-router-dom";
-import { UserInfo } from "../../components/UserInfo";
+import { UserInfo } from "../../utils/UserInfo";
 
 export const AuthorizedCallback: React.FC = () => {
     const query = new URLSearchParams(useLocation().search)
     const token = query.get("token")
     if (token == null) {
-        return (
-            <PageContainer>
-                <PageHeader>Error</PageHeader>
-                <div>Should show error page</div>
-            </PageContainer>
-        )
+      return (<>
+        <PageHeader>Error</PageHeader>
+        <div>Should show error page</div>
+      </>)
     }
 
     const rawUserData = jwt_decode(token);

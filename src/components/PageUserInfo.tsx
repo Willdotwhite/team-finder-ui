@@ -1,6 +1,6 @@
 import * as React from "react";
 import { NavLink } from "react-router-dom";
-import { UserInfo } from "./UserInfo";
+import { UserInfo } from "../utils/UserInfo";
 
 
 let userInfo: UserInfo = {avatar: undefined, username: undefined};

@@ -1,24 +1,35 @@
-import {FormData} from "./Register";
+import {FormData} from "../pages/Register/Register";
 
-interface TeamDto {
+export interface TeamDto {
   description: string;
   skillsetMask: number;
 }
 
+export const getAllTeams = (queryParams: Record<string, any>): Promise<Array<Record<string, unknown>>> => {
+  const url = new URL(`${import.meta.env.VITE_API_URL}/teams`);
 
-export const createTeam = async (formData: FormData): Promise<TeamDto> => {
+  for(let k in queryParams){
+    let v = queryParams[k];
+    if(queryParams.hasOwnProperty(k) && v != null && v != undefined)
+      url.searchParams.append(k, v.toString());
+  }
+
+  return fetch(url.toString(), {mode: "cors"}).then((res) => res.json());
+};
+
+export const createTeam = async (formData: FormData): Promise<Response> => {
   return makeApiRequest("/teams", "POST", teamFromForm(formData));
 };
 
-export const getTeam = async (): Promise<TeamDto> => {
-  return makeApiRequest("/teams/mine", "GET");
+export const getTeam = async (): Promise<TeamDto | null> => {
+  return (await makeApiRequest("/teams/mine", "GET")).json();
 };
 
-export const updateTeam = async (formData: FormData): Promise<TeamDto> => {
+export const updateTeam = async (formData: FormData): Promise<Response> => {
   return makeApiRequest("/teams/mine", "PUT", teamFromForm(formData));
 };
 
-export const deleteTeam = async (): Promise<TeamDto> => {
+export const deleteTeam = async (): Promise<Response> => {
   return makeApiRequest("/teams/mine", "DELETE");
 };
 
@@ -59,12 +70,10 @@ const makeApiRequest = async (path: string, method: string, body: TeamDto | unde
   
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const response = await fetch(`${import.meta.env.VITE_API_URL}${path}`, options);
-
-  if (!response.ok) {
-    throw new Error(
-      `${response.status} ${response.statusText}: ${await response.text()}`
-    );
+  const res = await fetch(`${import.meta.env.VITE_API_URL}${path}`, options);
+  if(!res.ok) {
+    if(res.status == 401) window.location.replace(`${import.meta.env.VITE_API_URL}/oauth2/authorization/discord`);
+    else throw new Error(`${res.status} ${res.statusText}: ${await res.text()}`);
   }
-  return await response.json();
+  return res;
 }
