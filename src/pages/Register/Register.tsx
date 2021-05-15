@@ -31,12 +31,6 @@ export const Register: React.FC = () => {
 }
 
 const RegisterForm: React.FC<{userTeam: TeamDto | null}> = ({userTeam}) => {
-  // I know this is a no-no, but it makes no sense down at the bottom
-  if (!isUserLoggedIn()) {
-    window.location.replace(`${import.meta.env.VITE_API_URL}/oauth2/authorization/discord`);
-    return(<div className="my-6 text-center text-white text-3xl">Redirecting to login...</div>);
-  }
-
   const [userHasTeam, updateUserHasTeam] = React.useState(userTeam != null);
 
   // sending data changes to server
