@@ -26,7 +26,7 @@ const TeamList: React.FC<TLprops> = ({selectedSkillsets}) => {
         onClick={() => refetch()}
         className="block bg-primary-dark my-6 p-2 focus:outline-none"
       >
-        Refetch Teams
+        Find A Team!
       </button>
 
       <div>
