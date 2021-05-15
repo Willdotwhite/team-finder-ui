@@ -13,12 +13,14 @@ const timeAgo = new TimeAgo('en-GB')
 
 export class TeamData {
   author: string;
+  authorId: string;
   description: string;
   skills: Array<Skillset>;
   createdAt: Date;
   id: number;
   constructor(teamJSON: Record<string, unknown>){
     this.author = teamJSON.author as string;
+    this.authorId = teamJSON.authorId as string;
     this.description = teamJSON.description as string;
 
     const createdAt = teamJSON.createdAt as string;
@@ -39,7 +41,11 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
 
   return (
     <div data-team-id={team.id} className="my-8 p-5 border relative">
-      <div className="absolute -top-2.5 left-1 px-3 bg-black leading-none font-bold text-lg">{team.author}</div>
+      <div className="absolute -top-2.5 left-1 px-3 bg-black leading-none font-bold text-lg">
+        <a href={`https://discordapp.com/users/${team.authorId}`} target="_blank">
+          {team.author}
+        </a>
+      </div>
       <div className="flex justify-between">
         <div className="mr-5 text-lg">{team.description}</div>
         <div>

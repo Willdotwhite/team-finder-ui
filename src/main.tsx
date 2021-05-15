@@ -17,7 +17,7 @@ ReactDOM.render(
         <NavLink to="/">
           <div className="text-center">
             {/* TODO: Resize and optimise this image before launch */}
-            <img className="inline-block my-6" src="MainLogo100px.png" alt="GMTK Game Jam 2021 - Team Finder"/>
+            <img className="inline-block my-6" src="/MainLogo100px.png" alt="GMTK Game Jam 2021 - Team Finder"/>
           </div>
         </NavLink>
         <PageUserInfo/>
