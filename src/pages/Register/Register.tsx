@@ -1,67 +1,113 @@
 import * as React from "react";
-import { Controller, NestedValue, useForm } from "react-hook-form";
+import { Controller, NestedValue, useForm, useWatch } from "react-hook-form";
 import classnames from "classnames";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { Button } from "../../components/Button";
 import { isUserLoggedIn } from "../../components/PageUserInfo";
-import { useHistory } from "react-router";
 import { SkillsetSelector } from "../../components/SkillsetSelector";
-import {createTeam} from "../../utils/TeamActions";
-
+import { createTeam, updateTeam, getTeam, deleteTeam, TeamDto } from "../../utils/TeamActions";
+import { getSkillsets } from "../../utils/Skillsets";
+import match from "../../utils/match";
 
 export interface FormData {
   description: string;
   skillsets: NestedValue<number[]>;
 }
 
-export const Register: React.FC = () => {
-  const history = useHistory();
+const charLimit = 240;
+const defaultTeam = {description: "", skillsets: [] as number[]};
 
-  const { mutate, error, isLoading } = useMutation(
-    async (formData: FormData) => {
-      return createTeam(formData);
+// There's SURELY a better way of doing this, right?
+export const Register: React.FC = () => {
+  const {data, isLoading} = useQuery("userTeam", async () => {
+    return (await getTeam()).json();
+  }, {
+    // has to be 0, otherwise when you leave and come back to Register the the cache isn't invalidated
+    cacheTime: 0
+  });
+
+  if(isLoading) return null;
+  return (<RegisterForm userTeam={data!} />);
+}
+
+const RegisterForm: React.FC<{userTeam: TeamDto | null}> = ({userTeam}) => {
+  // I know this is a no-no, but it makes no sense down at the bottom
+  if (!isUserLoggedIn()) {
+    window.location.replace(`${import.meta.env.VITE_API_URL}/oauth2/authorization/discord`);
+    return(<div className="my-6 text-center text-white text-3xl">Redirecting to login...</div>);
+  }
+
+  const [userHasTeam, updateUserHasTeam] = React.useState(userTeam != null);
+
+  // sending data changes to server
+  const { status, data, mutate, error, isLoading } = useMutation(
+    async (formData: FormData | null) => {
+      // delay to ensure the background on the status bar transitions smoothly
+      await new Promise(resolve => setTimeout(resolve, 200));
+
+      if(formData == null) {
+        await deleteTeam();
+        return "delete";
+      }
+
+      if(userHasTeam){
+        await updateTeam(formData);
+        return "update";
+      } else {
+        await createTeam(formData);
+        return "create";
+      }
     },
     {
-      onSuccess: () => {
-        // ordinarily, you'd also invalidate queries here...
-        // but the only other query for now is the list page,
-        // whose primary purpose is to see OTHER people's teams!
-        // So we don't need to work too hard to make sure your own shows up
-        history.push("/");
-      },
+      onSuccess: action => updateUserHasTeam(action != "delete")
     }
   );
 
-  const { register, formState, handleSubmit, control } = useForm<FormData>({
-    defaultValues: {
-      description: "",
-      skillsets: [],
-    },
+  // setting up the form
+  const { register, formState, handleSubmit, control, getValues } = useForm<FormData>({
+    criteriaMode: "all",
+    defaultValues: userTeam == null ? defaultTeam : {
+      description: userTeam.description,
+      skillsets: getSkillsets(userTeam.skillsetMask).map(s => s.id)
+    }
   });
 
+  // validation
   React.useEffect(() => {
     register("skillsets", {
       validate: (value) => {
-        if (value.length === 0) {
-          return "Required";
-        }
+        if(value.length === 0) return "Required";
+      },
+    });
+    register("description", {
+      validate: (value) => {
+        if(value.length > charLimit) return "The character limit is "+charLimit;
       },
     });
   }, [register]);
 
 
-  if (!isUserLoggedIn()) {
-    window.location.replace(`${import.meta.env.VITE_API_URL}/oauth2/authorization/discord`);
+  // Counts how many characters are left for the description
+  useWatch({control, name:"description"});
+  let charRemain = charLimit - getValues("description").length;
+  let remainColor = charRemain <= 0 ? "text-red-400" : "";
 
-    return(<>
-      <div className="my-6 text-center text-white text-3xl">Redirecting to login...</div>
-    </>);
-
-  } 
+  // Configures the status bar's appearance
+  let statusBarBG = data ? "bg-primary-dark" : error ? "bg-red-500" : "bg-transparent border";
+  let statusBarMsg = match(data,
+    ["create", "Team successfully created!"],
+    ["update", "Team successfully updated!"],
+    ["delete", "Team successfully deleted!"]
+  ) || match(status,
+    ["idle", "Use the form below to let people know about your team!"],
+    ["error", "An error occurred while updating, please try again."],
+    ["loading", "Updating..."]
+  );
 
   return (<>
+    <div className={"p-2 m-8 rounded text-center text-lg font-bold transition "+statusBarBG}>{statusBarMsg}</div>
     <form
-      className="max-w-prose mx-auto space-y-8"
+      className="mx-auto space-y-8"
       onSubmit={handleSubmit((data) => mutate(data))}
     >
       <div className="space-y-2">
@@ -71,7 +117,7 @@ export const Register: React.FC = () => {
             formState.errors.skillsets && "text-red-400"
           )}
         >
-          What skillsets are you looking for from team members?
+          What skills do you need from new teammates?
         </label>
         <Controller
           control={control}
@@ -94,16 +140,18 @@ export const Register: React.FC = () => {
           )}
           htmlFor="description"
         >
-          Tell us a bit about yourself and the team you&rsquo;d like to see!
+          Tell us a bit about yourself and the team you&rsquo;d like to see!<br/>
+          Characters Remaining: <span className={remainColor}>{charRemain}</span>
         </label>
         <textarea
+          style={{resize:"none"}}
           className={classnames(
-            "text-md bg-transparent border  px-4 py-2 block w-full placeholder-white placeholder-opacity-40 h-40",
+            "text-md bg-transparent border  px-4 py-2 block w-full placeholder-white placeholder-opacity-40 h-36",
             formState.errors.description
               ? "border-red-400 focus:border-red-500"
               : "border-white focus:border-primary"
           )}
-          placeholder="Hi, I'm Mark! I've been learning Unity for about a year, but this is my first jam. I like level design, and I can do a bit of programming too! I like platformers and games that make it feel good to move around. I'd love to pair up with an artist and maybe a programmer."
+          placeholder="This is my first jam, though I've made some small games before&#10;I like to do level design for platformers (like Celeste), and sometimes I code for Unity&#10;Ideally I want a team of 3 people - mostly I need an artist"
           id="description"
           {...register("description", { required: "Required" })}
         />
@@ -112,29 +160,26 @@ export const Register: React.FC = () => {
             {formState.errors.description.message}
           </div>
         )}
-        <div className="prose prose-sm text-white text-opacity-70">
-          <p>It&rsquo;s good to talk about:</p>
-          <ul>
-            <li>Your experience with game development</li>
-            <li>Your experience with game jams</li>
-            <li>Your specific skillset</li>
-            <li>The types of games you like to work on</li>
-            <li>The size of team you&rsquo;d like to work with</li>
-            <li>
-              Anything else you&rsquo;d like a potential teammate to know!
-            </li>
+        <div className="max-width-max text-white text-sm text-opacity-70 leading-relaxed">
+          Don&rsquo;t forget to mention:
+          <ul className="list-disc pl-6">
+            <li>Your game dev/jam experience</li>
+            <li>Your skills</li>
+            <li>The type of games you like to make, or an idea you have for your jam game</li>
+            <li>How big you want your team, and if there's anybody you <em>really</em> need</li>
+            <li>If you're looking for a coder, make sure to mention what engine/language you're using!</li>
+            <li>Anything else you&rsquo;d like a potential teammate to know!</li>
           </ul>
         </div>
       </div>
-      {error && (
-        <div className="text-red-400">
-          Sorry, there was a problem and we couldn&rsquo;t submit a team for
-          you.
-        </div>
-      )}
       <Button type="submit" disabled={isLoading}>
-        {isLoading ? "Registering..." : "Register"}
+        {userHasTeam ? "Update Team" : "Post Team"}
       </Button>
+      {userHasTeam ?
+        <Button onClick={() => mutate(null)} className={"bg-red-500"} disabled={isLoading}>
+          {"Delete Team"}
+        </Button>
+      : null}
     </form>
   </>);
 };
