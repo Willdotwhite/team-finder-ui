@@ -33,7 +33,7 @@ const TeamList: React.FC<TLprops> = ({selectedSkillsets}) => {
         {!data && isLoading
           ? "Loading.."
           : isError
-          ? "fuck"
+          ? "Sorry, something went wrong. Please try again in a few minutes."
           : data!.map((t) => <Team key={t.id} team={t} />)}
       </div>
     </div>
