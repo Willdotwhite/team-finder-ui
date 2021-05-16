@@ -2,6 +2,7 @@ import "focus-visible";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Context } from "./Context";
+import { ReactQueryDevtools } from 'react-query/devtools'
 import { Routes } from "./Routes";
 import "tailwindcss/tailwind.css";
 import "./index.css";
@@ -22,9 +23,9 @@ ReactDOM.render(
         </NavLink>
         <PageUserInfo/>
         <PageNavigator/>
-        
         <Routes />
       </PageContainer>
+      <ReactQueryDevtools />
     </Context>
   </React.StrictMode>,
   document.getElementById("root")
