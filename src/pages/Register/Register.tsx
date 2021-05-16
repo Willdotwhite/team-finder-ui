@@ -237,6 +237,10 @@ export const Register: React.FC = () => {
               {formState.errors.description.message}
             </div>
           )}
+          <div className="max-width-max text-white text-sm leading-relaxed">
+            <b>Important</b>: To allow interested jammers to contact you, you need to set your Discord account to allow for friend requests and messages from &quot;Everyone&quot;.
+            <br></br>You can find this setting in your Discord User Settings under the <a href="FinderSettingsImage_2.png" className="underline"> Privacy &amp; Safety tab </a>.
+          </div>
           <div className="max-width-max text-white text-sm text-opacity-70 leading-relaxed">
             Don&rsquo;t forget to mention:
             <ul className="list-disc pl-6">
