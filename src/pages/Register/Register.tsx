@@ -265,6 +265,7 @@ export const Register: React.FC = () => {
         </Button>
         {userHasTeam ? (
           <Button
+            type="button"
             onClick={() => deleteMutate()}
             className={"bg-red-500"}
             disabled={!allowMutation}
