@@ -29,7 +29,7 @@ export const PageUserTeam: React.FC = () => {
   const skillsets = 
     userTeam == null
     ? null
-    : getSkillsets(userTeam.skillsetMask)/*.map((s) => s.id)*/;
+    : getSkillsets(userTeam.skillsetMask);
 
   const skillstr =
   (skillsets != null && userTeam != null)
