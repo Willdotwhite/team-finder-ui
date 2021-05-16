@@ -1,6 +1,10 @@
 import * as React from "react";
 import { NavLink } from "react-router-dom";
 import { UserInfo } from "../utils/UserInfo";
+import { getTeam } from "../utils/TeamActions";
+import { useQuery } from "react-query";
+import { SkillsetSVG } from "./SkillsetSVG";
+import { getSkillsets } from "../utils/Skillsets";
 
 
 let userInfo: UserInfo = {avatar: undefined, username: undefined};
@@ -11,6 +15,36 @@ let storedUserData = null;
 export function isUserLoggedIn(): boolean {
   return (localStorage.getItem("userData") != null);
 }
+
+export const PageUserTeam: React.FC = () => {
+
+  const {
+    data: userTeam,
+    isLoading,
+    error: errorLoading,
+  } = useQuery("userTeam", async () => {
+    return getTeam();
+  });
+
+  const skillsets = 
+    userTeam == null
+    ? null
+    : getSkillsets(userTeam.skillsetMask);
+
+  const skillstr =
+  (skillsets != null && userTeam != null)
+  ? skillsets.map(r => <SkillsetSVG skillsetId={r.id} key={r.id} className="align-middle w-7 fill-primary inline-block m-1 align-top"/>)
+  : null;
+
+  return(
+    <div>
+      {skillstr == null
+        ? "No team registered."
+        : "Skills needed:"}{skillstr}
+    </div>
+  );
+
+};
 
 export const PageUserInfo: React.FC = () => (
   <div className="text-center">
@@ -36,7 +70,7 @@ const LoggedInUserInfoPanel: React.FC<UserInfo> = ({avatar, username}) => (
         <NavLink to="/logout" className="text-white text-right ml-6 hover:underline hover:cursor-pointer">Log Out</NavLink>
       </div>
       <h1 className="text-white text-center mx-6">Team Status:</h1>
-      <h1 className="text-white text-center mx-6">No Team Registered</h1>
+      <h1 className="text-white text-center mx-6"><PageUserTeam/></h1>
     </div>
   </div>
 )

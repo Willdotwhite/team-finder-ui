@@ -21,16 +21,20 @@ export const getAllTeams = (
   return fetch(url.toString(), { mode: "cors" }).then((res) => res.json());
 };
 
-export const createTeam = async (formData: FormData): Promise<Response> => {
-  return makeApiRequest("/teams", "POST", teamFromForm(formData));
+export const createTeam = async (formData: FormData): Promise<TeamDto> => {
+  const team = teamFromForm(formData);
+  await makeApiRequest("/teams", "POST", team);
+  return team;
 };
 
 export const getTeam = async (): Promise<TeamDto | null> => {
   return (await makeApiRequest("/teams/mine", "GET")).json();
 };
 
-export const updateTeam = async (formData: FormData): Promise<Response> => {
-  return makeApiRequest("/teams/mine", "PUT", teamFromForm(formData));
+export const updateTeam = async (formData: FormData): Promise<TeamDto> => {
+  const team = teamFromForm(formData);
+  await makeApiRequest("/teams/mine", "PUT", teamFromForm(formData));
+  return team;
 };
 
 export const deleteTeam = async (): Promise<Response> => {
