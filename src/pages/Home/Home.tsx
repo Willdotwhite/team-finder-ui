@@ -27,25 +27,15 @@ const TeamList: React.FC<{skillsetMask:number}> = ({skillsetMask}) => {
   const [order, updateOrder] = useState<orderVals>("desc");
 
   const { isLoading, isError, data, refetch, fetchNextPage } = useInfiniteQuery(["Teams", skillsetMask, order],
-    async ({pageParam = 1}): Promise<Array<TeamData>> => {
-      const query = {
-        skillsetMask, order,
-        page: pageParam
-      };
-      return ( await getTeamsList(query) ).map((t) => new TeamData(t));
+    async ({pageParam: page = 1}): Promise<Array<TeamData>> => {
+      return ( await getTeamsList( { skillsetMask, order, page } ) ).map((t) => new TeamData(t));
     },
     {
-      keepPreviousData: true
+      keepPreviousData: true,
+      getNextPageParam: (lastPage, allPages) => lastPage.length < 25 ? undefined : allPages.length
     }
   );
   const pagesArray = data ? data.pages : [] as TeamData[][];
-
-  const fetchNext = () => {
-    if(getLastItem(pagesArray).length < 25) return;
-    
-    const pp = getLastItem(data!.pageParams as (number | undefined)[]) || 1;
-    fetchNextPage({pageParam: pp + 1});
-  }
 
   return (
     <div>
@@ -55,7 +45,7 @@ const TeamList: React.FC<{skillsetMask:number}> = ({skillsetMask}) => {
         <option value="random">Random</option>
       </select>
       <button
-        onClick={fetchNext}
+        onClick={() => fetchNextPage()}
         className="block bg-primary-dark my-6 p-2 focus:outline-none"
         disabled={isLoading}
       >
