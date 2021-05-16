@@ -99,7 +99,6 @@ export const Register: React.FC = () => {
             description: userTeam.description,
             skillsets: getSkillsets(userTeam.skillsetMask).map((s) => s.id),
           };
-    console.log('resetting', newDefaultValues);
     reset(newDefaultValues);
   }, [userTeam, reset]);
 
