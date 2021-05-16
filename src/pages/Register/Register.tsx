@@ -125,7 +125,19 @@ export const Register: React.FC = () => {
   let statusBar;
   const statusBarCommonClasses =
     "p-2 m-8 rounded text-center text-lg font-bold transition ";
-  if (lastFormEvent && lastFormEvent != "error") {
+  if (isSaving) {
+    statusBar = (
+      <div className={statusBarCommonClasses + "bg-transparent border"}>
+        Saving...
+      </div>
+    );
+  } else if (isDeleting) {
+    statusBar = (
+      <div className={statusBarCommonClasses + "bg-transparent border"}>
+        Deleting...
+      </div>
+    );
+  } else if (lastFormEvent && lastFormEvent != "error") {
     const message = match(
       lastFormEvent,
       ["create", "Team successfully created!"],
@@ -136,18 +148,6 @@ export const Register: React.FC = () => {
     statusBar = (
       <div className={statusBarCommonClasses + "bg-primary-dark"}>
         {message}
-      </div>
-    );
-  } else if (isSaving) {
-    statusBar = (
-      <div className={statusBarCommonClasses + "bg-transparent border"}>
-        Saving...
-      </div>
-    );
-  } else if (isDeleting) {
-    statusBar = (
-      <div className={statusBarCommonClasses + "bg-transparent border"}>
-        Deleting...
       </div>
     );
   } else if (lastFormEvent == "error") {
