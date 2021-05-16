@@ -105,7 +105,7 @@ const RegisterForm: React.FC<{userTeam: TeamDto | null}> = ({userTeam}) => {
   return (<>
     <div className={"p-2 m-8 rounded text-center text-lg font-bold transition "+statusBarBG}>{statusBarMsg}</div>
     <form
-      className="mx-auto space-y-8"
+      className="mx-auto space-y-8 mb-8"
       onSubmit={handleSubmit((data) => mutate(data))}
     >
       <div className="space-y-2">
@@ -168,6 +168,10 @@ const RegisterForm: React.FC<{userTeam: TeamDto | null}> = ({userTeam}) => {
             <li>If you&rsquo;re looking for a coder, make sure to mention what engine/language you&rsquo;re using!</li>
             <li>Anything else you&rsquo;d like a potential teammate to know!</li>
           </ul>
+        </div>
+        <div className="max-width-max text-white text-sm leading-relaxed">
+          <b>Important</b>: To allow interested jammers to contact you, you need to set your Discord account to allow for friend requests and messages from "Everyone".
+          <br></br>You can find this setting in your Discord User Settings under the <a href="FinderSettingsImage_2.png" className="underline"> Privacy &amp; Safety tab </a>.
         </div>
       </div>
       <Button type="submit" disabled={isLoading}>
