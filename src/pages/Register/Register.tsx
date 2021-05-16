@@ -12,7 +12,7 @@ import {
   TeamDto,
 } from "../../utils/TeamActions";
 import { getSkillsets } from "../../utils/Skillsets";
-import match from "../../utils/match";
+import { match } from "../../utils/match";
 
 export interface FormData {
   description: string;

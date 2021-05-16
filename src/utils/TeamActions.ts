@@ -5,18 +5,16 @@ export interface TeamDto {
   skillsetMask: number;
 }
 
-type QueryParam = string | number | null;
-
-export const getAllTeams = (
-  queryParams: Record<string, QueryParam>
+export const getTeamsList = (
+  queryParams: {
+    order: "asc" | "desc" | "random";
+    skillsetMask: number;
+    page: number;
+  }
 ): Promise<Array<Record<string, unknown>>> => {
   const url = new URL(`${import.meta.env.VITE_API_URL}/teams`);
 
-  Object.entries(queryParams).forEach(([k, v]) => {
-    if (v != null && v != undefined) {
-      url.searchParams.append(k, v.toString());
-    }
-  });
+  for(const [k, v] of Object.entries(queryParams)) url.searchParams.append(k, v.toString());
 
   return fetch(url.toString(), { mode: "cors" }).then((res) => res.json());
 };
