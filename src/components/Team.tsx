@@ -1,15 +1,9 @@
 import React from "react";
-import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en"
+import { formatDistanceToNow } from 'date-fns';
+import { enGB } from 'date-fns/locale';
 
 import { getSkillsets, Skillset } from "../utils/Skillsets";
 import {SkillsetSVG} from "./SkillsetSVG";
-
-// Use English time
-TimeAgo.addDefaultLocale(en)
-
-// Create formatter (English).
-const timeAgo = new TimeAgo('en-GB')
 
 export class TeamData {
   author: string;
@@ -51,7 +45,13 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
       <div className="flex justify-between">
         <div className="mr-5 text-lg">{team.description}</div>
         <div>
-          <div className="mb-1">🕓 {timeAgo.format(team.createdAt)}</div>
+          <div className="mb-1">
+            🕓{" "}
+            {formatDistanceToNow(team.createdAt, {
+              addSuffix: true,
+              locale: enGB,
+            })}
+          </div>
           <div className="text-lg w-36">🔎 {skillstr}</div>
         </div>
       </div>
