@@ -5,20 +5,6 @@ export interface TeamDto {
   skillsetMask: number;
 }
 
-export const getTeamsList = (
-  queryParams: {
-    order: "asc" | "desc" | "random";
-    skillsetMask: number;
-    page: number;
-  }
-): Promise<Array<Record<string, unknown>>> => {
-  const url = new URL(`${import.meta.env.VITE_API_URL}/teams`);
-
-  for(const [k, v] of Object.entries(queryParams)) url.searchParams.append(k, v.toString());
-
-  return fetch(url.toString(), { mode: "cors" }).then((res) => res.json());
-};
-
 export const createTeam = async (formData: FormData): Promise<TeamDto> => {
   const team = teamFromForm(formData);
   await makeApiRequest("/teams", "POST", team);

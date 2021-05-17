@@ -49,7 +49,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
         </a>
       </div>
       <div className="flex justify-between">
-        <div className="mr-5 mt-1 text-lg pb-7">
+        <div className="mr-5 mt-1 text-lg pb-7 overflow-hidden">
           {team.description}
           <div className="text-sm absolute bottom-3 left-4">🕗 {timeAgo.format(team.updatedAt)}</div>
         </div>
