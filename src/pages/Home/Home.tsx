@@ -3,6 +3,7 @@ import { useInfiniteQuery } from "react-query";
 import { PageHeader } from "../../components/PageHeader";
 import { TeamData, Team } from "../../components/Team";
 import { SkillsetSelector } from "../../components/SkillsetSelector";
+import { ReactSVG } from "react-svg";
 
 const getTeamsList = (
   queryParams: {
@@ -25,7 +26,7 @@ export const Home: React.FC = () => {
 
   return (<>
     <PageHeader>
-      Filter by what skills you can give:
+      Filter by what skills you can offer:
     </PageHeader>
     <SkillsetSelector
       selectedSkillsets={selectedSkillsets}
@@ -41,7 +42,8 @@ const TeamList: React.FC<{skillsetMask:number}> = ({skillsetMask}) => {
   const [order, updateOrder] = useState<orderVals>("desc");
 
   const {
-    isFetchingNextPage, isLoading: initalLoad, isError, data, fetchNextPage
+    isLoading: initalLoad,
+    isFetchingNextPage, isError, data, fetchNextPage
   } = useInfiniteQuery(["Teams", skillsetMask, order],
     async ({pageParam: page = 1}) =>
       ( await getTeamsList({ skillsetMask, order, page }) ).map((t) => new TeamData(t)),
@@ -49,6 +51,7 @@ const TeamList: React.FC<{skillsetMask:number}> = ({skillsetMask}) => {
       getNextPageParam: (lastPage, allPages) => lastPage.length < pageSize ? undefined : allPages.length
     }
   );
+
   const pagesArray = data ? data.pages : [] as TeamData[][];
   const isLoading = initalLoad || isFetchingNextPage;
 
@@ -57,42 +60,50 @@ const TeamList: React.FC<{skillsetMask:number}> = ({skillsetMask}) => {
 
   useEffect(() => {
     if(allLoaded) return;
-    const de = document.documentElement;
+
+    const docEle = document.documentElement;
 
     const onScroll = () => {
-      const distanceLeft = de.scrollHeight - (de.scrollTop + innerHeight);
+      const distanceLeft = docEle.scrollHeight - (docEle.scrollTop + innerHeight);
       if(distanceLeft < 200) fetchNextPage();
     }
 
-    window.addEventListener("scroll", onScroll, {passive: true});
-    de.addEventListener("scroll", onScroll, {passive: true});
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      de.removeEventListener("scroll", onScroll);
-    }
+    const listenTo = [window, docEle];
+
+    listenTo.forEach(x =>
+      x.addEventListener("scroll", onScroll, {passive: true})
+    );
+
+    return () => listenTo.forEach(x =>
+      x.removeEventListener("scroll", onScroll)
+    );
   }, [fetchNextPage, allLoaded]);
 
   return (
     <div>
       <label className="text-lg">
         Sort By:
-        <select className="text-black block p-1 pb-1.5 mt-1 outline-none" value={order} onChange={e => updateOrder(e.target.value as orderVals)}>
+        <select
+          value={order}
+          onChange={e => updateOrder(e.target.value as orderVals)}
+          className="text-black block p-1 pb-1.5 mt-1 outline-none"
+        >
           <option value="desc">Newest First</option>
           <option value="asc">Oldest First</option>
           <option value="random">Random</option>
         </select>
       </label>
 
-      <div>
-        {isError ?
-          "Sorry, something went wrong. Please try again in a few minutes." :
-          pagesArray.map(arr =>
-            arr.map((t) => <Team key={t.id} team={t} />)
-          )
-        }
-        {/* literally just slapped in. please replace it. god. please. */}
-        {isLoading ? <img src="https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif" /> : null}
-      </div>
+      <div>{isError ?
+        "Sorry, something went wrong. Please try again in a few minutes." :
+        pagesArray.map(arr =>
+          arr.map((t) => <Team key={t.id} team={t} />)
+        )
+      }</div>
+      
+      {isLoading ?
+        <ReactSVG className="w-40 m-auto block" src="/spinner.svg"/>
+      : null}
 
       {allLoaded ?
         <div className="text-center text-2xl pb-10">No more teams to load</div>
