@@ -12,7 +12,7 @@ import {
   TeamDto,
 } from "../../utils/TeamActions";
 import { getSkillsets } from "../../utils/Skillsets";
-import { match } from "../../utils/match";
+import { match, matchif } from "../../utils/match";
 
 export interface FormData {
   description: string;
@@ -41,18 +41,12 @@ export const Register: React.FC = () => {
   const userHasTeam = Boolean(userTeam);
 
   // mutations
+  type saveArgs = {
+    userTeam: TeamDto | null | undefined;
+    formData: FormData;
+  };
   const { mutate: saveMutate, isLoading: isSaving } = useMutation(
-    async (args: {
-      userTeam: TeamDto | null | undefined;
-      formData: FormData;
-    }) => {
-      const { userTeam, formData } = args;
-      if (userTeam) {
-        return updateTeam(formData);
-      } else {
-        return createTeam(formData);
-      }
-    },
+    (args: saveArgs) => args.userTeam ? updateTeam(args.formData) : createTeam(args.formData),
     {
       onSuccess: (result, args) => {
         setLastFormEvent(args.userTeam ? "update" : "create");
@@ -66,9 +60,7 @@ export const Register: React.FC = () => {
   );
 
   const { mutate: deleteMutate, isLoading: isDeleting } = useMutation(
-    async () => {
-      return deleteTeam();
-    },
+    async () => deleteTeam(),
     {
       onSuccess: () => {
         setLastFormEvent("delete");
@@ -111,8 +103,7 @@ export const Register: React.FC = () => {
     });
     register("description", {
       validate: (value) => {
-        if (value.length > charLimit)
-          return "The character limit is " + charLimit;
+        if (value.length > charLimit) return "The character limit is " + charLimit;
       },
     });
   }, [register]);
@@ -122,58 +113,37 @@ export const Register: React.FC = () => {
   const charRemain = charLimit - description.length;
   const remainColor = charRemain <= 0 ? "text-red-400" : "";
 
-  let statusBar;
-  const statusBarCommonClasses =
-    "p-2 m-8 rounded text-center text-lg font-bold transition ";
-  if (isSaving) {
-    statusBar = (
-      <div className={statusBarCommonClasses + "bg-transparent border"}>
-        Saving...
-      </div>
-    );
-  } else if (isDeleting) {
-    statusBar = (
-      <div className={statusBarCommonClasses + "bg-transparent border"}>
-        Deleting...
-      </div>
-    );
-  } else if (lastFormEvent && lastFormEvent != "error") {
-    const message = match(
-      lastFormEvent,
-      ["create", "Team successfully created!"],
-      ["update", "Team successfully updated!"],
-      ["delete", "Team successfully deleted!"],
-      [null, "Use the form below to let people know about your team!"]
-    );
-    statusBar = (
-      <div className={statusBarCommonClasses + "bg-primary-dark"}>
-        {message}
-      </div>
-    );
-  } else if (lastFormEvent == "error") {
-    statusBar = (
-      <div className={statusBarCommonClasses + "bg-red-500"}>
-        An error occurred while updating, please try again.
-      </div>
-    );
-  } else if (errorLoading) {
-    statusBar = (
-      <div className={statusBarCommonClasses + "bg-red-500"}>
-        An error occurred while checking if you already have a team, please
-        refresh the page.
-      </div>
-    );
-  } else {
-    statusBar = (
-      <div className={statusBarCommonClasses + "bg-transparent border"}>
-        Use the form below to let people know about your team!
-      </div>
-    );
-  }
+  // Configuring the look + message of the status bar
+  const [statusClass, statusMsg] = matchif(
+    [isSaving, ["bg-transparent border", "Saving..."]],
+
+    [isDeleting, ["bg-transparent border", "Deleting..."]],
+
+    [lastFormEvent == "error", [
+      "bg-red-500",
+      "An error occurred while updating, please try again."
+    ]],
+
+    [lastFormEvent, [
+      "bg-primary-dark",
+      match(lastFormEvent,
+        ["create", "Team successfully created!"],
+        ["update", "Team successfully updated!"],
+        ["delete", "Team successfully deleted!"]
+      )!
+    ]],
+
+    [errorLoading, [
+      "bg-red-500",
+      "An error occurred while checking if you already have a team, please refresh the page."
+    ]],
+  ) || ["bg-transparent border", "Use the form below to let people know about your team!"];
 
   return (
     <>
-      {statusBar}
+      <div className={"p-2 m-8 rounded text-center text-lg font-bold transition " + statusClass}>
+        {statusMsg}
+      </div>
       <form
         className="mx-auto space-y-8"
         onSubmit={handleSubmit((data) =>
