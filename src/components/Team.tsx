@@ -31,28 +31,46 @@ export class TeamData {
 
 export const Team: React.FC<{team:TeamData}> = ({team}) => {
 
-  const skillstr = team.skills.map(r => <SkillsetSVG skillsetId={r.id} key={r.id} className="w-7 fill-primary inline-block m-1 align-top"/>);
+  const skillstr = team.skills.map(r => <SkillsetSVG skillsetId={r.id} key={r.id} className="w-6 fill-primary inline-block m-1 align-top"/>);
 
   return (
     <div data-team-id={team.id} className="my-8 p-5 border relative">
       <div className="absolute -top-2.5 left-1 px-3 bg-black leading-none font-bold text-lg">
         <a href={`https://discordapp.com/users/${team.authorId}`} target="_blank" rel="noreferrer">
           <span className="pb-1 border-b-2 border-white" style={{borderBottomWidth: "1px"}}>
-            🔗 {team.author}&rsquo;s Team
+            {team.author}&rsquo;s Team
           </span>
         </a>
       </div>
+
+      <div className="absolute -top-2.5 right-10 px-3 bg-black leading-none font-bold text-lg">
+        Skills needed:
+      </div>
+
       <div className="flex justify-between">
-        <div className="mr-5 text-lg">{team.description}</div>
-        <div>
-          <div className="mb-1">
-            🕓{" "}
-            {formatDistanceToNow(team.createdAt, {
-              addSuffix: true,
-              locale: enGB,
-            })}
+        <div className="mr-5">
+          {team.description}
+
+          {/* Horrific spacing hack to ensure the position:absolute row below doesn't overlap variable-length text */}
+          <br />&nbsp;<br />&nbsp;
+
+          <div className="absolute bottom-6 block">
+            <span className="text-xs mr-2">
+              🚩
+            </span>
+
+            <span className="text-xs">
+              🕓 &nbsp;&nbsp;
+              {formatDistanceToNow(team.createdAt, {
+                addSuffix: true,
+                locale: enGB,
+              })}
+            </span>
           </div>
-          <div className="text-lg w-36">🔎 {skillstr}</div>
+        </div>
+
+        <div> {/* Empty div used in flex spacing, somehow */}
+          <div className="text-lg w-36">{skillstr}</div>
         </div>
       </div>
     </div>
