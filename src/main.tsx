@@ -27,7 +27,6 @@ ReactDOM.render(
             />
           </div>
         </NavLink>
-        <PageUserInfo/>
         <PageNavigator/>
         <Routes />
       </PageContainer>
