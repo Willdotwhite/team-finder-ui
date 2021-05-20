@@ -32,7 +32,7 @@ export const AuthorizedCallback: React.FC = () => {
     localStorage.setItem("userData", JSON.stringify(userInfo))
 
     // Redirect to homepage, we don't need to stay here!
-    window.location.replace("/");
+    window.location.replace("/register");
 
     return null
 }
