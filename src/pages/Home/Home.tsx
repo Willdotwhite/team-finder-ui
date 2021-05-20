@@ -25,6 +25,10 @@ export const Home: React.FC = () => {
   const [selectedSkillsets, setSelectedSkillsets] = useState<number[]>([]);
 
   return (<>
+    <div className="text-center text-3xl text-primary font-light my-12">
+    Looking for a team to do the jam with?<br></br>
+    Check the list below to find one to join!
+    </div>
     <PageHeader>
       Filter by what skills you can offer:
     </PageHeader>
