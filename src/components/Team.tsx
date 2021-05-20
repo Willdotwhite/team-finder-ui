@@ -55,10 +55,6 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
           <br />&nbsp;<br />&nbsp;
 
           <div className="absolute bottom-6 block">
-            <span className="text-xs mr-2">
-              🚩
-            </span>
-
             <span className="text-xs">
               🕓 &nbsp;&nbsp;
               {formatDistanceToNow(team.createdAt, {
