@@ -13,6 +13,7 @@ import {
 } from "../../utils/TeamActions";
 import { getSkillsets } from "../../utils/Skillsets";
 import { match, matchif } from "../../utils/match";
+import { PageUserInfo } from "../../components/PageUserInfo";
 
 export interface FormData {
   description: string;
@@ -141,6 +142,8 @@ export const Register: React.FC = () => {
 
   return (
     <>
+      <PageUserInfo />
+
       <div className={"p-2 m-8 rounded text-center text-lg font-bold transition " + statusClass}>
         {statusMsg}
       </div>

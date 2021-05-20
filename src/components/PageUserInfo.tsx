@@ -44,7 +44,7 @@ const LoggedInUserInfoPanel: React.FC<UserInfo> = ({avatar, username}) => {
   ) || "No team registered";
 
   return (
-    <div className="inline-flex flex-row justify-center items-center p-6 border">
+    <div className="inline-flex flex-row justify-center items-center p-6">
       <img style={{height: "90px", width: "90px"}} className="object-cover rounded-full ring-4 ring-primary" src={avatar} />
       <div className="flex flex-col justify-center">
         <div className="flex flex-row mb-2">
