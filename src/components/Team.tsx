@@ -34,11 +34,18 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
   const skillstr = team.skills.map(r => <SkillsetSVG skillsetId={r.id} key={r.id} className="w-6 fill-primary inline-block m-1 align-top"/>);
 
   return (
-    <div data-team-id={team.id} className="my-8 p-5 border relative">
+    <div data-team-id={team.id} className="my-8 p-5 pb-3 border relative">
       <div className="absolute -top-2.5 left-1 px-3 bg-black leading-none font-bold text-lg">
         <a href={`https://discordapp.com/users/${team.authorId}`} target="_blank" rel="noreferrer">
           <span className="pb-1 border-b-2 border-white" style={{borderBottomWidth: "1px"}}>
             {team.author}&rsquo;s Team
+            <img
+              className="inline-block m-0 w-6 pl-1 fill-primary"
+              src="/Speechbubble.svg"
+              width={21}
+              height={24}
+              alt="Click here to open this user's Discord profile"
+            />
           </span>
         </a>
       </div>
@@ -54,7 +61,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
           {/* Horrific spacing hack to ensure the position:absolute row below doesn't overlap variable-length text */}
           <br />&nbsp;<br />&nbsp;
 
-          <div className="absolute bottom-6 block">
+          <div className="absolute bottom-4 block">
             <span className="text-xs">
               🕓 &nbsp;&nbsp;
               {formatDistanceToNow(team.createdAt, {
