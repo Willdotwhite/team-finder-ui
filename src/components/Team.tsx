@@ -64,7 +64,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
           <div className="absolute bottom-4 block">
             <span className="text-xs">
               🕓 &nbsp;&nbsp;
-              {formatDistanceToNow(team.createdAt, {
+              {formatDistanceToNow(team.updatedAt, {
                 addSuffix: true,
                 locale: enGB,
               })}
