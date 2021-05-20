@@ -44,9 +44,8 @@ export const SkillsetSelector: React.FC<Props> = ({
             key={s.id}
             onClick={() => !disabled && toggleSelected(s.id)}
             className={
-              "group items-center flex flex-row sm:block sm:text-center leading-tight sm:break-words align-top cursor-pointer sm:flex-1 sm:w-0"
+              "group items-center flex flex-row sm:block sm:text-center leading-tight sm:break-words align-top cursor-pointer sm:flex-1 sm:w-0 sm:max-w-[5rem]"
             }
-            style={{ maxWidth: 80 }}
           >
             <SkillsetSVG
               skillsetId={s.id}
