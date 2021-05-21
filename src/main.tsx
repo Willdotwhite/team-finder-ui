@@ -6,7 +6,6 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { Routes } from "./Routes";
 import "tailwindcss/tailwind.css";
 import "./index.css";
-import { PageUserInfo } from "./components/PageUserInfo";
 import { PageNavigator } from "./components/PageNavigator";
 import { NavLink } from "react-router-dom";
 import { PageContainer } from "./components/PageContainer";
