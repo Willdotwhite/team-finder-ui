@@ -32,7 +32,18 @@ export const PageNavigator: React.FC = () => (
       >
       <div>Post / Edit<br />Your Team</div>
       <DiscordText/>
-      </NavLink>
+    </NavLink>
+
+    <NavLink
+      to="/about"
+      exact={true}
+      activeClassName="text-primary font-medium"
+      activeStyle={{transform: "translate(0px, 1px)"}}
+      className="leading-tight text-2xl font-light bg-black py-3 px-12 text-white text-center uppercase whitespace-pre rounded-t-lg border-t border-l border-r"
+      >
+      FAQ /<br />
+      About
+    </NavLink>
   </div>
 );
 
