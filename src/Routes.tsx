@@ -8,20 +8,21 @@ import { Logout } from "./pages/Login/Logout"
 import { AuthorizedCallback } from "./pages/Login/AuthorizedCallback";
 import { NotFound } from "./pages/Errors/NotFound";
 import { LoginFailure } from "./pages/Errors/LoginFailure";
+import { isUserLoggedIn } from "./components/PageUserInfo";
 
 export const Routes: React.FC = () => (
   <Switch>
     <Route exact={true} path="/">
       <Home />
     </Route>
-    <Route exact={true} path="/register">
-      <Register />
-    </Route>
     <Route exact={true} path="/about">
       <About />
     </Route>
     <Route exact={true} path="/login">
       <Login />
+    </Route>
+    <Route exact={true} path="/register">
+      {isUserLoggedIn() ? <Register/> : <Login />}
     </Route>
     <Route exact={true} path="/logout">
       <Logout />
