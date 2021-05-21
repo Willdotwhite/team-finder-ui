@@ -20,7 +20,8 @@ export const PageNavigator: React.FC = () => (
       className="leading-tight text-2xl font-light bg-black py-3 px-7 text-white text-center uppercase whitespace-pre rounded-t-lg border-t border-l border-r"
       >
       <div>Post / Edit<br />Your Team</div>
-
+    </NavLink>
+    
     <NavLink
       to="/about"
       exact={true}
