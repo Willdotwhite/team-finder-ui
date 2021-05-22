@@ -55,7 +55,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
       </div>
 
       <div className="flex justify-between">
-        <div className="mr-5">
+        <div className="mr-5 overflow-hidden">
           {team.description}
 
           {/* Horrific spacing hack to ensure the position:absolute row below doesn't overlap variable-length text */}
