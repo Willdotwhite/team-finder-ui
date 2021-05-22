@@ -35,7 +35,7 @@ export const SkillsetSelector: React.FC<Props> = ({
         const color = disabled
           ? "fill-white cursor-not-allowed"
           : selectedSkillsets.includes(s.id)
-          ? "fill-primary transition-none"
+          ? "fill-primary border-4 transition-none"
           : "fill-white opacity-50 group-hover:opacity-100 transition";
 
         return (
