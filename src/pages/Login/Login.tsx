@@ -6,7 +6,7 @@ export const Login: React.FC = () => {
 
   return (<>
     <div className="text-center text-3xl text-primary font-light my-12">
-      Login with Discord to continue
+      Log in with Discord to continue
     </div>
 
     <div className="text-center">
