@@ -9,17 +9,18 @@ export const Login: React.FC = () => {
       Login with Discord to continue
     </div>
 
-    <a className="block mb-8" href={loginUrl}>
-      <div className="text-center text-2xl p-4 border-2 border-white">
-        <img
-          className="inline-block"
-          src="/DiscordLogo.svg"
-          width={320}
-          height={180}
-        />
-        <h2>Click here to login</h2>
-      </div>
-    </a>
+    <div className="text-center">
+      <a className="inline-block mb-8" href={loginUrl}>
+        <div className="text-center text-2xl sm:p-8 sm:px-16 p-4 px-8 border-2 border-white">
+          <img
+            className="mx-auto"
+            width={320}
+            src="/DiscordLogo.svg"
+          />
+          <div className="inline-block p-4 my-4 leading-none rounded-2xl" style={{background:"#5865F2"}}>Log In with Discord</div>
+        </div>
+      </a>
+    </div>
 
     <p>This site uses your Discord account to track your team, and let other jammers find you easily!</p>
     <p>Please be respectful and follow the guidelines on the Register page once you&rsquo;ve logged in.</p>
