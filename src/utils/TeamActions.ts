@@ -1,7 +1,9 @@
 import {FormData} from "../pages/Register/Register";
+import {filterValidLanguageCodes} from "../components/LanguageSelector";
 
 export interface TeamDto {
   description: string;
+  languages: string[];
   skillsetMask: number;
 }
 
@@ -36,6 +38,9 @@ export const reportTeam = async (teamId: string): Promise<Response> => {
 const teamFromForm = (formData: FormData): TeamDto => {
   return {
     description: formData.description,
+    // TODO: Get the form to submit the correct multi-select data!
+    // languages: filterValidLanguageCodes(formData.languages),
+    languages: ["en", "ja", "ko"],
     skillsetMask: formData.skillsets.reduce((a, b) => a + b, 0),
   };
 };
