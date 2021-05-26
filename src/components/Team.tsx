@@ -4,6 +4,7 @@ import { enGB } from 'date-fns/locale';
 
 import { getSkillsets, Skillset } from "../utils/Skillsets";
 import {SkillsetSVG} from "./SkillsetSVG";
+import { getFlags } from "./LanguageSelector";
 
 export class TeamData {
   author: string;
@@ -64,6 +65,9 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
           <br />&nbsp;<br />&nbsp;
 
           <div className="absolute bottom-4 block">
+            <span className="text-xs mr-2">
+               {getFlags(team.languages)}
+            </span>
             <span className="text-xs">
               🕓 &nbsp;&nbsp;
               {formatDistanceToNow(team.updatedAt, {

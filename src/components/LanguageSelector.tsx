@@ -16,6 +16,19 @@ export const LanguageSelector: React.FC = () => (
   </>
 )
 
+export const getFlags = (codes: string[]) : string => {
+  let flags = "";
+  codes.forEach(code => {
+    languages.forEach(language => {
+      if (language.code == code) {
+        flags += language.flag;
+      }
+    })
+  })
+
+  return flags;
+}
+
 export const filterValidLanguageCodes = (codes: string[]) : string[] => {
   return codes.filter(code => languages.some(language => language.code === code))
 }
