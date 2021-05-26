@@ -1,7 +1,9 @@
 import {FormData} from "../pages/Register/Register";
+import {isValidLanguageCode} from "../components/LanguageSelector";
 
 export interface TeamDto {
   description: string;
+  language: string;
   skillsetMask: number;
 }
 
@@ -32,6 +34,7 @@ export const deleteTeam = async (): Promise<Response> => {
 const teamFromForm = (formData: FormData): TeamDto => {
   return {
     description: formData.description,
+    language: isValidLanguageCode(formData.language) ? formData.language : "en",
     skillsetMask: formData.skillsets.reduce((a, b) => a + b, 0),
   };
 };

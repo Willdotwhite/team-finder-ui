@@ -14,9 +14,11 @@ import {
 import { getSkillsets } from "../../utils/Skillsets";
 import { match, matchif } from "../../utils/match";
 import { PageUserInfo } from "../../components/PageUserInfo";
+import { LanguageSelector } from "../../components/LanguageSelector";
 
 export interface FormData {
   description: string;
+  language: string;
   skillsets: NestedValue<number[]>;
 }
 
@@ -237,6 +239,12 @@ export const Register: React.FC = () => {
             </ul>
           </div>
         </div>
+
+        <div className="space-y-2">
+          <h2 className="text-lg block">Optional Fields:</h2>
+          <LanguageSelector />
+        </div>
+
         <Button type="submit" disabled={!allowMutation}>
           {userHasTeam ? "Update Team" : "Post Team"}
         </Button>
