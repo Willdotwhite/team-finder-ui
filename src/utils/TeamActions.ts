@@ -34,7 +34,9 @@ export const deleteTeam = async (): Promise<Response> => {
 const teamFromForm = (formData: FormData): TeamDto => {
   return {
     description: formData.description,
-    languages: filterValidLanguageCodes(formData.languages) ? formData.languages : ["en"],
+    // TODO: Get the form to submit the correct multi-select data!
+    // languages: filterValidLanguageCodes(formData.languages),
+    languages: ["en", "ja", "ko"],
     skillsetMask: formData.skillsets.reduce((a, b) => a + b, 0),
   };
 };

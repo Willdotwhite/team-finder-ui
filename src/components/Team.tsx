@@ -9,6 +9,7 @@ export class TeamData {
   author: string;
   authorId: string;
   description: string;
+  languages: string[];
   skills: Array<Skillset>;
   updatedAt: Date;
   id: number;
@@ -16,6 +17,7 @@ export class TeamData {
     this.author = teamJSON.author as string;
     this.authorId = teamJSON.authorId as string;
     this.description = teamJSON.description as string;
+    this.languages = (teamJSON.languages as string).split(",");
 
     const updatedAt = teamJSON.updatedAt as string;
     this.updatedAt = new Date(updatedAt);
