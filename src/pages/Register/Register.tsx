@@ -18,12 +18,12 @@ import { LanguageSelector } from "../../components/LanguageSelector";
 
 export interface FormData {
   description: string;
-  language: string;
+  languages: string[];
   skillsets: NestedValue<number[]>;
 }
 
 const charLimit = 240;
-const defaultTeam = { description: "", skillsets: [] as number[] };
+const defaultTeam = { description: "", languages: ["en"], skillsets: [] as number[] };
 
 type FormEvent = "create" | "update" | "delete" | "error";
 
@@ -92,6 +92,7 @@ export const Register: React.FC = () => {
         ? defaultTeam
         : {
             description: userTeam.description,
+            languages: userTeam.languages || "en",
             skillsets: getSkillsets(userTeam.skillsetMask).map((s) => s.id),
           };
     reset(newDefaultValues);
@@ -242,6 +243,8 @@ export const Register: React.FC = () => {
 
         <div className="space-y-2">
           <h2 className="text-lg block">Optional Fields:</h2>
+
+          {/* TODO: This needs to submit a string[] on form submit - for me it just submits "null" */}
           <LanguageSelector />
         </div>
 

@@ -1,11 +1,12 @@
 import * as React from "react";
 
+// TODO: Make this a multi-select that submits string[]
 export const LanguageSelector: React.FC = () => (
   <>
-  <label htmlFor="language" className="block">
+  <label htmlFor="languages" className="block">
     Preferred Language
   </label>
-  <select id="language" defaultValue={"en"} className="text-black">
+  <select id="languages" name="languages" defaultValue={"en"} className="text-black">
     {languages.map(language => (
       <option key={language.code} value={language.code}>
         {language.display}
@@ -15,7 +16,9 @@ export const LanguageSelector: React.FC = () => (
   </>
 )
 
-export const isValidLanguageCode = (code: string) : boolean => languages.some(language => language.code === code);
+export const filterValidLanguageCodes = (codes: string[]) : string[] => {
+  return codes.filter(code => languages.some(language => language.code === code))
+}
 
 const languages = [
   {code: "am", display: "Amharic"},
