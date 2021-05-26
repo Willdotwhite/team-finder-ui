@@ -3,8 +3,9 @@ import { formatDistanceToNow } from 'date-fns';
 import { enGB } from 'date-fns/locale';
 
 import { getSkillsets, Skillset } from "../utils/Skillsets";
-import {SkillsetSVG} from "./SkillsetSVG";
 import { getFlags } from "./LanguageSelector";
+import { SkillsetSVG } from "./SkillsetSVG";
+import { ReportButton } from "./ReportButton";
 
 export class TeamData {
   author: string;
@@ -79,7 +80,15 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
         </div>
 
         <div> {/* Empty div used in flex spacing, somehow */}
-          <div className="text-lg w-36">{skillstr}</div>
+          <div className="text-lg w-36">
+            {skillstr}
+
+            <div className="absolute bottom-4 right-4">
+              {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+              {/*// @ts-ignore*/}
+              <ReportButton teamId={team.id} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
