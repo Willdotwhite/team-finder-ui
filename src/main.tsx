@@ -9,6 +9,7 @@ import "./index.css";
 import { PageNavigator } from "./components/PageNavigator";
 import { NavLink } from "react-router-dom";
 import { PageContainer } from "./components/PageContainer";
+import { StatusMessenger } from "./components/StatusMessenger";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -30,6 +31,7 @@ ReactDOM.render(
         <Routes />
       </PageContainer>
       <ReactQueryDevtools />
+      <StatusMessenger />
     </Context>
   </React.StrictMode>,
   document.getElementById("root")

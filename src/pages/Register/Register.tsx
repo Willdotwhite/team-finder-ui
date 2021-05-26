@@ -14,6 +14,7 @@ import {
 import { getSkillsets } from "../../utils/Skillsets";
 import { match, matchif } from "../../utils/match";
 import { PageUserInfo } from "../../components/PageUserInfo";
+import { AddMessage } from "../../components/StatusMessenger";
 
 export interface FormData {
   description: string;
@@ -114,11 +115,11 @@ export const Register: React.FC = () => {
   const charRemain = charLimit - description.length;
   const remainColor = charRemain <= 0 ? "text-red-400" : "";
 
-  // Configuring the look + message of the status bar
+  // Configuring the look + message of the status message
   const [statusClass, statusMsg] = matchif(
-    [isSaving, ["bg-transparent border", "Saving..."]],
+    [isSaving, ["bg-black border", "Saving..."]],
 
-    [isDeleting, ["bg-transparent border", "Deleting..."]],
+    [isDeleting, ["bg-black border", "Deleting..."]],
 
     [lastFormEvent == "error", [
       "bg-red-500",
@@ -138,17 +139,17 @@ export const Register: React.FC = () => {
       "bg-red-500",
       "An error occurred while checking if you already have a team, please refresh the page."
     ]],
-  ) || ["bg-transparent border", "Use the form below to let people know about your team!"];
+  ) || ["", ""];
+
+  React.useEffect(() => {
+    if(statusMsg != "") AddMessage(statusClass, statusMsg);
+  }, [statusClass, statusMsg]);
 
   return (
     <>
       <PageUserInfo />
-
-      <div className={"p-2 m-8 rounded text-center text-lg font-bold transition " + statusClass}>
-        {statusMsg}
-      </div>
       <form
-        className="mx-auto space-y-8"
+        className="mx-auto space-y-8 pb-12"
         onSubmit={handleSubmit((data) =>
           saveMutate({ userTeam, formData: data })
         )}
