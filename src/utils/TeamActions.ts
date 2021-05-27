@@ -30,6 +30,20 @@ export const reportTeam = async (teamId: string): Promise<Response> => {
   return await makeApiRequest(`/teams/report?teamId=${teamId}`, "POST");
 };
 
+/* Admin actions - refactor out of here later! */
+export const getReportedTeams = async (): Promise<Response> => {
+  return await makeApiRequest("/admin/reports", "GET");
+};
+
+export const adminBanUser = async (userId: string): Promise<Response> => {
+  return await makeApiRequest(`/admin/ban-user?userId=${userId}`, "POST");
+};
+
+export const adminDeleteTeam = async (teamId: string): Promise<Response> => {
+  return await makeApiRequest(`/admin/delete-team?teamId=${teamId}`, "DELETE");
+};
+
+
 /**
  * Convert FormData to the format needed to create/update a Team record
  * @param formData
