@@ -30,6 +30,11 @@ export const reportTeam = async (teamId: string): Promise<Response> => {
   return await makeApiRequest(`/teams/report?teamId=${teamId}`, "POST");
 };
 
+export const getReportedTeams = async (): Promise<Response> => {
+  return await makeApiRequest("/admin/reports", "GET");
+};
+
+
 /**
  * Convert FormData to the format needed to create/update a Team record
  * @param formData

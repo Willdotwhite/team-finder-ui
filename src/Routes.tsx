@@ -9,6 +9,7 @@ import { AuthorizedCallback } from "./pages/Login/AuthorizedCallback";
 import { NotFound } from "./pages/Errors/NotFound";
 import { LoginFailure } from "./pages/Errors/LoginFailure";
 import { isUserLoggedIn } from "./components/PageUserInfo";
+import { Admin } from "./pages/Admin/Admin";
 
 export const Routes: React.FC = () => (
   <Switch>
@@ -17,6 +18,9 @@ export const Routes: React.FC = () => (
     </Route>
     <Route exact={true} path="/about">
       <About />
+    </Route>
+    <Route exact={true} path="/admin">
+      <Admin />
     </Route>
     <Route exact={true} path="/register">
       {isUserLoggedIn() ? <Register/> : <Login />}
