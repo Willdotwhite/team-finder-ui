@@ -9,6 +9,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      borderWidth: {
+        5: "5px"
+      },
       width: {
         21: "5.25rem"
       },
