@@ -1,5 +1,12 @@
 import React from "react";
-import { PageHeader } from "../../components/PageHeader";
+import { ReactSVG } from "react-svg";
+
+const AboutPara: React.FC = ({children}) => (<p className="mb-2">{children}</p>);
+
+const FAQItem = (heading:string, children: React.ReactNode): React.ReactNode => (<>
+  <h2 className="text-3xl text-white font-light my-6">{heading}</h2>
+  {children}
+</>);
 
 export const About: React.FC = () => {
 
@@ -8,85 +15,90 @@ export const About: React.FC = () => {
     Welcome to the GMTK Game Jam 2021 Team Finder!<br></br>
     </div>
 
-    <PageHeader>
-      What is this website?
-    </PageHeader>
+    {FAQItem("What is this website?", (<>
+      <AboutPara>
+        This is a semi-official fan project aimed at supporting the jam in becoming more community-driven,
+        and to help you jammers make new teams and maybe even meet new friends!
+      </AboutPara>
 
-    <p className="mb-2">
-      This is a semi-official fan project aimed at supporting the jam in becoming more community-driven,
-      and to help you jammers make new teams and maybe even meet new friends!
-    </p>
+      <AboutPara>
+        <span className="italic">This is not run by Mark Brown!</span> Mark gave his blessing for us to use his shiny logos and branding,
+        but other than that Mark isn&#39;t directly involved in the development of this tool.
+        Please do not contact Mark with questions about this tool.
+      </AboutPara>
+    </>))}
 
-    <p className="mb-2">
-      <span className="italic">This is not run by Mark Brown!</span> Mark gave his blessing for us to use his shiny logos and branding,
-      but other than that Mark isn&#39;t directly involved in the development of this tool.
-      Please do not contact Mark with questions about this tool.
-    </p>
-    <h2 className="text-3xl text-white font-light my-6">
-      How do I find teams to join?
-    </h2>
-
-    <p className="mb-2">
+    {FAQItem("How do I find teams to join?", (<>
+      <AboutPara>
       If you are looking for a team to join, click on the Team Finder tab above!
-    </p>
+      </AboutPara>
 
-    <p className="mb-2">
-      You can scroll through the list of teams that other jammers have posted
-      and filter them according to what skills they are looking for.
-    </p>
+      <AboutPara>
+        You can scroll through the list of teams that other jammers have posted
+        and filter them according to what skills they are looking for.
+      </AboutPara>
 
-    <p className="mb-2">
-      Once you find a team that looks good, click their name/message bubble 
-      <img
-        className="inline-block m-0 mr-1 w-6 pl-1 fill-primary"
-        src="/Speechbubble.svg"
-        width={21}
-        height={24}
-        alt="Click here to open this user's Discord profile"
-      />
-      and a window will open to their Discord profile where you can contact them.
-    </p>
-    <h2 className="text-3xl text-white font-light my-6">
-      How do I post my own team?
-    </h2>
+      <AboutPara>
+        Once you find a team that looks good, click their name/message bubble 
+        <img
+          className="inline-block m-0 mr-1 w-6 pl-1 fill-primary"
+          src="/Speechbubble.svg"
+          width={21}
+          height={24}
+          alt="Click here to open this user's Discord profile"
+        />
+        and a window will open to their Discord profile where you can contact them.
+      </AboutPara>
+    </>))}
+    
+    {FAQItem("How do I post my own team?", (<>
+      <AboutPara>
+        If you want to post about your own team to find new teammates, click on the Post / Edit Your Team tab above.
+      </AboutPara>
 
-    <p className="mb-2">
-      If you want to post about your own team to find new teammates, click on the Post / Edit Your Team tab above.
-    </p>
+      <AboutPara>
+        You will be asked to authenticate your Discord account (don&#39;t worry, we only get access to your Discord username).
+      </AboutPara>
 
-    <p className="mb-2">
-      You will be asked to authenticate your Discord account (don&#39;t worry, we only get access to your Discord username).
-    </p>
+      <AboutPara>
+        Once you&#39;re logged in, you can fill in what roles you are looking for and write a short description about your team.
+        Make sure that you allow for friend requests from &quot;Everyone&quot; in your <a href="FinderSettingsImage_2.png" className="underline">Discord settings</a>, otherwise people can&#39;t contact you!
+      </AboutPara>
+    </>))}
+    
+    {FAQItem("I've found someone for my team, what do I do now?", (<>
+      <AboutPara>
+        If you&#39;ve filled a role and are no longer looking for it, you can edit your team post in the Post / Edit Your Team tab above.<br />
+        If you&#39;re no longer looking for any more team members, make sure to delete your post in the Post / Edit Your Team tab!
+      </AboutPara>
+    </>))}
+    
+    {FAQItem("Can I report team posts?", (<>
+      <AboutPara>
+        Yes! If you have any moderation concerns, use the Report function
+        <ReactSVG
+          style={{width:16}}
+          src="/Flag.svg"
+          className="inline-block fill-gray-500 mx-1"
+        />
+        or contact the Jam Moderators on the GMTK Discord server.
+        If you are encountering technical problems, please <span className="text-primary">@Team Finder Tech Support</span> on the GMTK Discord server.
+      </AboutPara>  
+    </>))}
+    
+    {FAQItem("What is the GMTK Game Jam 2021, anyway?", (<>
+      <AboutPara>
+        Please see <a className="text-primary underline" href="https://itch.io/jam/gmtk-2021">the official itch.io page for details</a>.
+      </AboutPara>
+    </>))}
 
-    <p className="mb-2">
-      Once you&#39;re logged in, you can fill in what roles you are looking for and write a short description about your team.
-      Make sure that you allow for friend requests from &quot;Everyone&quot; in your <a href="FinderSettingsImage_2.png" className="underline">Discord settings</a>, otherwise people can&#39;t contact you!
-    </p>
-    <h2 className="text-3xl text-white font-light my-6">
-      I&#39;ve found someone for my team, what do I do now?
-    </h2>
+    {FAQItem("Help! I just submitted a team, but I can't see it in the Team Finder?", (<>
+      <AboutPara>
+        It can take up to 5 minutes for the Team Finder to update. If it&apos;s been more than 5 minutes, and you still can&apos;t see your team,
+        please <span className="text-primary">@Team Finder Tech Support</span> on the GMTK Discord server.
+      </AboutPara>
+    </>))}
 
-    <p className="mb-2">
-      If you&#39;ve filled a role and are no longer looking for it, you can edit your team post in the Post / Edit Your Team tab above.<br />
-      If you&#39;re no longer looking for any more team members, make sure to delete your post in the Post / Edit Your Team tab!
-    </p>
-    <h2 className="text-3xl text-white font-light my-6">
-      Can I report team posts?
-    </h2>
-
-    <p className="mb-2">
-      Yes! If you have any moderation concerns, use the Report function
-      <img
-        className="inline-block m-0 mr-1 w-6 pl-1 fill-primary"
-        src="/Flag.svg"
-        width={21}
-        height={24}
-        alt="Click here to open this user's Discord profile"
-      />
-      or contact the Jam Moderators on the GMTK Discord server.
-      If you are encountering technical problems, please contact Discord user <a className="text-primary font-medium" href="https://discordapp.com/users/427486675409829898">Dotwo#5394</a>.
-    </p>
-
-    <div className="my-12"></div>
+    <div className="mb-12"></div>
   </>);
 };
