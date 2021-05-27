@@ -1,54 +1,51 @@
 import * as React from "react";
-import {Props} from "react";
-import {reportTeam} from "../utils/TeamActions";
+import { reportTeam } from "../utils/TeamActions";
 import { isUserLoggedIn } from "../components/PageUserInfo";
 import { AddMessage } from "../components/StatusMessenger";
-
-const trySubmitReport = (teamId: string) => {
-  if (!isUserLoggedIn()) {
-    AddMessage("bg-red-500", "Please login to report a team");
-    return;
-  }
-
-  if (hasAlreadySubmittedTeam(teamId)) {
-    return;
-  }
-
-  submitReport(teamId);
-}
-
-const hasAlreadySubmittedTeam = (teamId: string) => getReports()[teamId] === true;
+import { ReactSVG } from "react-svg";
+import { useForceUpdate } from "../utils/useForceUpdate";
 
 const getReports = () => JSON.parse(localStorage.getItem("reports") || '{}');
+const userReportedTeam = (teamId: string) => getReports()[teamId] === true;
 
-const submitReport = (teamId: string) => {
-  reportTeam(teamId).then(() => {
-    const reports = getReports();
-    reports[teamId] = true;
-    localStorage.setItem("reports", JSON.stringify(reports));
+const successfulSubmitText = "Your report has been received, a moderator will investigate";
 
-    AddMessage("bg-green-500", "Your report has been received, a moderator will look into this further");
-  })
+const trySubmitReport = async (teamId: string) => {
+  if (!isUserLoggedIn()) return AddMessage("bg-red-500", "Please login to report a team");
+  if (userReportedTeam(teamId)) AddMessage("bg-primary-dark", successfulSubmitText);
+  
+
+  const res = await reportTeam(teamId);
+
+  if(res.status != 200){
+    AddMessage("bg-red-500", "There was an error trying to report this team. Please try again.");
+    return;
+  }
+
+  const reports = getReports();
+  reports[teamId] = true;
+  localStorage.setItem("reports", JSON.stringify(reports));
+
+  AddMessage("bg-primary-dark", successfulSubmitText);
 }
 
-const activeStyle = "invert(1) sepia(1) saturate(5) hue-rotate(330deg)"
 
-// @ts-ignore
-export const ReportButton: React.FC<Props<any>> = ({teamId: teamId}) => {
-  return (
-    <div
-      className="cursor-pointer mr-1 w-6 pl-1"
-      onClick={() => trySubmitReport(teamId)}
-    >
-      <object
-        type="image/svg+xml"
-        data="./Flag.svg"
-        width="21"
-        height="24"
-        style={{filter: hasAlreadySubmittedTeam(teamId) ? activeStyle : ""}}
-      >
-        {/* This space for rent */}
-      </object>
-    </div>
-  )
-};
+export const ReportButton: React.FC<{teamId:string, className?:string}> = ({teamId, className: baseClass = ""}) => {
+  const forceUpdate = useForceUpdate();
+
+  const handleClick = async () => {
+    await trySubmitReport(teamId);
+    forceUpdate();
+  };
+
+  return (<div onClick={handleClick} className="inline-block cursor-pointer text-black hover:text-red-500 transition-colors">
+    <ReactSVG
+      src="/Flag.svg"
+      className={
+        "inline-block relative -bottom-1.5  mr-1 w-6 pl-1 " +
+        (userReportedTeam(teamId) ? "fill-red-500" : "fill-gray-500")
+      }
+    />
+    Report?
+  </div>);
+}
