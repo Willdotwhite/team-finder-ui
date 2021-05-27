@@ -12,7 +12,7 @@ const successfulSubmitText = "Your report has been received, a moderator will in
 
 const trySubmitReport = async (teamId: string) => {
   if (!isUserLoggedIn()) return AddMessage("bg-red-500", "Please login to report a team");
-  if (userReportedTeam(teamId)) AddMessage("bg-primary-dark", successfulSubmitText);
+  if (userReportedTeam(teamId)) return AddMessage("bg-primary-dark", successfulSubmitText);
   
 
   const res = await reportTeam(teamId);
