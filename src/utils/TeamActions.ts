@@ -1,5 +1,4 @@
 import {FormData} from "../pages/Register/Register";
-import {filterValidLanguageCodes} from "../components/LanguageSelector";
 
 export interface TeamDto {
   description: string;
@@ -19,7 +18,7 @@ export const getTeam = async (): Promise<TeamDto | null> => {
 
 export const updateTeam = async (formData: FormData): Promise<TeamDto> => {
   const team = teamFromForm(formData);
-  await makeApiRequest("/teams/mine", "PUT", teamFromForm(formData));
+  await makeApiRequest("/teams/mine", "PUT", team);
   return team;
 };
 
@@ -38,9 +37,7 @@ export const reportTeam = async (teamId: string): Promise<Response> => {
 const teamFromForm = (formData: FormData): TeamDto => {
   return {
     description: formData.description,
-    // TODO: Get the form to submit the correct multi-select data!
-    // languages: filterValidLanguageCodes(formData.languages),
-    languages: ["en", "ja", "ko"],
+    languages: formData.languages,
     skillsetMask: formData.skillsets.reduce((a, b) => a + b, 0),
   };
 };

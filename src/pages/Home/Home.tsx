@@ -22,28 +22,22 @@ const getTeamsList = (
 const pageSize = 25;
 
 export const Home: React.FC = () => {
-  const [selectedSkillsets, setSelectedSkillsets] = useState<number[]>([]);
-
   return (<>
     <div className="text-center text-3xl text-primary font-light my-12">
     Looking for a team to do the jam with?<br></br>
     Check the list below to find one to join!
     </div>
-    <PageHeader>
-      Filter by what skills you can offer:
-    </PageHeader>
-    <SkillsetSelector
-      selectedSkillsets={selectedSkillsets}
-      onChange={setSelectedSkillsets}
-    />
-    <TeamList skillsetMask={ selectedSkillsets.reduce((a, b) => a + b, 0) } />
+    <TeamList/>
   </>);
 };
 
 type orderVals = "desc" | "asc" | "random";
 
-const TeamList: React.FC<{skillsetMask:number}> = ({skillsetMask}) => {
+const TeamList: React.FC = () => {
+  const [selectedSkillsets, setSelectedSkillsets] = useState<number[]>([]);
   const [order, updateOrder] = useState<orderVals>("desc");
+
+  const skillsetMask = selectedSkillsets.reduce((a, b) => a + b, 0);
 
   const {
     isLoading: initalLoad,
@@ -84,7 +78,16 @@ const TeamList: React.FC<{skillsetMask:number}> = ({skillsetMask}) => {
   }, [fetchNextPage, allLoaded]);
 
   return (
-    <div>
+    // scrollbar popping in and out on load causes some jank
+    // setting min-height to be 100% of the view height prevents this
+    <div style={{minHeight:"100vh"}}>
+      <PageHeader>
+        Filter by what skills you can offer:
+      </PageHeader>
+      <SkillsetSelector
+        selectedSkillsets={selectedSkillsets}
+        onChange={setSelectedSkillsets}
+      />
       <label className="text-lg">
         Sort By:
         <select
@@ -97,6 +100,8 @@ const TeamList: React.FC<{skillsetMask:number}> = ({skillsetMask}) => {
           <option value="random">Random</option>
         </select>
       </label>
+
+      <div className="pt-14"></div>
 
       <div>{isError ?
         "Sorry, something went wrong. Please try again in a few minutes." :

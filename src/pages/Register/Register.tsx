@@ -14,8 +14,12 @@ import {
 import { getSkillsets } from "../../utils/Skillsets";
 import { match, matchif } from "../../utils/match";
 import { PageUserInfo } from "../../components/PageUserInfo";
-import { LanguageSelector } from "../../components/LanguageSelector";
+import { languages } from "../../utils/LanguageData";
 import { AddMessage } from "../../components/StatusMessenger";
+import { MultiSelect } from "../../components/MultiSelect";
+
+const languageCodes = languages.map(l => l.code);
+const languageDisplays = languages.map(l => l.display);
 
 export interface FormData {
   description: string;
@@ -89,13 +93,17 @@ export const Register: React.FC = () => {
   // Reset form state depending on server-side userTeam
   React.useEffect(() => {
     const newDefaultValues =
-      userTeam == null
+      !userTeam
         ? defaultTeam
         : {
             description: userTeam.description,
-            languages: userTeam.languages || "en",
+            languages: userTeam.languages || ["en"],
             skillsets: getSkillsets(userTeam.skillsetMask).map((s) => s.id),
           };
+    
+    // Hack, due to the fact that the API returns wrong data
+    // @ts-ignore
+    if(typeof newDefaultValues.languages === "string") newDefaultValues.languages = newDefaultValues.languages.split(",");
     reset(newDefaultValues);
   }, [userTeam, reset]);
 
@@ -243,20 +251,34 @@ export const Register: React.FC = () => {
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-lg block">Optional Fields:</h2>
-
-          {/* TODO: This needs to submit a string[] on form submit - for me it just submits "null" */}
-          <LanguageSelector />
+          <div className="text-lg">
+            Select preferred languages <br/>
+            Use the dropdown to add a language, or click one to remove it
+          </div>
+          <Controller
+            control={control}
+            name="languages"
+            render={({ field: { value, onChange } }) => (
+              <MultiSelect
+                disabled={isLoading}
+                values={value}
+                changeCallback={onChange}
+                possibleVals={languageCodes}
+                displayVals={languageDisplays}
+              />
+            )}
+          />
         </div>
 
-        <Button type="submit" disabled={!allowMutation}>
+        <Button className="inline-block" type="submit" disabled={!allowMutation}>
           {userHasTeam ? "Update Team" : "Post Team"}
         </Button>
+
         {userHasTeam ? (
           <Button
             type="button"
             onClick={() => deleteMutate()}
-            className={"bg-red-500"}
+            className={"inline-block ml-5 bg-red-500"}
             disabled={!allowMutation}
           >
             {"Delete Team"}

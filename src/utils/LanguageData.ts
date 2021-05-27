@@ -1,39 +1,21 @@
-import * as React from "react";
-
-// TODO: Make this a multi-select that submits string[]
-export const LanguageSelector: React.FC = () => (
-  <>
-  <label htmlFor="languages" className="block">
-    Preferred Language
-  </label>
-  <select id="languages" name="languages" defaultValue={"en"} className="text-black">
-    {languages.map(language => (
-      <option key={language.code} value={language.code}>
-        {language.flag} {language.display}
-      </option>
-    ))}
-  </select>
-  </>
-)
-
 export const getFlags = (codes: string[]) : string => {
   let flags = "";
-  codes.forEach(code => {
-    languages.forEach(language => {
-      if (language.code == code) {
-        flags += language.flag;
-      }
-    })
-  })
-
+  for(const c of codes) flags += languageIndex[c].flag;
   return flags;
+}
+
+export const getDisplay = (codes: string[]) : string => {
+  return codes
+    .map(c => languageIndex[c].display)
+    .toString()
+    .replaceAll(',', ', ');
 }
 
 export const filterValidLanguageCodes = (codes: string[]) : string[] => {
   return codes.filter(code => languages.some(language => language.code === code))
 }
 
-const languages = [
+export const languages = [
   {code: "am",    flag: "🏴", display: "Amharic"},
   {code: "ar",    flag: "🇦🇪", display: "Arabic"},
   {code: "eu",    flag: "🏴", display: "Basque"},
@@ -91,3 +73,6 @@ const languages = [
   {code: "cy",    flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿", display: "Welsh"},
   {code: "ot",    flag: "🏳️", display: "Other"},
 ]
+
+const languageIndex: Record<string, {code: string, flag:string, display:string}> = {};
+for(const l of languages) languageIndex[l.code] = l;

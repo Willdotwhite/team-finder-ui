@@ -35,8 +35,8 @@ export const SkillsetSelector: React.FC<Props> = ({
         const color = disabled
           ? "fill-white cursor-not-allowed"
           : selectedSkillsets.includes(s.id)
-          ? "fill-primary border-4 transition-none"
-          : "fill-white opacity-50 group-hover:opacity-100 transition";
+          ? "fill-primary border-5"
+          : "border-2 fill-white opacity-50 group-hover:opacity-100";
 
         return (
           <div
@@ -50,7 +50,7 @@ export const SkillsetSelector: React.FC<Props> = ({
             <SkillsetSVG
               skillsetId={s.id}
               className={
-                "mr-2 sm:mr-0 sm:mb-2 p-2 border-2 rounded w-12 sm:w-auto " +
+                "mr-2 sm:mr-0 sm:mb-2 p-2 rounded w-12 sm:w-auto transition-all " +
                 color
               }
             />
