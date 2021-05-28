@@ -1,8 +1,8 @@
-import React, {Props, useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {getBannedUsers, getReportedTeams} from "../../utils/TeamActions";
 import {TeamData} from "../../components/Team";
 import {TeamView} from "./TeamView";
-import {UserView} from "./UserView";
+import {User, UserView} from "./UserView";
 
 const subNavStyle = "text-primary font-medium leading-tight text-2xl font-light bg-black py-3 px-4 w-48 text-white text-center uppercase whitespace-pre rounded-t-lg border-t border-l border-r"
 
@@ -12,11 +12,9 @@ export const Admin: React.FC = () => {
   const [notLoggedInAsAdmin, setNotLoggedInAsAdmin] = useState(false);
   const [isAngryAdmin, setIsAngryAdmin] = useState(true);
 
-  const [teams, setTeams] = useState([]);
-  const [bannedUsers, setBannedUsers] = useState([]);
+  const [teams, setTeams] = useState< Record<string, unknown>[] >([]);
+  const [bannedUsers, setBannedUsers] = useState< User[] >([]);
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   useEffect(() => {
     let mounted = true;
 
@@ -40,7 +38,9 @@ export const Admin: React.FC = () => {
       })
       .catch(() => setNotLoggedInAsAdmin(true));
 
-    return () => mounted = false;
+    return () => {
+      mounted = false;
+    }
   }, [])
 
   if (notLoggedInAsAdmin) {
@@ -63,20 +63,19 @@ export const Admin: React.FC = () => {
 }
 
 
-const AngryAdminView: React.FC<Props> = ({teams}) => {
+const AngryAdminView: React.FC<{teams:Record<string, unknown>[]}> = ({teams}) => {
   return (
     <div>
       {
         teams && teams.length > 0
-          // @ts-ignore
-          ? teams.map(t => <TeamView key={t.id} team={new TeamData(t)} />)
+          ? teams.map(t => <TeamView key={t.id as string} team={new TeamData(t)} />)
           : <p>Could not load any reported teams</p>
       }
     </div>
   )
 }
 
-const WhoopsAdminView: React.FC<Props> = ({users}) => {
+const WhoopsAdminView: React.FC<{users:User[]}> = ({users}) => {
   return (
     <>
       <div>

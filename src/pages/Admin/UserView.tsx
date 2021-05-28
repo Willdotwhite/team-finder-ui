@@ -1,10 +1,15 @@
-import React, {Props} from "react";
+import React from "react";
 import {tryPerformAction} from "./AdminActions";
 import {adminRedeemUser} from "../../utils/TeamActions";
 
 const tryRedeemUser = (discordId: string) => tryPerformAction(() => adminRedeemUser(discordId))
 
-export const UserView: React.FC<Props> = ({user}) => {
+export interface User {
+  name: string;
+  discordId: string;
+}
+
+export const UserView: React.FC<{user:User}> = ({user}) => {
   const buttonStyling = "bg-blue-500 w-full py-2 mb-3 rounded color-red"
 
   console.log(user)
