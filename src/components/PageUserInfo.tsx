@@ -51,7 +51,7 @@ const LoggedInUserInfoPanel: React.FC<UserInfo> = ({avatar, username}) => {
           <h1 className="text-white font-bold text-lg text-left mx-6">
             {username}
           </h1>
-          <NavLink to="/logout" className="bg-red-500 leading-none p-1.5 pb-2 rounded text-white text-right ml-6 hover:cursor-pointer">Log Out</NavLink>
+          <NavLink to="/logout" className="bg-red-500 text-trueWhite leading-none p-1.5 pb-2 rounded text-white text-right ml-6 hover:cursor-pointer">Log Out</NavLink>
         </div>
         <h1 className="text-white text-center mx-6">Team Skills Needed:</h1>
         <h1 className="text-white text-center mx-6">{teamSkills}</h1>
