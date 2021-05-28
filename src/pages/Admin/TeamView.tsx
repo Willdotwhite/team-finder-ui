@@ -1,7 +1,6 @@
 import React from "react";
 import {Team, TeamData} from "../../components/Team";
 import {adminBanUser, adminClearReports, adminDeleteTeam} from "../../utils/TeamActions";
-import {AddMessage} from "../../components/StatusMessenger";
 import {tryPerformAction} from "./AdminActions";
 
 const tryDeleteTeam = (teamId: string) => tryPerformAction(() => adminDeleteTeam(teamId))
@@ -9,22 +8,6 @@ const tryDeleteTeam = (teamId: string) => tryPerformAction(() => adminDeleteTeam
 const tryBanUser = (userId: string) => tryPerformAction(() => adminBanUser(userId))
 
 const tryClearReports = (teamId: string) => tryPerformAction(() => adminClearReports(teamId))
-
-const tryPerformAction = async (callableFunction: any) => {
-  try {
-    const res = await callableFunction();
-
-    if (res.status != 200) {
-      AddMessage("bg-red-500", "There was an error trying to perform this action. Please try again.");
-      return;
-    }
-
-    AddMessage("bg-primary-dark", "Action successful. Refresh page to update list.");
-  } catch (e) {
-    AddMessage("bg-red-500", "Something went wrong - check JS Console for more details.");
-    console.log(e)
-  }
-}
 
 export const TeamView: React.FC<{team:TeamData}> = ({team}) => {
   const buttonStyling = "w-full py-2 mb-3 rounded"
