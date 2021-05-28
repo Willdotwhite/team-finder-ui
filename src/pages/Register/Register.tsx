@@ -222,30 +222,14 @@ export const Register: React.FC = () => {
               {formState.errors.description.message}
             </div>
           )}
-          <div className="max-width-max text-white text-sm leading-relaxed">
-            <b>Important</b>: To allow interested jammers to contact you, you need to set your Discord account to allow for friend requests and messages from &quot;Everyone&quot;.
-            <br></br>You can find this setting in your Discord User Settings under the <a href="FinderSettingsImage_2.png" className="underline"> Privacy &amp; Safety tab </a>.
-          </div>
+
           <div className="max-width-max text-white text-sm text-opacity-70 leading-relaxed">
-            Don&rsquo;t forget to mention:
+            <span className="text-lg text-red-400">Don&rsquo;t forget to mention:</span>
             <ul className="list-disc pl-6">
-              <li>Your game dev/jam experience</li>
-              <li>Your skills</li>
-              <li>
-                The type of games you like to make, or an idea you have for your
-                jam game
-              </li>
-              <li>
-                How big you want your team, and if there&rsquo;s anybody you{" "}
-                <em>really</em> need
-              </li>
-              <li>
-                If you&rsquo;re looking for a coder, make sure to mention what
-                engine/language you&rsquo;re using!
-              </li>
-              <li>
-                Anything else you&rsquo;d like a potential teammate to know!
-              </li>
+              <li>If you have a timezone you prefer to work in;</li>
+              <li>If you have a specific game engine in mind (Unity, Unreal, Godot etc);</li>
+              <li>The type of games you like to make, or an idea you have for your jam game</li>
+              <li>Anything else you&rsquo;d like a potential teammate to know!</li>
             </ul>
           </div>
         </div>
@@ -268,6 +252,11 @@ export const Register: React.FC = () => {
               />
             )}
           />
+        </div>
+
+        <div className="max-width-max text-white text-sm leading-relaxed">
+          <b>Important</b>: To allow interested jammers to contact you, you need to set your Discord account to allow for friend requests and messages from &quot;Everyone&quot;.
+          <br></br>You can find this setting in your Discord User Settings under the <a href="FinderSettingsImage_2.png" className="underline"> Privacy &amp; Safety tab </a>.
         </div>
 
         <Button className="inline-block" type="submit" disabled={!allowMutation}>
