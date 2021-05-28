@@ -102,6 +102,7 @@ export const Register: React.FC = () => {
           };
     
     // Hack, due to the fact that the API returns wrong data
+    // eslint-disable-next-line
     // @ts-ignore
     if(typeof newDefaultValues.languages === "string") newDefaultValues.languages = newDefaultValues.languages.split(",");
     reset(newDefaultValues);
