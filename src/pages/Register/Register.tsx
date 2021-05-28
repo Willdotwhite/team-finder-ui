@@ -160,7 +160,7 @@ export const Register: React.FC = () => {
     <>
       <PageUserInfo />
       <form
-        className="mx-auto space-y-12 pb-12"
+        className="mx-auto space-y-14 pb-14"
         onSubmit={handleSubmit((data) =>
           saveMutate({ userTeam, formData: data })
         )}
