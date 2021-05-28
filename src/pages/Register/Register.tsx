@@ -17,9 +17,9 @@ import { PageUserInfo } from "../../components/PageUserInfo";
 import { languages } from "../../utils/LanguageData";
 import { AddMessage } from "../../components/StatusMessenger";
 import { MultiSelect } from "../../components/MultiSelect";
+import { ArrayToRecord } from "../../utils/ArrayToRecord";
 
-const languageCodes = languages.map(l => l.code);
-const languageDisplays = languages.map(l => l.display);
+const languageSelectIndex: Record<string, string> = ArrayToRecord(languages, l => [l.code, l.display]);
 
 export interface FormData {
   description: string;
@@ -207,7 +207,7 @@ export const Register: React.FC = () => {
           <textarea
             style={{ resize: "none" }}
             className={classnames(
-              "text-md bg-transparent border px-4 py-2 block w-full placeholder-white placeholder-opacity-40 h-36 disabled:opacity-50",
+              "rounded text-md bg-transparent border px-4 py-2 block w-full placeholder-white placeholder-opacity-40 h-36 disabled:opacity-50",
               formState.errors.description
                 ? "border-red-400 focus:border-red-500"
                 : "border-white focus:border-primary"
@@ -252,8 +252,7 @@ export const Register: React.FC = () => {
 
         <div className="space-y-2">
           <div className="text-lg">
-            Select preferred languages <br/>
-            Use the dropdown to add a language, or click one to remove it
+            Select preferred languages
           </div>
           <Controller
             control={control}
@@ -261,10 +260,9 @@ export const Register: React.FC = () => {
             render={({ field: { value, onChange } }) => (
               <MultiSelect
                 disabled={isLoading}
-                values={value}
+                selected={value}
                 changeCallback={onChange}
-                possibleVals={languageCodes}
-                displayVals={languageDisplays}
+                valueDisplayIndex={languageSelectIndex}
               />
             )}
           />

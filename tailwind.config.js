@@ -1,4 +1,5 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require('tailwindcss/colors')
 
 const primaryBright = "#00FFC0";
 const primaryDark = "#16D0A2";
@@ -19,6 +20,7 @@ module.exports = {
         sans: ["Lato", ...defaultTheme.fontFamily.sans],
       },
       colors: {
+        gray: colors.trueGray,
         primary: {
           DEFAULT: primaryBright,
           bright: primaryBright,
