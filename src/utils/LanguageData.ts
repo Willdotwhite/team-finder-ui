@@ -1,3 +1,5 @@
+import { ArrayToRecord } from "./ArrayToRecord";
+
 export const getFlags = (codes: string[]) : string => {
   let flags = "";
   for(const c of codes) flags += languageIndex[c].flag;
@@ -74,5 +76,4 @@ export const languages = [
   {code: "ot",    flag: "🏳️", display: "Other"},
 ]
 
-const languageIndex: Record<string, {code: string, flag:string, display:string}> = {};
-for(const l of languages) languageIndex[l.code] = l;
+const languageIndex = ArrayToRecord(languages, l => [l.code, l]);
