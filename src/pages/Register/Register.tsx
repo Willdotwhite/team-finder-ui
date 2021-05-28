@@ -102,6 +102,7 @@ export const Register: React.FC = () => {
           };
     
     // Hack, due to the fact that the API returns wrong data
+    // eslint-disable-next-line
     // @ts-ignore
     if(typeof newDefaultValues.languages === "string") newDefaultValues.languages = newDefaultValues.languages.split(",");
     reset(newDefaultValues);
@@ -160,7 +161,7 @@ export const Register: React.FC = () => {
     <>
       <PageUserInfo />
       <form
-        className="mx-auto space-y-12 pb-12"
+        className="mx-auto space-y-14 pb-14"
         onSubmit={handleSubmit((data) =>
           saveMutate({ userTeam, formData: data })
         )}

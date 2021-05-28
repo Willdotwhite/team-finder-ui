@@ -86,7 +86,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
       <a
         target="_blank" rel="noreferrer"
         href={`https://discordapp.com/users/${team.authorId}`}
-        className="text-sm p-2 leading-none absolute bottom-5 right-5 rounded"
+        className="text-sm p-2 leading-none absolute bottom-5 right-5 rounded text-trueWhite"
         style={{background:"#5865F2"}}
       >
         Message {author} on Discord

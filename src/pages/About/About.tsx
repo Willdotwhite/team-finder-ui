@@ -4,7 +4,7 @@ import { ReactSVG } from "react-svg";
 const AboutPara: React.FC = ({children}) => (<p className="mb-2">{children}</p>);
 
 const FAQItem = (heading:string, children: React.ReactNode): React.ReactNode => (<>
-  <h2 className="text-3xl text-white font-light my-6">{heading}</h2>
+  <h2 className="text-3xl text-white font-light mb-4 mt-12">{heading}</h2>
   {children}
 </>);
 
