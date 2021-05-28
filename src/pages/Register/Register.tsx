@@ -160,7 +160,7 @@ export const Register: React.FC = () => {
     <>
       <PageUserInfo />
       <form
-        className="mx-auto space-y-8 pb-12"
+        className="mx-auto space-y-12 pb-12"
         onSubmit={handleSubmit((data) =>
           saveMutate({ userTeam, formData: data })
         )}
@@ -191,6 +191,7 @@ export const Register: React.FC = () => {
             </div>
           )}
         </div>
+
         <div className="space-y-2">
           <label
             className={classnames(
@@ -222,16 +223,6 @@ export const Register: React.FC = () => {
               {formState.errors.description.message}
             </div>
           )}
-
-          <div className="max-width-max text-white text-sm text-opacity-70 leading-relaxed">
-            <span className="text-lg text-red-400">Don&rsquo;t forget to mention:</span>
-            <ul className="list-disc pl-6">
-              <li>If you have a timezone you prefer to work in;</li>
-              <li>If you have a specific game engine in mind (Unity, Unreal, Godot etc);</li>
-              <li>The type of games you like to make, or an idea you have for your jam game</li>
-              <li>Anything else you&rsquo;d like a potential teammate to know!</li>
-            </ul>
-          </div>
         </div>
 
         <div className="space-y-2">
@@ -254,11 +245,20 @@ export const Register: React.FC = () => {
           />
         </div>
 
-        <div className="max-width-max text-white text-sm leading-relaxed">
-          <b>Important</b>: To allow interested jammers to contact you, you need to set your Discord account to allow for friend requests and messages from &quot;Everyone&quot;.
-          <br></br>You can find this setting in your Discord User Settings under the <a href="FinderSettingsImage_2.png" className="underline"> Privacy &amp; Safety tab </a>.
+        <div className="text-white text-sm p-3 pl-5 leading-relaxed border-red-500 border-l-4" style={{background:"#270202"}}>
+          <div className="text-2xl font-bold text-red-500 mb-1">Don&rsquo;t forget!</div>
+          You might want to mention:
+          <ul className="list-disc pl-6">
+            <li>If you have a timezone you prefer to work in</li>
+            <li>If you have a specific game engine in mind (Unity, Unreal, Godot etc) - especially if you need a coder!</li>
+            <li>The type of games you like to make, or an idea you have for your jam game</li>
+            <li>Anything else you&rsquo;d like a potential teammate to know!</li>
+          </ul>
+          <div className="font-bold mt-3">And:</div>
+          To allow interested jammers to contact you, you need to set your Discord account to allow for friend requests and messages from &quot;Everyone&quot;.
+          <br></br>You can find this setting in your <a href="FinderSettingsImage_1.png" target="_blank" className="underline">Discord User Settings</a> under the <a href="FinderSettingsImage_2.png" target="_blank" className="underline"> Privacy &amp; Safety tab </a>.
         </div>
-
+        
         <Button className="inline-block" type="submit" disabled={!allowMutation}>
           {userHasTeam ? "Update Team" : "Post Team"}
         </Button>
