@@ -52,6 +52,10 @@ export const adminDeleteTeam = async (teamId: string): Promise<Response> => {
   return await makeApiRequest(`/admin/delete-team?teamId=${teamId}`, "DELETE");
 };
 
+export const adminClearReports = async (teamId: string): Promise<Response> => {
+  return await makeApiRequest(`/admin/reports/clear?teamId=${teamId}`, "POST");
+};
+
 
 /**
  * Convert FormData to the format needed to create/update a Team record
