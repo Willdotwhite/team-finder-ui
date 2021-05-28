@@ -2,7 +2,7 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require('tailwindcss/colors')
 
 const primaryBright = "#00FFC0";
-const primaryDark = "#16D0A2";
+const primaryDark = "#14bd93";
 
 module.exports = {
   mode: "jit",
@@ -21,6 +21,8 @@ module.exports = {
       },
       colors: {
         gray: colors.trueGray,
+        trueWhite: "#fff",
+        white: "#f0f0f0",
         primary: {
           DEFAULT: primaryBright,
           bright: primaryBright,

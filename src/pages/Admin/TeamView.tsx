@@ -2,6 +2,7 @@ import React from "react";
 import {Team, TeamData} from "../../components/Team";
 import {adminBanUser, adminClearReports, adminDeleteTeam} from "../../utils/TeamActions";
 import {AddMessage} from "../../components/StatusMessenger";
+import {tryPerformAction} from "./AdminActions";
 
 const tryDeleteTeam = (teamId: string) => tryPerformAction(() => adminDeleteTeam(teamId))
 
