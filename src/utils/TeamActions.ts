@@ -35,8 +35,17 @@ export const getReportedTeams = async (): Promise<Response> => {
   return await makeApiRequest("/admin/reports", "GET");
 };
 
+export const getBannedUsers = async (): Promise<Response> => {
+  return await makeApiRequest("/admin/banned-users", "GET");
+};
+
 export const adminBanUser = async (userId: string): Promise<Response> => {
   return await makeApiRequest(`/admin/ban-user?userId=${userId}`, "POST");
+};
+
+
+export const adminRedeemUser = async (discordId: string): Promise<Response> => {
+  return await makeApiRequest(`/admin/redeem-user?userId=${discordId}`, "POST");
 };
 
 export const adminDeleteTeam = async (teamId: string): Promise<Response> => {
