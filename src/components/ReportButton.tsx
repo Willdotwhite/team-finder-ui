@@ -11,7 +11,7 @@ const userReportedTeam = (teamId: string) => getReports()[teamId] === true;
 const successfulSubmitText = "Your report has been received, a moderator will investigate";
 
 const trySubmitReport = async (teamId: string) => {
-  if (!isUserLoggedIn()) return AddMessage("bg-red-500", "Please login to report a team");
+  if (!isUserLoggedIn()) return AddMessage("bg-red-500", "Please login (on the Register page) to report a team");
   if (userReportedTeam(teamId)) return AddMessage("bg-primary-dark", successfulSubmitText);
   
 
