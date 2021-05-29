@@ -39,14 +39,7 @@ export const About: React.FC = () => {
       </AboutPara>
 
       <AboutPara>
-        Once you find a team that looks good, click their name/message bubble 
-        <img
-          className="inline-block m-0 mr-1 w-6 pl-1 fill-primary"
-          src="/Speechbubble.svg"
-          width={21}
-          height={24}
-          alt="Click here to open this user's Discord profile"
-        />
+        Once you find a team that looks good, click the &quot;Message on Discord&quot; button
         and a window will open to their Discord profile where you can contact them.
       </AboutPara>
     </>))}
