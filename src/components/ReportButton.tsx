@@ -38,7 +38,7 @@ export const ReportButton: React.FC<{teamId:string, className?:string}> = ({team
     forceUpdate();
   };
 
-  return (<div onClick={handleClick} className={baseClass+" inline-block cursor-pointer text-black hover:text-red-500 transition-colors pr-4"}>
+  return (<div onClick={handleClick} className={baseClass+" inline-block cursor-pointer text-black hover:text-red-500 transition-colors"}>
     <ReactSVG
       src="/Flag.svg"
       className={

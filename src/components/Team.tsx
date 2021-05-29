@@ -38,7 +38,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
   const author = team.author.replace(/#\d{4}$/, "");
 
   return (
-    <div data-team-id={team.id} className="mb-24 p-6 pb-24 border relative">
+    <div data-team-id={team.id} className="mb-24 p-6 border relative">
 
       {/* Headings that cut into the top border */}
       <div className="absolute -top-2.5 left-2 px-3 bg-black leading-none font-bold text-lg">
@@ -61,9 +61,9 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
       </div>
 
       {/* absolutely positioned container for meta info + Message CTA */}
-      <div className="absolute bottom-6 px-6 left-0 text-xs w-full overflow-hidden flex justify-between flex-wrap">
+      <div className="text-xs mt-3 w-full overflow-hidden flex justify-between flex-wrap space-x-4">
 
-        <span className="flex-shrink-0 py-2">
+        <span className="flex-shrink-0 pt-2">
           🕓&nbsp;&nbsp;
           {formatDistanceToNow(team.updatedAt, {
             addSuffix: true,
@@ -71,12 +71,12 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
           })}
         </span>
 
-        <span className="flex-shrink-0 mx-10 py-2">
+        <span className="flex-shrink-0 pt-2">
           Languages: {getDisplay(team.languages)}
         </span>
         
         <ReportButton
-          className="flex-shrink-0"
+          className="flex-shrink-0 mb-2"
           teamId={team.id.toString()}
         />
 
