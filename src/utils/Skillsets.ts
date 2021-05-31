@@ -14,6 +14,7 @@ export const skillsets: Skillset[] = [
   { id: 8, name: "Design/\nProduction" },
   { id: 16, name: "Sound/\nMusic" },
   { id: 32, name: "Testing/\nSupport" },
+  { id: 128, name: "Team Lead" },
   { id: 64, name: "Other" },
 ];
 
