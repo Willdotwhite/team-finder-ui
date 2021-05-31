@@ -17,7 +17,7 @@ export const PageNavigator: React.FC = () => (
   <div className="flex flex-row justify-center items-center space-x-4 my-8 border-b border-white">
     <NavTab to="/">Team<br/>Finder</NavTab>
     <NavTab to="/register">Post / Edit<br/>Your Team</NavTab>
-    <NavTab to="/about">FAQ /<br/>About</NavTab>
+    <NavTab to="/about">Help /<br/>About</NavTab>
   </div>
 );
 
