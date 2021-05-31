@@ -77,18 +77,18 @@ export const About: React.FC = () => {
         Make sure that you allow for friend requests from &quot;Everyone&quot; in your <a href="FinderSettingsImage_2.png" className="underline">Discord settings</a>, otherwise people can&#39;t contact you!
       </AboutPara>
     </FAQItem>
+
+    <FAQItem heading="I just posted a team, but I can't see it in the Team Finder?">
+      <AboutPara>
+        It can take up to 5 minutes for the Team Finder to update. If it&apos;s been more than 5 minutes, and you still can&apos;t see your team,
+        please <span className="text-primary">@Team Finder Tech Support</span> on the GMTK Discord server.
+      </AboutPara>
+    </FAQItem>
     
     <FAQItem heading="I've found someone for my team, what do I do now?">
       <AboutPara>
         If you&#39;ve filled a role and are no longer looking for it, you can edit your team post in the Post / Edit Your Team tab above.<br />
         If you&#39;re no longer looking for any more team members, make sure to delete your post in the Post / Edit Your Team tab!
-      </AboutPara>
-    </FAQItem>
-
-    <FAQItem heading="Help! I just submitted a team, but I can't see it in the Team Finder?">
-      <AboutPara>
-        It can take up to 5 minutes for the Team Finder to update. If it&apos;s been more than 5 minutes, and you still can&apos;t see your team,
-        please <span className="text-primary">@Team Finder Tech Support</span> on the GMTK Discord server.
       </AboutPara>
     </FAQItem>
     
