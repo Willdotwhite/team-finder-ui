@@ -34,7 +34,15 @@ export class TeamData {
 
 export const Team: React.FC<{team:TeamData}> = ({team}) => {
 
-  const skillIcons = team.skills.map(r => <SkillsetSVG skillsetId={r.id} key={r.id} className="w-6 fill-primary inline-block m-1 align-top"/>);
+  const skillIcons = team.skills.map((r) => (
+    <SkillsetSVG
+      skillsetId={r.id}
+      key={r.id}
+      title={r.name}
+      aria-label={r.name}
+      className="w-6 fill-primary inline-block m-1 align-top"
+    />
+  ));
   const author = team.author.replace(/#\d{4}$/, "");
 
   return (
