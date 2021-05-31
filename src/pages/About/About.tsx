@@ -3,11 +3,15 @@ import { ReactSVG } from "react-svg";
 
 
 const FAQItem: React.FC<{heading:string}> = ({heading, children}) => {
-  const [isCollapsed, setCollapsed] = React.useState(true);
+
+  const id = heading.toLowerCase().replaceAll(" ", "_").replaceAll(/[^a-z0-9_]/g, "");
+
+  const deepLinkRef = window.location.hash.replace("#", "")
+  const isDirectLinkToItem = deepLinkRef === id;
+
+  const [isCollapsed, setCollapsed] = React.useState(!isDirectLinkToItem);
 
   const arrowClass = "inline-block ml-2 w-4 " + (isCollapsed ? "" : "transform rotate-180");
-  
-  const id = heading.replaceAll(" ", "_").replaceAll("?", "").toLowerCase();
 
   return (<>
     <h2
