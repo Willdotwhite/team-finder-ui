@@ -1,6 +1,6 @@
 import {AddMessage} from "../../components/StatusMessenger";
 
-export const tryPerformAction = async (callableFunction: any) => {
+export const tryPerformAction = async (callableFunction: () => Promise<Response>): Promise<void> => {
   try {
     const res = await callableFunction();
 
@@ -12,6 +12,6 @@ export const tryPerformAction = async (callableFunction: any) => {
     AddMessage("bg-primary-dark", "Action successful. Refresh page to update list.");
   } catch (e) {
     AddMessage("bg-red-500", "Something went wrong - check JS Console for more details.");
-    console.log(e)
+    console.error(e);
   }
 }
