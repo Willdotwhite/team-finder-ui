@@ -78,9 +78,9 @@ export const About: React.FC = () => {
       </AboutPara>
     </FAQItem>
 
-    <FAQItem heading="I just posted a team, but I can't see it in the Team Finder?">
+    <FAQItem heading="I just posted/updated my post, but I can't see it in the Team Finder?">
       <AboutPara>
-        It can take up to 5 minutes for the Team Finder to update. If it&apos;s been more than 5 minutes, and you still can&apos;t see your team,
+        It can take up to 5 minutes for the Team Finder to update after you make a change. If it&apos;s been more than 5 minutes, and you still can&apos;t see your team,
         please <span className="text-primary">@Team Finder Tech Support</span> on the GMTK Discord server.
       </AboutPara>
     </FAQItem>
