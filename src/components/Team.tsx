@@ -43,7 +43,25 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
       className="w-6 fill-primary inline-block m-1 align-top"
     />
   ));
+
   const author = team.author.replace(/#\d{4}$/, "");
+
+
+  const description: React.ReactNode[] = [];
+  let numNewlines = 0;
+  
+  for(let i = 0; i < team.description.length; i++){
+    const c = team.description[i];
+    if(numNewlines < 12 && c == "\n") {
+      description.push( (<br/>) );
+      numNewlines++;
+    }
+    else {
+      const lastIndex = description.length - 1;
+      if(typeof description[lastIndex] == "string") description[lastIndex] += c;
+      else description.push(c);
+    }
+  }
 
   return (
     <div data-team-id={team.id} className="mb-24 p-6 border relative">
@@ -60,7 +78,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
       {/* flexbox for displaying description + skills */}
       <div className="flex">
         <div className="flex-grow mr-5 overflow-hidden">
-          {team.description}
+          {description}
         </div>
 
         <div className="flex-shrink-0 w-36">
