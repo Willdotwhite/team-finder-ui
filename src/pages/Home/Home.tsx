@@ -43,10 +43,10 @@ const TeamList: React.FC = () => {
     isLoading: initalLoad,
     isFetchingNextPage, isError, data, fetchNextPage
   } = useInfiniteQuery(["Teams", skillsetMask, order],
-    async ({pageParam: page = 1}) =>
+    async ({pageParam: page = 1}) => 
       ( await getTeamsList({ skillsetMask, order, page }) ).map((t) => new TeamData(t)),
     {
-      getNextPageParam: (lastPage, allPages) => lastPage.length < pageSize ? undefined : allPages.length
+      getNextPageParam: (lastPage, allPages) => lastPage.length < pageSize ? undefined : allPages.length + 1
     }
   );
 
