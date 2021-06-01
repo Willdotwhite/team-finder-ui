@@ -235,6 +235,7 @@ export const Register: React.FC = () => {
             name="languages"
             render={({ field: { value, onChange } }) => (
               <MultiSelect
+                placeholder="Click here to add languages..."
                 disabled={isLoading}
                 selected={value}
                 changeCallback={onChange}
