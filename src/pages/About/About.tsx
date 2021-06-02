@@ -4,7 +4,7 @@ import { ReactSVG } from "react-svg";
 
 const FAQItem: React.FC<{heading:string}> = ({heading, children}) => {
 
-  const id = heading.toLowerCase().replaceAll(" ", "_").replace(/[^a-z0-9_]/g, "");
+  const id = heading.toLowerCase().replace(/ /g, "_").replace(/[^a-z0-9_]/g, "");
 
   const deepLinkRef = window.location.hash.replace("#", "")
   const isDirectLinkToItem = deepLinkRef === id;
