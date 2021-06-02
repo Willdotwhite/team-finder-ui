@@ -4,6 +4,7 @@ import { enGB } from 'date-fns/locale';
 
 import { getSkillsets, Skillset } from "../utils/Skillsets";
 import { getDisplay } from "../utils/LanguageData";
+import { limitNewlines } from "../utils/limitNewlines";
 import { SkillsetSVG } from "./SkillsetSVG";
 import { ReportButton } from "./ReportButton";
 
@@ -43,6 +44,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
       className="w-6 fill-primary inline-block m-1 align-top"
     />
   ));
+  
   const author = team.author.replace(/#\d{4}$/, "");
 
   return (
@@ -59,8 +61,8 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
 
       {/* flexbox for displaying description + skills */}
       <div className="flex">
-        <div className="flex-grow mr-5 overflow-hidden">
-          {team.description}
+        <div className="flex-grow mr-5 overflow-hidden whitespace-pre-wrap">
+          {limitNewlines(team.description)}
         </div>
 
         <div className="flex-shrink-0 w-36">
