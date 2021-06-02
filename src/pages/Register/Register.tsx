@@ -49,6 +49,9 @@ export const Register: React.FC = () => {
 
   const userHasTeam = Boolean(userTeam);
 
+  // to check whether user has seen reminder
+  const [isChecked, changeCheck] = React.useState(false);
+
   // mutations
   type saveArgs = {
     userTeam: TeamDto | null | undefined;
@@ -75,6 +78,7 @@ export const Register: React.FC = () => {
         setLastFormEvent("delete");
         queryClient.setQueryData("userTeam", null);
         queryClient.invalidateQueries(["Teams"], { exact: false });
+        changeCheck(false);
       },
       onError: () => {
         setLastFormEvent("error");
@@ -266,12 +270,32 @@ export const Register: React.FC = () => {
             <li>The type of games you like to make, or an idea you have for your jam game</li>
             <li>Anything else you&rsquo;d like a potential teammate to know!</li>
           </ul>
-          <div className="font-bold mt-3">And:</div>
-          To allow interested jammers to contact you, you need to set your Discord account to allow for friend requests and messages from &quot;Everyone&quot;.
-          <br></br>You can find this setting in your <a href="FinderSettingsImage_1.png" target="_blank" className="underline">Discord User Settings</a> under the <a href="FinderSettingsImage_2.png" target="_blank" className="underline"> Privacy &amp; Safety tab </a>.
+          <div className="font-bold mt-3">
+            To ensure anbody interested in joining your team can contact you, make sure you:
+          </div>
+          <ul className="list-disc pl-6">
+            <li>
+              <a className="underline" href="discord.gg/pd4rQKU">Join the GMTK Discord!</a>
+            </li>
+            <li>
+              Set your Discord account to allow for friend requests and messages from &quot;Everyone&quot; (You can find this setting in your <a href="FinderSettingsImage_1.png" target="_blank" className="underline">Discord User Settings</a> under the <a href="FinderSettingsImage_2.png" target="_blank" className="underline"> Privacy &amp; Safety tab </a>)
+            </li>
+          </ul>
         </div>
         
-        <Button className="inline-block" type="submit" disabled={!allowMutation}>
+        {userHasTeam ? null : (
+          <label className="block font-bold text-lg leading-tight">
+            <input
+              value={isChecked.toString()}
+              onChange={e => changeCheck(e.target.checked)}
+              className="mr-2"
+              type="checkbox"
+            />
+            I have read the above reminder, I have changed my Discord settings, and I am ready to post my team.
+          </label>
+        )}
+        
+        <Button className="inline-block" type="submit" disabled={!allowMutation || !(userHasTeam || isChecked)}>
           {userHasTeam ? "Update Team" : "Post Team"}
         </Button>
 
