@@ -6,7 +6,8 @@ export const getFlags = (codes: string[]) : string => {
   return flags;
 }
 
-export const getDisplay = (codes: string[]) : string => {
+export const getDisplay = (codes: string[] | null) : string => {
+  if(!codes) return "";
   return codes
     .map(c => languageIndex[c].display)
     .toString()
