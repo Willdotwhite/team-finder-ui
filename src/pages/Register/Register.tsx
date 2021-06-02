@@ -275,7 +275,7 @@ export const Register: React.FC = () => {
           </div>
           <ul className="list-disc pl-6">
             <li>
-              <a className="underline" href="discord.gg/pd4rQKU">Join the GMTK Discord!</a>
+              <a className="underline" href="https://discord.gg/pd4rQKU">Join the GMTK Discord!</a>
             </li>
             <li>
               Set your Discord account to allow for friend requests and messages from &quot;Everyone&quot; (You can find this setting in your <a href="FinderSettingsImage_1.png" target="_blank" className="underline">Discord User Settings</a> under the <a href="FinderSettingsImage_2.png" target="_blank" className="underline"> Privacy &amp; Safety tab </a>)
