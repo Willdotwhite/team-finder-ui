@@ -61,9 +61,13 @@ const TeamList: React.FC = () => {
 
     const docEle = document.documentElement;
 
+    let hasFetchedNext = false;
     const onScroll = () => {
       const distanceLeft = docEle.scrollHeight - (docEle.scrollTop + innerHeight);
-      if(distanceLeft < 200) fetchNextPage();
+      if((distanceLeft < 200) && !hasFetchedNext) {
+        hasFetchedNext = true;
+        fetchNextPage();
+      }
     }
 
     const listenTo = [window, docEle];
@@ -75,7 +79,7 @@ const TeamList: React.FC = () => {
     return () => listenTo.forEach(x =>
       x.removeEventListener("scroll", onScroll)
     );
-  }, [fetchNextPage, allLoaded]);
+  }, [fetchNextPage, allLoaded, pagesArray]);
 
   return (
     // scrollbar popping in and out on load causes some jank
