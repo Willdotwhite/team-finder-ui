@@ -47,16 +47,14 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
   const author = team.author.replace(/#\d{4}$/, "");
 
 
-  let description = "";
   let numNewlines = 0;
-
-  for(const x of team.description.split(/\r?\n/) ){
-    description += x;
-    if(numNewlines < 12){
-      description += "\n";
+  const description = team.description.replace(/\r?\n/g, (m) => {
+    if(numNewlines > 10) return ""
+    else {
       numNewlines++;
+      return m;
     }
-  }
+  })
 
   return (
     <div data-team-id={team.id} className="mb-24 p-6 border relative">
