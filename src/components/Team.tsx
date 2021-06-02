@@ -69,7 +69,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
 
       {/* flexbox for displaying description + skills */}
       <div className="flex">
-        <div className="flex-grow mr-5 overflow-hidden whitespace-pre-wrap">
+        <div className="flex-grow mr-5 overflow-hidden">
           {description}
         </div>
 
