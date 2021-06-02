@@ -11,7 +11,7 @@ export const getDisplay = (codes: string[] | null) : string => {
   return codes
     .map(c => languageIndex[c].display)
     .toString()
-    .replaceAll(',', ', ');
+    .replace(/,/g, ', ');
 }
 
 export const filterValidLanguageCodes = (codes: string[]) : string[] => {
