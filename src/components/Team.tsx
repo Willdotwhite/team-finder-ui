@@ -34,6 +34,7 @@ export class TeamData {
 }
 
 export const Team: React.FC<{team:TeamData}> = ({team}) => {
+  const [hasClickedBtn, changeHasClicked] = React.useState(false);
 
   const skillIcons = team.skills.map((r) => (
     <SkillsetSVG
@@ -52,7 +53,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
 
       {/* Headings that cut into the top border */}
       <div className="absolute -top-2.5 left-2 px-3 bg-black leading-none font-bold text-lg">
-        {author}&rsquo;s Team
+        {team.author}
       </div>
 
       <div className="absolute -top-2.5 right-10 px-3 bg-black leading-none font-bold text-lg">
@@ -70,7 +71,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
         </div>
       </div>
 
-      {/* absolutely positioned container for meta info + Message CTA */}
+      {/* container for meta info + Message CTA */}
       <div className="text-xs mt-3 w-full overflow-hidden flex justify-between flex-wrap space-x-4">
 
         <span className="flex-shrink-0 pt-2">
@@ -95,11 +96,18 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
           href={`https://discordapp.com/users/${team.authorId}`}
           className="text-sm p-2 leading-none rounded text-trueWhite self-end flex-shrink-0"
           style={{background:"#5865F2"}}
+          onClick={() => changeHasClicked(true)}
         >
           Message {author} on Discord
         </a>
 
       </div>
+
+      {!hasClickedBtn ? null : (
+        <div className="p-2.5 rounded mt-6" style={{background:"#5865F2"}} >
+          If you&apos;re having trouble messaging this user, it may be that they haven&apos;t joined the GMTK Discord, or their Discord privacy settings aren&apos;t correctly configured. You could try looking them up directly by copy+pasting their name into Discord.
+        </div>
+      )}
     </div>
   )
 }
