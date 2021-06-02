@@ -44,9 +44,8 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
       className="w-6 fill-primary inline-block m-1 align-top"
     />
   ));
-  const author = team.author.replace(/#\d{4}$/, "");
   
-  const description = limitNewlines(team.description);
+  const author = team.author.replace(/#\d{4}$/, "");
 
   return (
     <div data-team-id={team.id} className="mb-24 p-6 border relative">
@@ -63,7 +62,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
       {/* flexbox for displaying description + skills */}
       <div className="flex">
         <div className="flex-grow mr-5 overflow-hidden whitespace-pre-wrap">
-          {description}
+          {limitNewlines(team.description)}
         </div>
 
         <div className="flex-shrink-0 w-36">
