@@ -4,9 +4,9 @@ import { enGB } from 'date-fns/locale';
 
 import { getSkillsets, Skillset } from "../utils/Skillsets";
 import { getDisplay } from "../utils/LanguageData";
+import { limitNewlines } from "../utils/limitNewlines";
 import { SkillsetSVG } from "./SkillsetSVG";
 import { ReportButton } from "./ReportButton";
-import { NUM_NEWLINES } from "../utils/consts";
 
 export class TeamData {
   author: string;
@@ -46,14 +46,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
   ));
   const author = team.author.replace(/#\d{4}$/, "");
   
-  let numNewlines = 0;
-  const description = team.description.replace(/\r?\n/g, (m) => {
-    if(numNewlines > NUM_NEWLINES) return ""
-    else {
-      numNewlines++;
-      return m;
-    }
-  })
+  const description = limitNewlines(team.description);
 
   return (
     <div data-team-id={team.id} className="mb-24 p-6 border relative">
