@@ -27,6 +27,9 @@ export const Home: React.FC = () => {
     Looking for a team to do the jam with?<br></br>
     Check the list below to find one to join!
     </div>
+    <div className="text-center text-3xl font-light mb-20">
+      Make sure you&apos;re in the <a className="underline" href="https://discord.gg/pd4rQKU">GMTK Discord</a> so that you can message people!
+    </div>
     <TeamList/>
   </>);
 };
