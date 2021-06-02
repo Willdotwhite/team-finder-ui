@@ -18,6 +18,7 @@ import { languages } from "../../utils/LanguageData";
 import { AddMessage } from "../../components/StatusMessenger";
 import { MultiSelect } from "../../components/MultiSelect";
 import { ArrayToRecord } from "../../utils/ArrayToRecord";
+import { limitNewlines } from "../../utils/limitNewlines";
 
 const languageSelectIndex: Record<string, string> = ArrayToRecord(languages, l => [l.code, l.display]);
 
@@ -206,19 +207,30 @@ export const Register: React.FC = () => {
             Characters Remaining:{" "}
             <span className={remainColor}>{charRemain}</span>
           </label>
-          <textarea
-            style={{ resize: "none" }}
-            className={classnames(
-              "rounded text-md bg-transparent border px-4 py-2 block w-full placeholder-white placeholder-opacity-40 h-36 disabled:opacity-50",
-              formState.errors.description
-                ? "border-red-400 focus:border-red-500"
-                : "border-white focus:border-primary"
-            )}
-            disabled={isLoading}
-            placeholder="This is my first jam, though I've made some small games before&#10;I like to do level design for platformers (like Celeste), and sometimes I code for Unity&#10;Ideally I want a team of 3 people - mostly I need an artist"
-            id="description"
-            {...register("description", { required: "Required" })}
+          <Controller
+            name="description"
+            rules={{ required: "Required" }}
+            control={control} 
+            render={({ field }) =>
+              <textarea
+                style={{ resize: "none" }}
+                className={classnames(
+                  "rounded text-md bg-transparent border px-4 py-2 block w-full placeholder-white placeholder-opacity-40 h-36 disabled:opacity-50",
+                  formState.errors.description
+                    ? "border-red-400 focus:border-red-500"
+                    : "border-white focus:border-primary"
+                )}
+                disabled={isLoading}
+                placeholder="This is my first jam, though I've made some small games before&#10;I like to do level design for platformers (like Celeste), and sometimes I code for Unity&#10;Ideally I want a team of 3 people - mostly I need an artist"
+                id="description"
+                {...field}
+                onChange={e => {
+                  field.onChange(limitNewlines(e.target.value));
+                }}
+              />
+            }
           />
+         
           {formState.errors.description && (
             <div className="text-red-400">
               {formState.errors.description.message}
