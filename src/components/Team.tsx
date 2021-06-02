@@ -49,17 +49,12 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
 
   const description: React.ReactNode[] = [];
   let numNewlines = 0;
-  
-  for(let i = 0; i < team.description.length; i++){
-    const c = team.description[i];
-    if(numNewlines < 12 && c == "\n") {
+
+  for(const x of team.description.split("\n") ){
+    description.push(x);
+    if(numNewlines < 12){
       description.push( (<br/>) );
       numNewlines++;
-    }
-    else {
-      const lastIndex = description.length - 1;
-      if(typeof description[lastIndex] == "string") description[lastIndex] += c;
-      else description.push(c);
     }
   }
 
