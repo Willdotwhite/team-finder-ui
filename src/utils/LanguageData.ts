@@ -9,7 +9,9 @@ export const getFlags = (codes: string[]) : string => {
 export const getDisplay = (codes: string[] | null) : string => {
   if(!codes) return "";
   return codes
-    .map(c => languageIndex[c].display)
+    .map(c => languageIndex[c])
+    .filter(c => c != undefined && c != null)
+    .map(l => l.display)
     .toString()
     .replace(/,/g, ', ');
 }
