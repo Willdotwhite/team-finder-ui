@@ -8,6 +8,7 @@ import { ReactSVG } from "react-svg";
 const getTeamsList = (
   queryParams: {
     order: "asc" | "desc" | "random";
+    query: string;
     skillsetMask: number;
     page: number;
   }
@@ -39,15 +40,16 @@ type orderVals = "desc" | "asc" | "random";
 const TeamList: React.FC = () => {
   const [selectedSkillsets, setSelectedSkillsets] = useState<number[]>([]);
   const [order, updateOrder] = useState<orderVals>("desc");
+  const [query, updateQuery] = useState<string>("");
 
   const skillsetMask = selectedSkillsets.reduce((a, b) => a + b, 0);
 
   const {
     isLoading: initalLoad,
     isFetchingNextPage, isError, data, fetchNextPage
-  } = useInfiniteQuery(["Teams", skillsetMask, order],
+  } = useInfiniteQuery(["Teams", skillsetMask, order, query],
     async ({pageParam: page = 1}) => 
-      ( await getTeamsList({ skillsetMask, order, page }) ).map((t) => new TeamData(t)),
+      ( await getTeamsList({ skillsetMask, order, query, page }) ).map((t) => new TeamData(t)),
     {
       getNextPageParam: (lastPage, allPages) => lastPage.length < pageSize ? undefined : allPages.length + 1
     }
@@ -95,18 +97,34 @@ const TeamList: React.FC = () => {
         selectedSkillsets={selectedSkillsets}
         onChange={setSelectedSkillsets}
       />
-      <label className="text-lg">
-        Sort By:
-        <select
-          value={order}
-          onChange={e => updateOrder(e.target.value as orderVals)}
-          className="text-black block p-1 pb-1.5 mt-1 outline-none"
-        >
-          <option value="desc">Newest First</option>
-          <option value="asc">Oldest First</option>
-          <option value="random">Random</option>
-        </select>
-      </label>
+
+      <div className="flex flex-row mt-6">
+
+        <div className="mr-12">
+          <label className="text-lg">
+            Sort By:
+            <select
+              value={order}
+              onChange={e => updateOrder(e.target.value as orderVals)}
+              className="text-black block p-1 py-2 mt-1 outline-none leading-loose"
+            >
+              <option value="desc">Newest First</option>
+              <option value="asc">Oldest First</option>
+              <option value="random">Random</option>
+            </select>
+          </label>
+        </div>
+
+        <label className="text-lg">
+          Search description:<br />
+          <input
+            type="text"
+            className="text-black block p-1 pb-0 mt-1 outline-none leading-loose"
+            onChange={e => updateQuery(e.target.value)}
+          />
+        </label>
+
+      </div>
 
       <div className="pt-14"></div>
 
