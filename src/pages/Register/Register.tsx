@@ -302,7 +302,7 @@ export const Register: React.FC = () => {
         {userHasTeam ? (
           <Button
             type="button"
-            onClick={() => deleteMutate()}
+            onClick={() => { if(confirm("Are you sure you want to delete your team?")) deleteMutate() }}
             className={"inline-block ml-5 bg-red-500"}
             disabled={!allowMutation}
           >
