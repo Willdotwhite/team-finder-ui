@@ -42,6 +42,13 @@ const TeamList: React.FC = () => {
   const [order, updateOrder] = useState<orderVals>("desc");
   const [query, updateQuery] = useState<string>("");
 
+  let querySearchTimeout: number | undefined;
+  const tryUpdateQuery = (query: string) => {
+    clearTimeout(querySearchTimeout);
+
+    querySearchTimeout = setTimeout(() => updateQuery(query), 250) // 250ms
+  }
+
   const skillsetMask = selectedSkillsets.reduce((a, b) => a + b, 0);
 
   const {
@@ -116,11 +123,11 @@ const TeamList: React.FC = () => {
         </div>
 
         <label className="text-lg">
-          Search description:<br />
+          Search keywords description:<br />
           <input
             type="text"
-            className="text-black block p-1 pb-0 mt-1 outline-none leading-loose"
-            onChange={e => updateQuery(e.target.value)}
+            className="w-full text-black block p-1 pb-0 mt-1 outline-none leading-loose"
+            onChange={e => tryUpdateQuery(e.target.value)}
           />
         </label>
 
