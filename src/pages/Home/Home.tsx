@@ -42,11 +42,11 @@ const TeamList: React.FC = () => {
   const [order, updateOrder] = useState<orderVals>("desc");
   const [query, updateQuery] = useState<string>("");
 
-  let querySearchTimeout: number | undefined;
+  const querySearchTimeout = React.useRef<number | undefined>(undefined);
   const tryUpdateQuery = (query: string) => {
-    clearTimeout(querySearchTimeout);
+    clearTimeout(querySearchTimeout.current);
 
-    querySearchTimeout = setTimeout(() => updateQuery(query), 250) // 250ms
+    querySearchTimeout.current = setTimeout(() => updateQuery(query), 250) // 250ms
   }
 
   const skillsetMask = selectedSkillsets.reduce((a, b) => a + b, 0);
