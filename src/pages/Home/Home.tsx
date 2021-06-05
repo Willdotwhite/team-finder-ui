@@ -114,7 +114,7 @@ const TeamList: React.FC = () => {
 
         <div className="mr-12">
           <label className="text-lg">
-            Sort By:
+            Sort by:
             <select
               value={order}
               onChange={e => updateOrder(e.target.value as orderVals)}
@@ -140,7 +140,7 @@ const TeamList: React.FC = () => {
 
       <div className="mt-4">
         <div className="text-lg mb-1">
-          Select preferred languages
+          Filter by language(s):
         </div>
         <MultiSelect
           placeholder="Click here to add languages..."
