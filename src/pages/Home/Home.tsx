@@ -4,10 +4,14 @@ import { PageHeader } from "../../components/PageHeader";
 import { TeamData, Team } from "../../components/Team";
 import { SkillsetSelector } from "../../components/SkillsetSelector";
 import { ReactSVG } from "react-svg";
+import { MultiSelect } from "../../components/MultiSelect";
+import { languageSelectIndex } from "../../components/LanguageSelector";
 
 const getTeamsList = (
   queryParams: {
     order: "asc" | "desc" | "random";
+    query: string;
+    languages: string;
     skillsetMask: number;
     page: number;
   }
@@ -38,16 +42,26 @@ type orderVals = "desc" | "asc" | "random";
 
 const TeamList: React.FC = () => {
   const [selectedSkillsets, setSelectedSkillsets] = useState<number[]>([]);
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
   const [order, updateOrder] = useState<orderVals>("desc");
+  const [query, updateQuery] = useState<string>("");
+
+  const querySearchTimeout = React.useRef<number | undefined>(undefined);
+  const tryUpdateQuery = (query: string) => {
+    clearTimeout(querySearchTimeout.current);
+
+    querySearchTimeout.current = setTimeout(() => updateQuery(query), 250) // 250ms
+  }
 
   const skillsetMask = selectedSkillsets.reduce((a, b) => a + b, 0);
+  const languages = selectedLanguages.join(",");
 
   const {
     isLoading: initalLoad,
     isFetchingNextPage, isError, data, fetchNextPage
-  } = useInfiniteQuery(["Teams", skillsetMask, order],
+  } = useInfiniteQuery(["Teams", skillsetMask, order, languages, query],
     async ({pageParam: page = 1}) => 
-      ( await getTeamsList({ skillsetMask, order, page }) ).map((t) => new TeamData(t)),
+      ( await getTeamsList({ skillsetMask, order, query, languages, page }) ).map((t) => new TeamData(t)),
     {
       getNextPageParam: (lastPage, allPages) => lastPage.length < pageSize ? undefined : allPages.length + 1
     }
@@ -95,18 +109,48 @@ const TeamList: React.FC = () => {
         selectedSkillsets={selectedSkillsets}
         onChange={setSelectedSkillsets}
       />
-      <label className="text-lg">
-        Sort By:
-        <select
-          value={order}
-          onChange={e => updateOrder(e.target.value as orderVals)}
-          className="text-black block p-1 pb-1.5 mt-1 outline-none"
-        >
-          <option value="desc">Newest First</option>
-          <option value="asc">Oldest First</option>
-          <option value="random">Random</option>
-        </select>
-      </label>
+
+      <div className="flex flex-row mt-6">
+
+        <div className="mr-12">
+          <label className="text-lg">
+            Sort by:
+            <select
+              value={order}
+              onChange={e => updateOrder(e.target.value as orderVals)}
+              className="text-black block p-1 py-2 mt-1 outline-none leading-loose"
+            >
+              <option value="desc">Newest First</option>
+              <option value="asc">Oldest First</option>
+              <option value="random">Random</option>
+            </select>
+          </label>
+        </div>
+
+        <label className="text-lg">
+          Search keywords description:<br />
+          <input
+            type="text"
+            className="w-full text-black block p-1 pb-0 mt-1 outline-none leading-loose"
+            onChange={e => tryUpdateQuery(e.target.value)}
+          />
+        </label>
+
+      </div>
+
+      <div className="mt-4">
+        <div className="text-lg mb-1">
+          Filter by language(s):
+        </div>
+        <MultiSelect
+          placeholder="Click here to add languages..."
+          disabled={isLoading}
+          selected={selectedLanguages}
+          changeCallback={setSelectedLanguages}
+          valueDisplayIndex={languageSelectIndex}
+        />
+      </div>
+
 
       <div className="pt-14"></div>
 
