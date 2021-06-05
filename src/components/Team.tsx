@@ -102,8 +102,13 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
             onClick={() => changeHasClicked(true)}
           >
             Message {author} on Discord
-          </a> :
-          <span className="block text-sm">Send <SelectableTeamName>{team.author}</SelectableTeamName> a friend request on Discord to get in touch!</span>
+          </a> : (
+            <span className="block text-sm">
+              Send <SelectableTeamName>{team.author}</SelectableTeamName> a friend
+              request on Discord <a className="underline" href="/AddFriend.png" target="_blank">(❓)</a>
+              {' '}to get in touch!
+            </span>
+          )
       }
 
       </div>
