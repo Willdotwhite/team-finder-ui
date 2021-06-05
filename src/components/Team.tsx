@@ -8,6 +8,7 @@ import { limitNewlines } from "../utils/limitNewlines";
 import { SkillsetSVG } from "./SkillsetSVG";
 import { ReportButton } from "./ReportButton";
 import { isDesktop } from "../utils/browser";
+import { SelectableTeamName } from "./SelectableTeamName";
 
 export class TeamData {
   author: string;
@@ -54,7 +55,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
 
       {/* Headings that cut into the top border */}
       <div className="absolute -top-2.5 left-2 px-3 bg-black leading-none font-bold text-lg">
-        {team.author}
+        <SelectableTeamName>{team.author}</SelectableTeamName>
       </div>
 
       <div className="absolute -top-2.5 right-10 px-3 bg-black leading-none font-bold text-lg">
@@ -102,7 +103,7 @@ export const Team: React.FC<{team:TeamData}> = ({team}) => {
           >
             Message {author} on Discord
           </a> :
-          <span className="block text-sm">Send {team.author} a friend request on Discord to get in touch!</span>
+          <span className="block text-sm">Send <SelectableTeamName>{team.author}</SelectableTeamName> a friend request on Discord to get in touch!</span>
       }
 
       </div>
