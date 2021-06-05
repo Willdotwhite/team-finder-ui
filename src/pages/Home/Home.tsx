@@ -54,7 +54,7 @@ const TeamList: React.FC = () => {
   }
 
   const skillsetMask = selectedSkillsets.reduce((a, b) => a + b, 0);
-  const languages = selectedLanguages.join("+");
+  const languages = selectedLanguages.join(",");
 
   const {
     isLoading: initalLoad,
