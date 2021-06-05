@@ -14,13 +14,10 @@ import {
 import { getSkillsets } from "../../utils/Skillsets";
 import { match, matchif } from "../../utils/match";
 import { PageUserInfo } from "../../components/PageUserInfo";
-import { languages } from "../../utils/LanguageData";
 import { AddMessage } from "../../components/StatusMessenger";
 import { MultiSelect } from "../../components/MultiSelect";
-import { ArrayToRecord } from "../../utils/ArrayToRecord";
 import { limitNewlines } from "../../utils/limitNewlines";
-
-const languageSelectIndex: Record<string, string> = ArrayToRecord(languages, l => [l.code, l.display]);
+import { languageSelectIndex } from "../../components/LanguageSelector";
 
 export interface FormData {
   description: string;
