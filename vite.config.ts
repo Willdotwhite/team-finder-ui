@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [reactRefresh()],
     build: {
+      sourcemap: mode === "production",
       rollupOptions: {
         plugins: [
           mode === "production" &&

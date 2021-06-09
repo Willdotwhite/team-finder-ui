@@ -3,8 +3,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { NavLink } from "react-router-dom";
 import { ReactQueryDevtools } from 'react-query/devtools'
-import * as Sentry from "@sentry/react";
-import { Integrations } from "@sentry/tracing";
 import { Context } from "./Context";
 import { Routes } from "./Routes";
 import { PageNavigator } from "./components/PageNavigator";
@@ -15,12 +13,7 @@ import "tailwindcss/tailwind.css";
 import "./index.css";
 
 if (import.meta.env.PROD) {
-  Sentry.init({
-    dsn: import.meta.env.VITE_SENTRY_DSN,
-    integrations: [new Integrations.BrowserTracing()],
-
-    tracesSampleRate: 0.2,
-  })
+  import('./utils/init-sentry');
 }
 
 ReactDOM.render(
